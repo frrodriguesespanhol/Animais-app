@@ -2,13 +2,17 @@ import { httpClient } from "app/http";
 import { Cidade } from "app/models/cidades";
 import { AxiosResponse } from "axios";
 import { Page } from 'app/models/common/page'
+import { Copa } from "app/models/copas";
 
 const resourceURL: string = "/api/cidades"
 
 export const useCidadeService = () => {
 
     const salvar = async (cidade: Cidade) : Promise<Cidade> => {
+    //const salvar = async (cidade: Cidade) : Promise<void> => {
         const response: AxiosResponse<Cidade> = await httpClient.post<Cidade>(resourceURL, cidade)
+        console.log(cidade)
+        //await httpClient.post<Cidade>(resourceURL, cidade)
         return response.data
     }
 
@@ -30,10 +34,10 @@ export const useCidadeService = () => {
 
     const find = async (
         nome: string = '',
-        idcopa: string = '',
+        idCopa: string = '',
         page: number = 0,
         size: number = 10) : Promise<Page<Cidade>> => {
-        const url = `${resourceURL}?nome=${nome}&idcopa=${idcopa}&page=${page}&size=${size}`
+        const url = `${resourceURL}?nome=${nome}&idCopa=${idCopa}&page=${page}&size=${size}`
         const response: AxiosResponse<Page<Cidade>> = await httpClient.get(url)
         return response.data
     }

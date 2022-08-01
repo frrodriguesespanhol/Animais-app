@@ -15,7 +15,7 @@ interface CidadeFormProps {
 }
 
 const formScheme: Cidade = {
-    idcopa: undefined,
+    idCopa: undefined,
     nome: ''
 }
 
@@ -50,8 +50,8 @@ export const CidadeForm: React.FC<CidadeFormProps> = ({
 
     const handleCopaChange = (e: AutoCompleteChangeParams) => {
         const copaSelecionada: Copa = e.value
-        formik.setFieldValue("idcopa", copaSelecionada)
-        console.log(copaSelecionada.id)
+        formik.setFieldValue("idCopa", copaSelecionada)
+        console.log(copaSelecionada)
     }
 
     return (
@@ -86,16 +86,16 @@ export const CidadeForm: React.FC<CidadeFormProps> = ({
                     <AutoComplete
                         suggestions={listaCopas.content}
                         completeMethod={handleCopaAutoComplete}
-                        value={formik.values.idcopa}
+                        value={formik.values.idCopa}
                         field="nome"
-                        id="copa"
-                        name="copa"
+                        id="idCopa"
+                        name="idCopa"
                         onChange={handleCopaChange}
                         />
                     <small className='p-error p-d-block'>
-                        {formik.errors.idcopa}
+                        {formik.errors.idCopa}
                     </small>
-                </div>
+            </div>
         
 
             <div className='field is-grouped'>

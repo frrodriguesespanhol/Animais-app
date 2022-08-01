@@ -10,8 +10,7 @@ export const Menu: React.FC = () => {
                 <MenuItem href="/" label="Home" />
                 <MenuItem href="/consultas/copas" label="Copas" />
                 <MenuItem href="/consultas/cidades" label="Cidades" />
-                <MenuItem href="/vendas/nova-venda" label="Venda" />
-                <MenuItem href="/vendas/relatorio-vendas" label="Relatório" />
+                <MenuItem href="/consultas/selecoes" label="Seleções" />
                 <MenuItem href="/" label="Sair" />
             </ul>
         </aside>
