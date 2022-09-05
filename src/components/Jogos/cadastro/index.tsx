@@ -3,9 +3,9 @@ import { Layout } from "components"
 import { useState } from "react"
 import { Alert } from "components/common/message"
 import { useRouter } from "next/router"
-import { Jogos } from "app/models/Jogos"
+import { Jogos } from "app/models/jogos"
 import { useJogoService } from "app/services/jogos.service"
-import { JogosForm } from "./form"
+import { JogosForm } from './form'
 
 export const CadastroJogos: React.FC = () => {
 

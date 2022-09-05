@@ -1,4 +1,3 @@
-import { Copa } from 'app/models/copas'
 import { Layout } from 'components'
 import { Input } from 'components'
 import { useFormik } from 'formik'
@@ -9,34 +8,41 @@ import { Button } from 'primereact/button'
 import { confirmDialog } from 'primereact/confirmdialog'
 import { validationScheme } from './validationSchema'
 import { Page } from 'app/models/common/page'
-import { useCidadeService, useCopaService } from 'app/services'
+import { useSelecaoService } from 'app/services'
 import Router from 'next/router'
-import { Cidade } from 'app/models/cidades'
+import { Selecoes } from 'app/models/selecoes'
 import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete'
+import { Jogos } from 'app/models/jogos'
+import { useJogoService } from 'app/services/jogos.service'
+import { Fases } from 'app/models/fases'
+import { useFaseService } from 'app/services/fases.service'
 
 let cS: string
+let cs_fase: string
 
-interface ConsultaCidadesForm {
-    nome?: string
-    idCopa?: Copa
-    id_copa?: number
-    onSubmit?: (cidade: Cidade) => void
+interface ConsultaJogosForm {
+    sel1?: Selecoes,
+    sel1_1?: number,
+    fase?: Fases,
+    fase_1?: number,
+    onSubmit?: (jogo: Jogos) => void
 }
 
-const formScheme: Cidade = {
-    idCopa: undefined,
-    nome: ''
+const formScheme: Jogos = {
+    sel1: undefined,
+    fase: undefined
 }
 
-export const ListagemCidades: React.FC<ConsultaCidadesForm> = ({
-        nome,
-        idCopa,
-        id_copa,
+export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
+        sel1,
+        sel1_1,
+        fase,
+        fase_1,
         onSubmit
     }) => {
 
-    const copaService = useCopaService()
-    const [ listaCopas, setListaCopas ] = useState<Page<Copa>>({
+    const selecoesService = useSelecaoService()
+    const [ listaSelecoes, setListaSelecoes ] = useState<Page<Selecoes>>({
         content: [],
         first: 0,
         number: 0,
@@ -44,9 +50,18 @@ export const ListagemCidades: React.FC<ConsultaCidadesForm> = ({
         totalElements: 0
     })
 
-    const service = useCidadeService()
+    const faseService = useFaseService()
+    const [ listaFases, setListaFases ] = useState<Page<Fases>>({
+        content: [],
+        first: 0,
+        number: 0,
+        size: 0,
+        totalElements: 0
+    })
+
+    const jogosService = useJogoService()
     const [ loading, setLoading ] = useState<boolean>(false)
-    const [ cidades, setCidades ] = useState<Page<Cidade>>({
+    const [ jogos, setJogos ] = useState<Page<Jogos>>({
         content: [],
         first: 0,
         number: 0,
@@ -54,7 +69,7 @@ export const ListagemCidades: React.FC<ConsultaCidadesForm> = ({
         totalElements: 0
     })
 
-    const handleSubmit = (filtro: ConsultaCidadesForm) => {
+    const handleSubmit = (filtro: ConsultaJogosForm) => {
         handlePage(null)
     }
 
@@ -62,28 +77,28 @@ export const ListagemCidades: React.FC<ConsultaCidadesForm> = ({
         handleSubmit: formikSubmit,
         values: filtro,
         handleChange
-    } = useFormik<ConsultaCidadesForm>({
+    } = useFormik<ConsultaJogosForm>({
         onSubmit: handleSubmit,
-        initialValues: { nome: '', idCopa: undefined , id_copa: 0  }
+        initialValues: { sel1: undefined, sel1_1: 0, fase: undefined, fase_1: 0 }
     })
 
     const handlePage = (event: DataTablePageParams) => {
         setLoading(true)
         console.log(cS)
-        service.find(filtro.nome, cS, event?.page, event?.rows)
+        jogosService.find(cS, cs_fase, event?.page, event?.rows)
                 .then(result => {
-                    setCidades({...result, first: event?.first})
+                    setJogos({...result, first: event?.first})
                 }).finally(() => setLoading(false))
     }
 
-    const deletar = (cidade: Cidade) => {
-        service.deletar(cidade.id).then(result => {
+    const deletar = (jogo: Jogos) => {
+        jogosService.deletar(jogo.id).then(result => {
             handlePage(null)
         })
     }
 
-    const actionTemplate = (registro: Cidade) => {
-        const url = `/cadastros/cidades?id=${registro.id}`
+    const actionTemplate = (registro: Jogos) => {
+        const url = `/cadastros/jogos?id=${registro.id}`
         return (
             <div>
                 <Button label="Editar"
@@ -104,51 +119,77 @@ export const ListagemCidades: React.FC<ConsultaCidadesForm> = ({
         )
     }
 
-    const formik = useFormik<Cidade>({
+    const formik = useFormik<Jogos>({
         initialValues: {...formScheme},
         onSubmit,
         enableReinitialize: true,
         validationSchema: validationScheme
     })
 
-    const handleCopaAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
+    const handleSelecoesAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
         const nome = e.query
-        copaService
-            .find(nome, '', 0, 20)
-            .then(copas => setListaCopas(copas))
+        selecoesService
+            .find(nome, 0, 20)
+            .then(selecoes => setListaSelecoes(selecoes))
     }
 
-    const handleCopaChange = (e: AutoCompleteChangeParams) => {
-        const copaSelecionada: Copa = e.value
-        formik.setFieldValue("idCopa", copaSelecionada)
-        cS = copaSelecionada.id
-        console.log(copaSelecionada)
+    const handleSelecaoChange = (e: AutoCompleteChangeParams) => {
+        const selecaoSelecionada: Jogos = e.value
+        formik.setFieldValue("sel1", selecaoSelecionada)
+        cS = selecaoSelecionada.sel1
+        console.log(selecaoSelecionada)
     }
+
+    const handleFasesAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
+        const nome = e.query
+        faseService
+            .find(nome, 0, 20)
+            .then(fases => setListaFases(fases))
+    }
+
+    const handleFaseChange = (e: AutoCompleteChangeParams) => {
+        const faseSelecionada: Jogos = e.value
+        formik.setFieldValue("fase", faseSelecionada)
+        cs_fase = faseSelecionada.fase
+        console.log(faseSelecionada)
+    }
+
 
     return (
-        <Layout titulo="Cidades">
+        <Layout titulo="Jogos">
             <form onSubmit={formikSubmit}>
+            
             <div className='p-fluid'>
-                <div className='columns'>
-                    <Input label="Nome" id="nome"
-                        columnClasses='is-full'
-                        autoComplete='off'
-                        onChange={handleChange}
-                        name="nome" value={filtro.nome} />
-                </div>
+                
                 <div className='p-field'>
-                    <label htmlFor="copa">Copa: *</label>
+                    <label htmlFor="copa">Fase: *</label>
                     <AutoComplete
-                        suggestions={listaCopas.content}
-                        completeMethod={handleCopaAutoComplete}
-                        value={formik.values.idCopa}
+                        suggestions={listaFases.content}
+                        completeMethod={handleFasesAutoComplete}
+                        value={formik.values.fase}
                         field="nome"
-                        id="idCopa"
-                        name="idCopa"
-                        onChange={handleCopaChange}
+                        id="fase"
+                        name="fase"
+                        onChange={handleFaseChange}
                         />
                     <small className='p-error p-d-block'>
-                        {formik.errors.idCopa}
+                        {formik.errors.fase}
+                    </small>
+                </div>
+
+                <div className='p-field'>
+                    <label htmlFor="copa">Seleção: *</label>
+                    <AutoComplete
+                        suggestions={listaSelecoes.content}
+                        completeMethod={handleSelecoesAutoComplete}
+                        value={formik.values.sel1}
+                        field="nome"
+                        id="idSelecao"
+                        name="idSelecao"
+                        onChange={handleSelecaoChange}
+                        />
+                    <small className='p-error p-d-block'>
+                        {formik.errors.sel1}
                     </small>
             
                 </div>
@@ -160,7 +201,7 @@ export const ListagemCidades: React.FC<ConsultaCidadesForm> = ({
                     </div>
                     <div className='control is-link'>
                         <button type='submit'
-                                onClick={e => Router.push("/cadastros/cidades")}
+                                onClick={e => Router.push("/cadastros/jogos")}
                                 className='button is-warning'>
                             Novo
                         </button>
@@ -174,18 +215,18 @@ export const ListagemCidades: React.FC<ConsultaCidadesForm> = ({
 
             <div className='columns'>
                 <div className='is-full'>
-                    <DataTable value={cidades.content}
-                            totalRecords={cidades.totalElements}
+                    <DataTable value={jogos.content}
+                            totalRecords={jogos.totalElements}
                             lazy paginator
-                            first={cidades.first}
-                            rows={cidades.size}
+                            first={jogos.first}
+                            rows={jogos.size}
                             onPage={handlePage}
                             loading={loading}
                             emptyMessage="Nenhum registro."
                             >
                         <Column field='id' header="Código" />
-                        <Column field='nome' header="Nome" />
-                        <Column field='idCopa.nome' header="Copa" />
+                        <Column field='fase.nome' header="Fase" />
+                        <Column field='idSelecao.nome' header="Seleção" />
                         <Column body={actionTemplate} />
                     </DataTable>
 

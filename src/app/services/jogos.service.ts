@@ -1,9 +1,7 @@
 import { httpClient } from "app/http";
-import { Cidade } from "app/models/cidades";
 import { AxiosResponse } from "axios";
 import { Page } from 'app/models/common/page'
-import { Selecoes } from "app/models/selecoes";
-import { Jogos } from "app/models/Jogos";
+import { Jogos } from "app/models/jogos";
 
 
 const resourceURL: string = "/api/jogos"
@@ -11,6 +9,7 @@ const resourceURL: string = "/api/jogos"
 export const useJogoService = () => {
 
     const salvar = async (jogos: Jogos) : Promise<Jogos> => {
+        console.log(jogos) // retirar logs depois
         const response: AxiosResponse<Jogos> = await httpClient.post<Jogos>(resourceURL, jogos)
         return response.data
     }
@@ -33,9 +32,10 @@ export const useJogoService = () => {
 
     const find = async (
         selecao: string = '',
+        fase: string = '',
         page: number = 0,
         size: number = 10) : Promise<Page<Jogos>> => {
-        const url = `${resourceURL}?selecao=${selecao}&page=${page}&size=${size}`
+        const url = `${resourceURL}?selecao=${selecao}&fase=${fase}&page=${page}&size=${size}`
         const response: AxiosResponse<Page<Jogos>> = await httpClient.get(url)
         return response.data
     }

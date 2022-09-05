@@ -1,15 +1,25 @@
 import { Cidade } from 'app/models/cidades'
 import { Input } from 'components'
-import { useFormik } from 'formik'
+import { useFormik, useFormikContext, validateYupSchema } from 'formik'
 import { validationScheme } from './validationSchema'
 import Router from 'next/router'
-import { useCidadeService, useCopaService, useSelecaoService } from 'app/services'
+import { useCidadeService, useSelecaoService } from 'app/services'
 import { useState } from 'react'
 import { Page } from 'app/models/common/page'
-import { Copa } from 'app/models/copas'
 import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete'
-import { Jogos } from 'app/models/Jogos'
+import { Jogos } from 'app/models/jogos'
 import { Selecoes } from 'app/models/selecoes'
+import { useFaseService } from 'app/services/fases.service'
+import { Fases } from 'app/models/fases'
+
+import * as React from 'react';
+import TextField from '@mui/material/TextField';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+
+import Stack from '@mui/material/Stack';
+
 
 interface JogosFormProps {
     jogos: Jogos
@@ -22,14 +32,21 @@ const formScheme: Jogos = {
     gols1: '',
     gols2: '',
     cidade: undefined,
-    data_hora: '',
-    fase: ''
+    data_hora: undefined,
+    fase: undefined
 }
 
 export const JogosForm: React.FC<JogosFormProps> = ({
     jogos,
     onSubmit
 }) => {
+
+    const formik = useFormik<Jogos>({
+        initialValues: {...formScheme, ...jogos},
+        onSubmit,
+        enableReinitialize: true,
+        // validationSchema: validationScheme
+    })
 
     const selecaoService = useSelecaoService()
 
@@ -51,11 +68,14 @@ export const JogosForm: React.FC<JogosFormProps> = ({
         totalElements: 0
     })
 
-    const formik = useFormik<Jogos>({
-        initialValues: {...formScheme, ...jogos},
-        onSubmit,
-        enableReinitialize: true,
-        validationSchema: validationScheme
+    const faseService = useFaseService()
+
+    const [ listaFases, setListaFases ] = useState<Page<Fases>>({
+        content: [],
+        first: 0,
+        number: 0,
+        size: 0,
+        totalElements: 0
     })
 
     const handleSelecaoAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
@@ -63,26 +83,51 @@ export const JogosForm: React.FC<JogosFormProps> = ({
         selecaoService
             .find(nome, 0, 20)
             .then(selecoes => setListaSelecoes(selecoes))
+            //console.log(listaSelecoes.content)
+
     }
 
     const handleSelecaoChange = (e: AutoCompleteChangeParams) => {
         const selecaoSelecionada: Selecoes = e.value
-        formik.setFieldValue("nome", selecaoSelecionada)
+        formik.setFieldValue("sel1", selecaoSelecionada)
+        console.log(selecaoSelecionada)
+    }
+
+    const handleSelecaoChange2 = (e: AutoCompleteChangeParams) => {
+        const selecaoSelecionada: Selecoes = e.value
+        formik.setFieldValue("sel2", selecaoSelecionada)
         console.log(selecaoSelecionada)
     }
 
     const handleCidadeAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
         const nome = e.query
         cidadeService
-            .find(nome, "", 20)
+            .find(nome, "", 0, 20)
             .then(cidades => setListaCidades(cidades))
     }
 
     const handleCidadeChange = (e: AutoCompleteChangeParams) => {
         const cidadeSelecionada: Cidade = e.value
-        formik.setFieldValue("nome", cidadeSelecionada)
+        formik.setFieldValue("cidade", cidadeSelecionada)
         console.log(cidadeSelecionada)
     }
+
+    const handleFaseAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
+        const nome = e.query
+        faseService
+            .find(nome, 0, 20)
+            .then(fases => setListaFases(fases))
+    }
+
+    const handleFaseChange = (e: AutoCompleteChangeParams) => {
+        const faseSelecionada: Fases = e.value
+        formik.setFieldValue("fase", faseSelecionada)
+        console.log(faseSelecionada)
+    }
+
+
+    const [valueData, setValueData] = useState<Date | null>(null)
+        
 
     return (
         <form onSubmit={formik.handleSubmit}>
@@ -98,10 +143,11 @@ export const JogosForm: React.FC<JogosFormProps> = ({
                     />
                 </div>
             }
-
+            
+            <Stack spacing={4} direction='row'>
                 <div className='p-field'>
-                    <label htmlFor="sel1">Seleção 1: *</label>
-                    <AutoComplete
+                    <AutoComplete    
+                        placeholder='Seleção 1 *'   
                         suggestions={listaSelecoes.content}
                         completeMethod={handleSelecaoAutoComplete}
                         value={formik.values.sel1}
@@ -115,111 +161,125 @@ export const JogosForm: React.FC<JogosFormProps> = ({
                     </small>
                 </div>
 
-                <div className='p-fluid'>
-                    <div className='columns'>
-                        <Input id="gols1"
-                            name="gols1"
-                            label="Gols Seleção 1: *"
-                            autoComplete='off'
-                            columnClasses='is-full'
-                            value={formik.values.gols1}
-                            onChange={formik.handleChange}
-                            error={formik.errors.gols1}
-                        />
-                     </div>
+                <div className='p-field'>
+                    <TextField 
+                        //size='small'
+                        id='gols1'
+                        label='Gols'
+                        type='number'
+                        //margin='dense'
+                        value={formik.values.gols1}
+                        onChange={formik.handleChange}
+                        >
+                    </TextField>
+                </div>
+
+                <div className='label'>
+                    X
                 </div>
 
                 <div className='p-field'>
-                    <label htmlFor="sel2">Seleção 2: *</label>
-                    <AutoComplete
+                    <TextField 
+                        //size='small'
+                        id='gols2'
+                        label='Gols'
+                        type='number'
+                        //margin='dense'
+                        value={formik.values.gols2}
+                        onChange={formik.handleChange}
+                        >
+                    </TextField>
+                </div>
+
+
+                <div className='p-field'>
+                    <AutoComplete    
+                        placeholder='Seleção 2 *'   
                         suggestions={listaSelecoes.content}
                         completeMethod={handleSelecaoAutoComplete}
-                        value={formik.values.sel1}
+                        value={formik.values.sel2}
                         field="nome"
                         id="sel2"
                         name="sel2"
-                        onChange={handleSelecaoChange}
+                        onChange={handleSelecaoChange2}
                         />
                     <small className='p-error p-d-block'>
                         {formik.errors.sel2}
                     </small>
                 </div>
 
-                <div className='p-fluid'>
-                    <div className='columns'>
-                        <Input id="gols2"
-                            name="gols2"
-                            label="Gols Seleção 2: *"
-                            autoComplete='off'
-                            columnClasses='is-full'
-                            value={formik.values.gols2}
-                            onChange={formik.handleChange}
-                            error={formik.errors.gols2}
+            
+            </Stack>
+            
+            <Stack spacing={3} direction='row'>
+                <div className='p-field'>
+                        <AutoComplete
+                            placeholder='Cidade *'   
+                            suggestions={listaCidades.content}
+                            completeMethod={handleCidadeAutoComplete}
+                            value={formik.values.cidade}
+                            field="nome"
+                            id="cidade"
+                            name="cidade"
+                            onChange={handleCidadeChange}
+                            />
+                        <small className='p-error p-d-block'>
+                            {formik.errors.cidade}
+                        </small>
+                </div>
+
+            
+                <div className='p-field'>
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DateTimePicker
+                            ampm={false}
+                            label="Data / Hora do Jogo"
+                            renderInput={(params) => <TextField {...params} />} //id="dt" value={formik.values.data_hora} acrescentei isso mas não resolveu
+                            //value={formik.values.sel1}
+                            //inputFormat={'dd/MM/yyyy hh:mm'}
+                            onChange={(newValue) => {
+                                setValueData(newValue)
+                            }}
+                            //value={formik.values.data_hora}
+                            value={valueData} // não consegue pegar aqui
                         />
-                     </div>
+                    </LocalizationProvider>
                 </div>
 
-            <div className='p-field'>
-                    <label htmlFor="cidade">Cidade: *</label>
-                    <AutoComplete
-                        suggestions={listaCidades.content}
-                        completeMethod={handleCidadeAutoComplete}
-                        value={formik.values.cidade}
-                        field="nome"
-                        id="cidade"
-                        name="cidade"
-                        onChange={handleCidadeChange}
-                        />
-                    <small className='p-error p-d-block'>
-                        {formik.errors.cidade}
-                    </small>
-            </div>
+                <div className='p-field'>
+                        <AutoComplete
+                            placeholder='Fase *'
+                            suggestions={listaFases.content}
+                            completeMethod={handleFaseAutoComplete}
+                            value={formik.values.fase}
+                            field="nome"
+                            id="fase"
+                            name="fase"
+                            onChange={handleFaseChange}
+                            />
+                        <small className='p-error p-d-block'>
+                            {formik.errors.fase}
+                        </small>
+                </div>
+            </Stack>
 
-            <div className='p-fluid'>
-                <div className='columns'>
-                    <Input id="data_hora"
-                        name="data_hora"
-                        label="Data e Hora do Jogo: *"
-                        autoComplete='off'
-                        columnClasses='is-full'
-                        value={formik.values.data_hora}
-                        onChange={formik.handleChange}
-                        error={formik.errors.data_hora}
-                    />
-                </div>
-            </div>
 
-            <div className='p-fluid'>
-                <div className='columns'>
-                    <Input id="fase"
-                        name="fase"
-                        label="Fase: *"
-                        autoComplete='off'
-                        columnClasses='is-full'
-                        value={formik.values.fase}
-                        onChange={formik.handleChange}
-                        error={formik.errors.fase}
-                    />
+                <div className='field is-grouped'>
+                    <div className='control is-link'>
+                        <button type='submit' className='button is-success'>
+                            { formik.values.id ? "Atualizar" : "Salvar" }
+                        </button>
+                    </div>
+                    
+                    <div className='control is-link'>
+                        <button type='button'
+                                onClick={e => Router.push("/consultas/jogos")}
+                                className='button'>
+                            Voltar
+                        </button>
+                    </div>
                 </div>
-            </div>
-        
-
-            <div className='field is-grouped'>
-                <div className='control is-link'>
-                    <button type='submit' className='button is-success'>
-                        { formik.values.id ? "Atualizar" : "Salvar" }
-                    </button>
-                </div>
-                
-                <div className='control is-link'>
-                    <button type='button'
-                            onClick={e => Router.push("/consultas/cidades")}
-                            className='button'>
-                        Voltar
-                    </button>
-                </div>
-            </div>
-        
+           
         </form>
     )
 }

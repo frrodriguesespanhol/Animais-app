@@ -1,2 +1,2 @@
-export { CadastroCidades } from './cadastro'
-export { ListagemCidades } from './listagem'
+export { CadastroJogos } from './cadastro'
+export { ListagemJogos } from './listagem'
