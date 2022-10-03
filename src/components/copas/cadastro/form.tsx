@@ -3,6 +3,7 @@ import { Input } from 'components'
 import { useFormik } from 'formik'
 import { validationScheme } from './validationSchema'
 import Router from 'next/router'
+import { SessionProvider } from 'next-auth/react'
 
 interface CopaFormProps {
     copa: Copa
@@ -27,6 +28,7 @@ export const CopaForm: React.FC<CopaFormProps> = ({
     })
 
     return (
+
         <form onSubmit={formik.handleSubmit}>
             {formik.values.id &&
                 <div className='columns'>
@@ -81,5 +83,7 @@ export const CopaForm: React.FC<CopaFormProps> = ({
             </div>
             
         </form>
+
+        
     )
 }

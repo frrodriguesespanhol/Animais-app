@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { signOut } from "next-auth/client"
 
 export const Menu: React.FC = () => {
     return (
@@ -8,12 +9,16 @@ export const Menu: React.FC = () => {
             </p>
             <ul className="menu-list">
                 <MenuItem href="/" label="Home" />
+                <MenuItem href="/consultas/configuracao" label="Configuração" />
                 <MenuItem href="/consultas/copas" label="Copas" />
                 <MenuItem href="/consultas/cidades" label="Cidades" />
+                <MenuItem href="/consultas/estadios" label="Estádios" />
                 <MenuItem href="/consultas/selecoes" label="Seleções" />
                 <MenuItem href="/consultas/jogos" label="Jogos" />
                 <MenuItem href="/consultas/fases" label="Fases" />
-                <MenuItem href="/" label="Sair" />
+                <MenuItem href="/consultas/empresas" label="Empresas" />
+                <MenuItem href="/consultas/usuarios" label="Usuários" />
+                <MenuItem onClick={() => signOut()} href="/" label="Sair" />
             </ul>
         </aside>
     )
@@ -22,13 +27,14 @@ export const Menu: React.FC = () => {
 interface MenuItemProps {
     href: string
     label: string
+    onClick?: () => void
 }
 
 const MenuItem: React.FC<MenuItemProps> = (props: MenuItemProps) => {
     return (
         <li>
             <Link href={props.href}>
-                <a>
+                <a onClick={props.onClick}>
                     <span className="icon"></span> { props.label }
                 </a>
             </Link>

@@ -1,3 +1,6 @@
 export { useCidadeService} from './cidade.service'
+export { useEstadioService} from './estadio.service'
 export { useCopaService} from './copa.service'
 export { useSelecaoService } from './selecao.service'
+export { useUsuarioService } from './usuario.service'
+export { useEmpresaService } from './empresas.service'

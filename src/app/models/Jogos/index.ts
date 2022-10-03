@@ -1,6 +1,6 @@
 import { Selecoes } from 'app/models/selecoes'
-import { Cidade } from "app/models/cidades"
 import { Fases } from '../fases'
+import { Estadio } from '../estadios'
 
 
 export interface Jogos {
@@ -9,7 +9,7 @@ export interface Jogos {
     sel2?: Selecoes
     gols1?: string
     gols2?: string
-    cidade?: Cidade
+    estadio?: Estadio
     data_hora?: Date
     fase?: Fases
 }

@@ -3,7 +3,7 @@ import { Input } from 'components'
 import { useFormik, useFormikContext, validateYupSchema } from 'formik'
 import { validationScheme } from './validationSchema'
 import Router from 'next/router'
-import { useCidadeService, useSelecaoService } from 'app/services'
+import { useCidadeService, useEstadioService, useSelecaoService } from 'app/services'
 import { useState } from 'react'
 import { Page } from 'app/models/common/page'
 import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete'
@@ -19,6 +19,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 import Stack from '@mui/material/Stack';
+import { Estadio } from 'app/models/estadios'
 
 
 interface JogosFormProps {
@@ -31,7 +32,7 @@ const formScheme: Jogos = {
     sel2: undefined,
     gols1: '',
     gols2: '',
-    cidade: undefined,
+    estadio: undefined,
     data_hora: undefined,
     fase: undefined
 }
@@ -58,9 +59,9 @@ export const JogosForm: React.FC<JogosFormProps> = ({
         totalElements: 0
     })
 
-    const cidadeService = useCidadeService()
+    const estadioService = useEstadioService()
 
-    const [ listaCidades, setListaCidades ] = useState<Page<Cidade>>({
+    const [ listaEstadios, setListaEstadios ] = useState<Page<Estadio>>({
         content: [],
         first: 0,
         number: 0,
@@ -99,17 +100,17 @@ export const JogosForm: React.FC<JogosFormProps> = ({
         console.log(selecaoSelecionada)
     }
 
-    const handleCidadeAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
+    const handleEstadioAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
         const nome = e.query
-        cidadeService
+        estadioService
             .find(nome, "", 0, 20)
-            .then(cidades => setListaCidades(cidades))
+            .then(estadios => setListaEstadios(estadios))
     }
 
-    const handleCidadeChange = (e: AutoCompleteChangeParams) => {
-        const cidadeSelecionada: Cidade = e.value
-        formik.setFieldValue("cidade", cidadeSelecionada)
-        console.log(cidadeSelecionada)
+    const handleEstadioChange = (e: AutoCompleteChangeParams) => {
+        const estadioSelecionado: Estadio = e.value
+        formik.setFieldValue("estadio", estadioSelecionado)
+        //console.log(cidadeSelecionado)
     }
 
     const handleFaseAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
@@ -214,22 +215,32 @@ export const JogosForm: React.FC<JogosFormProps> = ({
             <Stack spacing={3} direction='row'>
                 <div className='p-field'>
                         <AutoComplete
-                            placeholder='Cidade *'   
-                            suggestions={listaCidades.content}
-                            completeMethod={handleCidadeAutoComplete}
-                            value={formik.values.cidade}
+                            placeholder='Estádio *'   
+                            suggestions={listaEstadios.content}
+                            completeMethod={handleEstadioAutoComplete}
+                            value={formik.values.estadio}
                             field="nome"
-                            id="cidade"
-                            name="cidade"
-                            onChange={handleCidadeChange}
+                            id="estadio"
+                            name="estadio"
+                            onChange={handleEstadioChange}
                             />
                         <small className='p-error p-d-block'>
-                            {formik.errors.cidade}
+                            {formik.errors.estadio}
                         </small>
                 </div>
 
-            
                 <div className='p-field'>
+                    <TextField 
+                        id='data_hora'
+                        // label='Data / Hora'
+                        //type='datetime-local'
+                        value={formik.values.data_hora}
+                        onChange={formik.handleChange}
+                        >
+                    </TextField>
+                </div>
+            
+                {/* <div className='p-field'>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DateTimePicker
                             ampm={false}
@@ -244,7 +255,7 @@ export const JogosForm: React.FC<JogosFormProps> = ({
                             value={valueData} // não consegue pegar aqui
                         />
                     </LocalizationProvider>
-                </div>
+                </div> */}
 
                 <div className='p-field'>
                         <AutoComplete
