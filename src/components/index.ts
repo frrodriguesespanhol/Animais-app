@@ -8,6 +8,7 @@ export { CadastroFase, ListagemFases } from './fases'
 export { CadastroEmpresa, ListagemEmpresas } from './empresas'
 export { CadastroUsuarios, ListagemUsuarios } from './usuarios'
 export { CadastroConfiguracao, ListagemConfiguracao } from './configuracao'
+export { CadastroPalpites, ListagemPalpites } from './palpites'
 export { RelatorioVendas } from './relatorios'
 export { RotaAutenticada } from './rotaautenticada'
 export {

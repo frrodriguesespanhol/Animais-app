@@ -18,6 +18,7 @@ export const Menu: React.FC = () => {
                 <MenuItem href="/consultas/fases" label="Fases" />
                 <MenuItem href="/consultas/empresas" label="Empresas" />
                 <MenuItem href="/consultas/usuarios" label="Usuários" />
+                <MenuItem href="/consultas/palpites" label="Palpites" />
                 <MenuItem onClick={() => signOut()} href="/" label="Sair" />
             </ul>
         </aside>

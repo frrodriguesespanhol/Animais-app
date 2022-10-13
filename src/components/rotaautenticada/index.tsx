@@ -1,5 +1,6 @@
 import { Loader } from 'components/common'
 import { signIn, useSession } from 'next-auth/client'
+import React, { useState } from 'react';
 
 interface RotaAutenticadaProps {
     children: React.ReactNode
@@ -21,6 +22,7 @@ export const RotaAutenticada: React.FC<RotaAutenticadaProps> = ({
       signIn()
       return null
   }
+
 
   return (
       <div>
