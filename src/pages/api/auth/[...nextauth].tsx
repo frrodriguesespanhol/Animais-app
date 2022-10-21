@@ -1,12 +1,11 @@
 import NextAuth from "next-auth"
 import Providers from "next-auth/providers"
-
 import { Usuario } from "app/models/usuarios"
 import { AxiosResponse } from "axios"
 import { httpClient } from "app/http";
+import { Provider, session, useSession } from "next-auth/client";
 import { useState } from "react";
-import Router from "next/router";
-import { useSession } from "next-auth/client";
+
 
 const resourceURL: string = "api/usuarios/validarSenha"
 
@@ -30,9 +29,8 @@ export default NextAuth({
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
           
-          //console.log(us)
-          const [id, setId] = useState(user.data.id);
-          setId(user.data.id)
+          //console.log(user.data.tipo)
+
           return user.data
 
         } else {

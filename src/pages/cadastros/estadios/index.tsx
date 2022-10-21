@@ -1,12 +1,17 @@
 import { CadastroEstadios, RotaAutenticada } from 'components'
-import { SessionProvider } from 'next-auth/react'
+import { useSession } from 'next-auth/client'
 
-//export default CadastroEstadios
+export default () => {
+    const [session] = useSession()
+    const permissao = session?.user?.email?.substring(session?.user?.email.length-3, session?.user?.email.length)
 
-export default () => (
-    //<SessionProvider>
+return (
+
     <RotaAutenticada>
-        <CadastroEstadios />
+        {permissao==="adm" &&
+            <CadastroEstadios />
+        }
     </RotaAutenticada>
-    //</SessionProvider>
+
 )
+}

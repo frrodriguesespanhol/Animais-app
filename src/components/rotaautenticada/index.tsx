@@ -6,6 +6,7 @@ interface RotaAutenticadaProps {
     children: React.ReactNode
 }
 
+
 export const RotaAutenticada: React.FC<RotaAutenticadaProps> = ({
     children
 }) => {
@@ -22,8 +23,7 @@ export const RotaAutenticada: React.FC<RotaAutenticadaProps> = ({
       signIn()
       return null
   }
-
-
+  
   return (
       <div>
           <p>Signed in as {session?.user?.email}</p>

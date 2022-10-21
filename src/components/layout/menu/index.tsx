@@ -1,25 +1,66 @@
 import Link from "next/link"
-import { signOut } from "next-auth/client"
+import { signOut, useSession } from "next-auth/client"
 
 export const Menu: React.FC = () => {
+    const [session, loading] = useSession()
+    const permissao = session?.user?.email?.substring(session?.user?.email?.length - 3, session?.user?.email?.length)
+    //const permissao = session?.user?.email
+
     return (
+        
         <aside className="column is-2 is-narrow-mobile is-fullheight is-hidden-mobile">
             <p className="menu-label is-hidden-touch">
                 Copa do Mundo
             </p>
             <ul className="menu-list">
-                <MenuItem href="/" label="Home" />
-                <MenuItem href="/consultas/configuracao" label="Configuração" />
-                <MenuItem href="/consultas/copas" label="Copas" />
-                <MenuItem href="/consultas/cidades" label="Cidades" />
-                <MenuItem href="/consultas/estadios" label="Estádios" />
-                <MenuItem href="/consultas/selecoes" label="Seleções" />
-                <MenuItem href="/consultas/jogos" label="Jogos" />
-                <MenuItem href="/consultas/fases" label="Fases" />
-                <MenuItem href="/consultas/empresas" label="Empresas" />
-                <MenuItem href="/consultas/usuarios" label="Usuários" />
-                <MenuItem href="/consultas/palpites" label="Palpites" />
-                <MenuItem onClick={() => signOut()} href="/" label="Sair" />
+                {
+                    (permissao==="adm" || permissao==="usu")  &&
+                        <MenuItem href="/" label="Home" />
+                }
+                {
+                    (permissao==="adm")  &&
+                        <MenuItem href="/consultas/configuracao" label="Configuração" />
+                }
+                {
+                    (permissao==="adm")  &&
+                        <MenuItem href="/consultas/copas" label="Copas" />
+                }
+                {
+                    (permissao==="adm")  &&
+                        <MenuItem href="/consultas/cidades" label="Cidades" />
+                }
+                {
+                    (permissao==="adm")  &&
+                        <MenuItem href="/consultas/estadios" label="Estádios" />
+                }
+                {
+                    (permissao==="adm")  &&
+                        <MenuItem href="/consultas/selecoes" label="Seleções" />
+                }
+                {
+                    (permissao==="adm")  &&
+                        <MenuItem href="/consultas/jogos" label="Jogos" />
+                }
+                {
+                    (permissao==="adm")  &&
+                        <MenuItem href="/consultas/fases" label="Fases" />
+                }
+                {
+                    (permissao==="adm")  &&
+                        <MenuItem href="/consultas/empresas" label="Empresas" />
+                }
+                {
+                    (permissao==="adm")  &&
+                        <MenuItem href="/consultas/usuarios" label="Usuários" />
+                }
+                {
+                    (permissao==="adm" || permissao==="usu")  &&
+                        <MenuItem href="/consultas/palpites" label="Palpites" />
+                }
+                {
+                    (permissao==="adm" || permissao==="usu")  &&
+                        <MenuItem onClick={() => signOut()} href="/" label="Sair" />
+                }
             </ul>
         </aside>
     )

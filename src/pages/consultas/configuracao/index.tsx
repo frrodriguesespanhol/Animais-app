@@ -1,12 +1,17 @@
 import { ListagemConfiguracao, RotaAutenticada } from 'components'
-//import { SessionProvider } from 'next-auth/react'
+import { useSession } from 'next-auth/client'
 
-//export default ListagemConfiguracao
+export default () => {
+    const [session] = useSession()
+    const permissao = session?.user?.email?.substring(session?.user?.email.length-3, session?.user?.email.length)
 
-export default () => (
-    //<SessionProvider>
+return (
+ 
     <RotaAutenticada>
-        <ListagemConfiguracao />
+        {permissao==="adm" &&
+            <ListagemConfiguracao />
+        }
     </RotaAutenticada>
-    //</SessionProvider>
-) 
+ 
+)
+}

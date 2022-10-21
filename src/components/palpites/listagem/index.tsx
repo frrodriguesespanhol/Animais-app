@@ -10,24 +10,34 @@ import { usePalpiteService } from 'app/services/palpites.service'
 import { Palpites } from 'app/models/palpites'
 import { TextField } from '@mui/material'
 import { Input } from 'components'
+import { useSession } from 'next-auth/client'
+import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete'
+import { useUsuarioService } from 'app/services'
+import { Usuario } from 'app/models/usuarios'
+
+let cs_usuario: string
 
 interface ConsultaPalpitesForm {
     data?: ''
-    usuario?: ''
-    //onSubmit?:() => void
+    usuario?: Usuario
+    usuario_1?: number,
+    onSubmit?:() => void
 }
 
-// const formScheme = {
-//     data: undefined,
-//     usuario: undefined
-// }
+ const formScheme = {
+     data: undefined,
+     usuario: undefined
+ }
 
-export const ListagemPalpites: React.FC = ({
-        // data,
-        // usuario,
-        // onSubmit
+export const ListagemPalpites: React.FC<ConsultaPalpitesForm>  = ({
+         data,
+         usuario,
+         usuario_1,
+         onSubmit
     }) => {
 
+    const [ session ] = useSession()
+    
     const palpiteService = usePalpiteService()
     const [ loading, setLoading ] = useState<boolean>(false)
     const [ palpites, setPalpites ] = useState<Page<Palpites>>({
@@ -35,6 +45,15 @@ export const ListagemPalpites: React.FC = ({
         first: 0,
         number: 0,
         size: 10,
+        totalElements: 0
+    })
+
+    const usuarioService = useUsuarioService()
+    const [ listaUsuarios, setListaUsuarios ] = useState<Page<Usuario>>({
+        content: [],
+        first: 0,
+        number: 0,
+        size: 0,
         totalElements: 0
     })
     
@@ -48,30 +67,47 @@ export const ListagemPalpites: React.FC = ({
         handleChange
     } = useFormik<ConsultaPalpitesForm>({
         onSubmit: handleSubmit,
-        initialValues: { data: '', usuario: ''}
+        initialValues: { data: '', usuario: undefined, usuario_1: 0}
     })
 
     const handlePage = (event: DataTablePageParams) => {
         setLoading(true)
-        console.log(filtro.data)
-        palpiteService.find(filtro.data, filtro.usuario, event?.page, event?.rows)
+        console.log(filtro.data + " - " + cs_usuario)
+        palpiteService.find(filtro.data, cs_usuario, event?.page, event?.rows)
                 .then(result => {
                     setPalpites({...result, first: event?.first})
                 }).finally(() => setLoading(false))
     }
 
-    // não deleta, apenas atualiza
-    // const deletar = (palpite: Palpites) => {
-    //     palpiteService.deletar(palpite.id).then(result => {
-    //         handlePage(null)
-    //     })
-    // }
+    const formik = useFormik<ConsultaPalpitesForm>({
+        initialValues: {...formScheme},
+        onSubmit,
+        enableReinitialize: true,
+        //validationSchema: validationScheme
+    })
+
+    const handleUsuariosAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
+        const nome = e.query
+        usuarioService
+            .find(nome, '', 0, 20)
+            .then(usuarios => setListaUsuarios(usuarios))
+    }
+
+    const handleUsuarioChange = (e: AutoCompleteChangeParams) => {
+        const usuarioSelecionado: Usuario = e.value
+        formik.setFieldValue("usuario", usuarioSelecionado)
+        cs_usuario = usuarioSelecionado.id
+        console.log(usuarioSelecionado)
+    }
+
 
     const actionTemplate = (registro: Palpites) => {
         const url = `/cadastros/palpites?id=${registro.id}`
+        const logado = session?.user?.email===registro.usuario?.email
         return (
             <div>
-                <Button label="Palpitar"
+                <Button label="Palpitar"  
+                        disabled={!logado}
                         className="p-button-rounded p-button-info"
                         onClick={e => Router.push(url)}
                         />
@@ -89,18 +125,12 @@ export const ListagemPalpites: React.FC = ({
         )
     }
 
-    // const formik = useFormik({
-    //     initialValues: {...formScheme},
-    //     onSubmit,
-    //     enableReinitialize: true,
-    //     //validationSchema: validationScheme
-    // })
+
 
     return (
         <Layout titulo="Palpites">
             <form onSubmit={formikSubmit}>
-            
-                          
+            <div className='p-fluid'>
                 <div className='columns'>
                     <Input label="Data" id="data"
                         columnClasses='is-half'
@@ -109,14 +139,24 @@ export const ListagemPalpites: React.FC = ({
                         onChange={handleChange}
                         name="data" value={filtro.data} />
 
-                    {/* <TextField
-                        name='data'
-                        id='data'
-                        value={formik.values.data}
-                        //onChange={formik.handleChange}
-                        >
-                    </TextField> */}
                 </div>
+
+                <div className='p-field'>
+                    <label htmlFor="usuario">Usuário: *</label>
+                    <AutoComplete
+                        suggestions={listaUsuarios.content}
+                        completeMethod={handleUsuariosAutoComplete}
+                        value={formik.values.usuario}
+                        field="nome"
+                        id="usuario"
+                        name="usuario"
+                        onChange={handleUsuarioChange}
+                        />
+                    <small className='p-error p-d-block'>
+                        {formik.errors.usuario}
+                    </small>
+                </div>
+            </div>
 
                 <div className='field is-grouped'>
                     <div className='control is-link'>
@@ -156,6 +196,7 @@ export const ListagemPalpites: React.FC = ({
                         <Column field='gols_sel2' header="Gols Seleção 2" />
                         <Column field='jogo.sel2.nome' header="Seleção 2" />
                         <Column field='jogo.fase.nome' header="Fase" />
+                        <Column field='usuario.nome' header="Apostador" />
                         <Column body={actionTemplate} />
                     </DataTable>
 
