@@ -2,6 +2,7 @@ import { httpClient } from "app/http";
 import { AxiosResponse } from "axios";
 import { Page } from 'app/models/common/page'
 import { Palpites } from "app/models/palpites";
+import { Ranking } from "pages";
 
 
 const resourceURL: string = "/api/palpites"
@@ -43,11 +44,21 @@ export const usePalpiteService = () => {
         return response.data
     }
 
+    const ranking = async (
+        page: number = 0,
+        size: number = 10) : Promise<Page<Ranking>> => {
+        const url = `${resourceURL}/ranking?page=${page}&size=${size}`
+        const response: AxiosResponse<Page<Ranking>> = await httpClient.get(url)
+        //console.log(response.data)
+        return response.data
+    }
+
     return {
         //salvar,
         atualizar,
         carregarPalpite,
         //deletar,
-        find
+        find,
+        ranking
     }
 }
