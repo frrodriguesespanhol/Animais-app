@@ -8,7 +8,7 @@ export const Menu: React.FC = () => {
 
     return (
         
-        <aside className="column is-2 is-narrow-mobile is-fullheight is-hidden-mobile">
+        <aside className="column is-2 is-mobile is-tablet is-fullheight is-desktop">
             <p className="menu-label is-hidden-touch">
                 Copa do Mundo
             </p>
@@ -19,7 +19,7 @@ export const Menu: React.FC = () => {
                 }
                 {
                     (permissao==="adm")  &&
-                        <MenuItem href="/consultas/configuracao" label="Configuração" />
+                        <MenuItem href="/consultas/configuracao" label="Config." />
                 }
                 {
                     (permissao==="adm")  &&

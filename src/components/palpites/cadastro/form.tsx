@@ -106,8 +106,8 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                     />
                 </div>
             }
-            
-            <Stack spacing={4} direction='row'>
+
+            <div className='p-fluid'>
                 <div className='p-field'>
                     <AutoComplete    
                         disabled
@@ -124,6 +124,7 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                         {formik.errors.jogo}
                     </small>
                 </div>
+            </div>
 
                 <div className='p-field'>
                     <TextField 
@@ -136,8 +137,10 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                     </TextField>
                 </div>
 
-                <div className='label'>
-                    X
+                <div className='p-field'>
+                    <div className='label'>
+                        X
+                    </div>
                 </div>
 
                 <div className='p-field'>
@@ -151,7 +154,7 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                     </TextField>
                 </div>
 
-
+            <div className='p-fluid'>
                 <div className='p-field'>
                     <AutoComplete    
                         disabled
@@ -168,9 +171,8 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                         {formik.errors.jogo}
                     </small>
                 </div>
+            </div>
 
-            
-            </Stack>
             
             {/* <Stack spacing={2} direction='row'> */}
                 {/* <div className='p-field'>
@@ -194,7 +196,7 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                     />
                 </div>
             
-                
+            <div className='p-fluid'>
                 <div className='p-field'>
                         
                         <AutoComplete
@@ -212,6 +214,7 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                             {formik.errors.usuario}
                         </small>
                 </div>
+            </div>                
             {/* </Stack> */}
 
 

@@ -145,9 +145,9 @@ export const JogosForm: React.FC<JogosFormProps> = ({
                 </div>
             }
             
-            <Stack spacing={4} direction='row'>
+            <div className='p-fluid'>
                 <div className='p-field'>
-                    <AutoComplete    
+                    <AutoComplete
                         placeholder='Seleção 1 *'   
                         suggestions={listaSelecoes.content}
                         completeMethod={handleSelecaoAutoComplete}
@@ -156,11 +156,12 @@ export const JogosForm: React.FC<JogosFormProps> = ({
                         id="sel1"
                         name="sel1"
                         onChange={handleSelecaoChange}
-                        />
+                    />
                     <small className='p-error p-d-block'>
                         {formik.errors.sel1}
                     </small>
                 </div>
+            </div>
 
                 <div className='p-field'>
                     <TextField 
@@ -174,10 +175,13 @@ export const JogosForm: React.FC<JogosFormProps> = ({
                         >
                     </TextField>
                 </div>
-
+            
+            
+            <div className='p-field'>
                 <div className='label'>
                     X
                 </div>
+            </div>
 
                 <div className='p-field'>
                     <TextField 
@@ -192,7 +196,7 @@ export const JogosForm: React.FC<JogosFormProps> = ({
                     </TextField>
                 </div>
 
-
+            <div className='p-fluid'>    
                 <div className='p-field'>
                     <AutoComplete    
                         placeholder='Seleção 2 *'   
@@ -208,11 +212,9 @@ export const JogosForm: React.FC<JogosFormProps> = ({
                         {formik.errors.sel2}
                     </small>
                 </div>
-
+            </div>
             
-            </Stack>
-            
-            <Stack spacing={3} direction='row'>
+            <div className='p-fluid'>  
                 <div className='p-field'>
                         <AutoComplete
                             placeholder='Estádio *'   
@@ -228,11 +230,12 @@ export const JogosForm: React.FC<JogosFormProps> = ({
                             {formik.errors.estadio}
                         </small>
                 </div>
+            </div>
 
                 <div className='p-field'>
                     <TextField 
                         id='data_hora'
-                        // label='Data / Hora'
+                        label='Data / Hora'
                         //type='datetime-local'
                         value={formik.values.data_hora}
                         onChange={formik.handleChange}
@@ -257,6 +260,7 @@ export const JogosForm: React.FC<JogosFormProps> = ({
                     </LocalizationProvider>
                 </div> */}
 
+            <div className='p-fluid'>  
                 <div className='p-field'>
                         <AutoComplete
                             placeholder='Fase *'
@@ -272,7 +276,7 @@ export const JogosForm: React.FC<JogosFormProps> = ({
                             {formik.errors.fase}
                         </small>
                 </div>
-            </Stack>
+            </div>
 
 
                 <div className='field is-grouped'>

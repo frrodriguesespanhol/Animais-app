@@ -14,7 +14,7 @@ export const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
         <div className="app">
             <section className="main-content columns is-fullheight">
                 < Menu />
-                <div className="container column is-10">
+                <div className="container column is-fullheight is-mobile is-tablet is-10 is-desktop">
                     <div className="section">
                         <div className="card">
                             <div className="card-header">
