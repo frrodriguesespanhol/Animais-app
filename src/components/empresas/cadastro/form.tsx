@@ -4,7 +4,7 @@ import { useFormik } from 'formik'
 import { validationScheme } from './validationSchema'
 import Router from 'next/router'
 
-interface FaseFormProps {
+interface EmpresaFormProps {
     empresa: Empresas
     onSubmit: (empresa: Empresas) => void
 }

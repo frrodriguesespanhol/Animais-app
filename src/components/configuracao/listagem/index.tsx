@@ -16,8 +16,8 @@ import { Copa } from 'app/models/copas'
 import { useCopaService, useEmpresaService } from 'app/services'
 import { useConfiguracaoService } from 'app/services/configuracao.service'
 
-let cS_empresa: string
-let cs_copa: string
+let cS_empresa: string | undefined
+let cs_copa: string | undefined
 
 interface ConsultaConfiguracaoForm {
     empresa?: Empresas,
@@ -80,7 +80,7 @@ export const ListagemConfiguracao: React.FC<ConsultaConfiguracaoForm> = ({
         initialValues: { empresa: undefined, empresa_1: 0, copa: undefined, copa_1: 0 }
     })
 
-    const handlePage = (event: DataTablePageParams) => {
+    const handlePage = (event: DataTablePageParams | any) => {
         setLoading(true)
         console.log(cS_empresa + " - " + cs_copa)
         configuracaoService.find(cS_empresa, cs_copa, event?.page, event?.rows)
@@ -119,7 +119,9 @@ export const ListagemConfiguracao: React.FC<ConsultaConfiguracaoForm> = ({
 
     const formik = useFormik<Configuracao>({
         initialValues: {...formScheme},
-        onSubmit,
+        onSubmit(values, formikHelpers) {
+            
+        },
         enableReinitialize: true,
         //validationSchema: validationScheme
     })

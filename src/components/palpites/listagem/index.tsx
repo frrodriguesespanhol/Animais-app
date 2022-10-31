@@ -15,7 +15,7 @@ import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParam
 import { useUsuarioService } from 'app/services'
 import { Usuario } from 'app/models/usuarios'
 
-let cs_usuario: string
+let cs_usuario: string | undefined
 
 interface ConsultaPalpitesForm {
     data?: ''
@@ -70,7 +70,7 @@ export const ListagemPalpites: React.FC<ConsultaPalpitesForm>  = ({
         initialValues: { data: '', usuario: undefined, usuario_1: 0}
     })
 
-    const handlePage = (event: DataTablePageParams) => {
+    const handlePage = (event: DataTablePageParams | any) => {
         setLoading(true)
         console.log(filtro.data + " - " + cs_usuario)
         palpiteService.find(filtro.data, cs_usuario, event?.page, event?.rows)
@@ -81,7 +81,9 @@ export const ListagemPalpites: React.FC<ConsultaPalpitesForm>  = ({
 
     const formik = useFormik<ConsultaPalpitesForm>({
         initialValues: {...formScheme},
-        onSubmit,
+        onSubmit(values, formikHelpers) {
+            
+        },
         enableReinitialize: true,
         //validationSchema: validationScheme
     })

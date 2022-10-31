@@ -17,8 +17,8 @@ import { useJogoService } from 'app/services/jogos.service'
 import { Fases } from 'app/models/fases'
 import { useFaseService } from 'app/services/fases.service'
 
-let cS: string
-let cs_fase: string
+let cS: string | undefined
+let cs_fase: string | undefined
 
 interface ConsultaJogosForm {
     sel1?: Selecoes,
@@ -81,7 +81,7 @@ export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
         initialValues: { sel1: undefined, sel1_1: 0, fase: undefined, fase_1: 0 }
     })
 
-    const handlePage = (event: DataTablePageParams) => {
+    const handlePage = (event: DataTablePageParams | any) => {
         setLoading(true)
         console.log(cS + " - " + cs_fase)
         jogosService.find(cS, cs_fase, event?.page, event?.rows)
@@ -120,7 +120,9 @@ export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
 
     const formik = useFormik<Jogos>({
         initialValues: {...formScheme},
-        onSubmit,
+        onSubmit(values, formikHelpers) {
+            
+        },
         enableReinitialize: true,
         //validationSchema: validationScheme
     })

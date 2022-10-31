@@ -10,7 +10,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
     columnClasses?: string;
     error?: string;
-    formatter?: (value: string) => string;
+    formatter?: (value: string | any) => string | any;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -23,20 +23,20 @@ export const Input: React.FC<InputProps> = ({
     ...inputProps
 }: InputProps) => {
 
-    const onInputChange = (event) => {
+    const onInputChange = (event: any) => {
         const value = event.target.value;
         const name = event.target.name;
 
         const formattedValue = (formatter && formatter(value as string)) || value
 
-        onChange({
+        onChange?({
             ...event,
             target: {
                 name,
                 value: formattedValue
             }
         })
-        
+        :undefined
     }
 
     return (

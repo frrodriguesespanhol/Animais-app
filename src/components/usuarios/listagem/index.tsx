@@ -15,7 +15,7 @@ import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParam
 import { useEmpresaService } from 'app/services/empresas.service'
 import { useUsuarioService } from 'app/services/usuario.service'
 
-let cS: string
+let cS: string | undefined
 
 interface ConsultaUsuariosForm {
     nome?: string
@@ -74,7 +74,7 @@ export const ListagemUsuarios: React.FC<ConsultaUsuariosForm> = ({
         initialValues: { nome: '', email: '', senha: '', idEmpresa: undefined , id_empresa: 0, tipo: ''  }
     })
 
-    const handlePage = (event: DataTablePageParams) => {
+    const handlePage = (event: DataTablePageParams | any) => {
         setLoading(true)
         console.log(cS)
         service.find(filtro.nome, cS, event?.page, event?.rows)
@@ -113,7 +113,9 @@ export const ListagemUsuarios: React.FC<ConsultaUsuariosForm> = ({
 
     const formik = useFormik<Usuario>({
         initialValues: {...formScheme},
-        onSubmit,
+        onSubmit(values, formikHelpers) {
+            
+        },
         enableReinitialize: true,
         validationSchema: validationScheme
     })
@@ -121,7 +123,7 @@ export const ListagemUsuarios: React.FC<ConsultaUsuariosForm> = ({
     const handleEmpresaAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
         const nome = e.query
         empresaService
-            .find(nome, '', 0, 20)
+            .find(nome, 0, 20)
             .then(empresas => setListaEmpresas(empresas))
     }
 

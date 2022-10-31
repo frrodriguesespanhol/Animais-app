@@ -65,7 +65,7 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
             .then(jogos => setListaJogos(jogos))
     }
 
-    const handleJogoChange = (e: AutoCompleteChangeParams) => {
+    const handleJogoChange = (e: AutoCompleteChangeParams | any) => {
         const jogoSelecionado: Jogos = e.value
         formik.setFieldValue("jogo_sel1", jogoSelecionado)
         //console.log(jogoSelecionado)

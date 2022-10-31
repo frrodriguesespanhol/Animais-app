@@ -41,7 +41,7 @@ export const ListagemCopas: React.FC = () => {
         initialValues: { nome: '', ano: '' }
     })
 
-    const handlePage = (event: DataTablePageParams) => {
+    const handlePage = (event: DataTablePageParams | any) => {
         setLoading(true)
         service.find(filtro.nome, filtro.ano, event?.page, event?.rows)
                 .then(result => {

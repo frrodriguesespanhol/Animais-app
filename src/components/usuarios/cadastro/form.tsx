@@ -49,7 +49,7 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
     const handleEmpresaAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
         const nome = e.query
         EmpresaService
-            .find(nome, '', 0, 20)
+            .find(nome, 0, 20)
             .then(empresas => setListaEmpresas(empresas))
     }
 

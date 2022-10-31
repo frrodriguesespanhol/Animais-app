@@ -14,7 +14,7 @@ import Router from 'next/router'
 import { Cidade } from 'app/models/cidades'
 import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete'
 
-let cS: string
+let cS: string | undefined
 
 interface ConsultaCidadesForm {
     nome?: string
@@ -67,7 +67,7 @@ export const ListagemCidades: React.FC<ConsultaCidadesForm> = ({
         initialValues: { nome: '', idCopa: undefined , id_copa: 0  }
     })
 
-    const handlePage = (event: DataTablePageParams) => {
+    const handlePage = (event: DataTablePageParams | any) => {
         setLoading(true)
         console.log(cS)
         service.find(filtro.nome, cS, event?.page, event?.rows)
@@ -106,7 +106,9 @@ export const ListagemCidades: React.FC<ConsultaCidadesForm> = ({
 
     const formik = useFormik<Cidade>({
         initialValues: {...formScheme},
-        onSubmit,
+        onSubmit(values, formikHelpers) {
+            
+        },
         enableReinitialize: true,
         validationSchema: validationScheme
     })

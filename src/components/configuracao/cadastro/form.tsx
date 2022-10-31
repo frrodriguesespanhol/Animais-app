@@ -13,6 +13,7 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import { Copa } from 'app/models/copas'
 import { Empresas } from 'app/models/empresas'
+import { Configuracao } from 'app/models/configuracao'
 
 interface ConfiguracaoFormProps {
     configuracao: Configuracao
@@ -22,9 +23,9 @@ interface ConfiguracaoFormProps {
 const formScheme: Configuracao = {
     empresa: undefined,
     copa: undefined,
-    pontos_cravada: '',
-    pontos_acerto: '',
-    pontos_erro: ''
+    pontos_cravada: undefined,
+    pontos_acerto: undefined,
+    pontos_erro: undefined
 }
 
 export const ConfiguracaoForm: React.FC<ConfiguracaoFormProps> = ({

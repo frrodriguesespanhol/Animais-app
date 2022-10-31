@@ -1,6 +1,7 @@
 import { httpClient } from "app/http";
 import { AxiosResponse } from "axios";
 import { Page } from 'app/models/common/page'
+import { Configuracao } from "app/models/configuracao";
 
 
 const resourceURL: string = "/api/configuracao"

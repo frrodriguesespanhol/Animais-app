@@ -11,22 +11,22 @@ import { Page } from 'app/models/common/page'
 import { useFormik } from 'formik'
 
 export interface Ranking {
-  id?: number
   nome?: string
   pontuacao?: number,
+  cravadas?: number,
   onSubmit?: () => void
 }
 
 const formScheme: Ranking = {
-  id: undefined,
   nome: '',
-  pontuacao: undefined
+  pontuacao: undefined,
+  cravadas: undefined
 }
 
 export const Home: React.FC<Ranking> = ({
-  id,
   nome,
   pontuacao,
+  cravadas,
   onSubmit
 }) => {
 
@@ -51,12 +51,12 @@ const {
   handleChange
 } = useFormik<Ranking>({
   onSubmit: handleSubmit,
-  initialValues: { id: 0, nome: '' , pontuacao: 0  }
+  initialValues: { nome: '' , pontuacao: 0, cravadas: 0  }
 })
 
 
 
-const handlePage = (event: DataTablePageParams) => {
+const handlePage = (event: DataTablePageParams | any) => {
 setLoading(true)
 palpiteService.ranking(event?.page, event?.rows)
                 .then(result => {
@@ -78,7 +78,9 @@ const actionTemplate = () => {
 
 const formik = useFormik<Ranking>({
   initialValues: {...formScheme},
-  onSubmit,
+  onSubmit(values, formikHelpers) {
+    
+  },
   enableReinitialize: true
   //validationSchema: validationScheme
 })
@@ -138,9 +140,9 @@ const formik = useFormik<Ranking>({
                             loading={loading}
                             emptyMessage="Nenhum registro."
                             >
-                        <Column field="id" header="Código" />
-                        <Column field='nome' header="Nome" />
+                        <Column field="nome" header="Apostador" />
                         <Column field='pontuacao' header="Pontuação" />
+                        <Column field='cravadas' header="Cravadas" />
                         <Column body={actionTemplate} />
                     </DataTable>
 

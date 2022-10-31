@@ -3,9 +3,6 @@ import Providers from "next-auth/providers"
 import { Usuario } from "app/models/usuarios"
 import { AxiosResponse } from "axios"
 import { httpClient } from "app/http";
-import { Provider, session, useSession } from "next-auth/client";
-import { useState } from "react";
-
 
 const resourceURL: string = "api/usuarios/validarSenha"
 
@@ -22,8 +19,9 @@ export default NextAuth({
       async authorize(credentials, req) {
         //const user = { id: 1, name: "J Smith", email: "jsmith@example.com", empresa: "Teste-Empresa"}
         const url = `${resourceURL}?email=${credentials?.email}&senha=${credentials?.senha}`
-        const user:  AxiosResponse<Usuario> = await httpClient.get(url)
-        
+        const user:  AxiosResponse = await httpClient.get(url)
+        //const user:  AxiosResponse<Usuario> = await httpClient.get(url)
+
         //return user.data
           
         if (user) {

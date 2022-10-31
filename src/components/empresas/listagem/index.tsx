@@ -41,7 +41,7 @@ export const ListagemEmpresas: React.FC = () => {
         initialValues: { nome: '', cidade: ''}
     })
 
-    const handlePage = (event: DataTablePageParams) => {
+    const handlePage = (event: DataTablePageParams | any) => {
         setLoading(true)
         service.find(filtro.nome, event?.page, event?.rows)
                 .then(result => {

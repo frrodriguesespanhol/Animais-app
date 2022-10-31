@@ -5,6 +5,7 @@ import { Alert } from "components/common/message"
 import { useRouter } from "next/router"
 import { ConfiguracaoForm } from "./form"
 import { useConfiguracaoService } from "app/services/configuracao.service"
+import { Configuracao } from "app/models/configuracao"
 
 export const CadastroConfiguracao: React.FC = () => {
 
