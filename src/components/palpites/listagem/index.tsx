@@ -182,7 +182,10 @@ export const ListagemPalpites: React.FC<ConsultaPalpitesForm>  = ({
 
             <div className='columns'>
                 <div className='is-full'>
-                    <DataTable value={palpites.content}
+                    <DataTable autoLayout
+                            resizableColumns
+                            columnResizeMode='fit'
+                            value={palpites.content}
                             totalRecords={palpites.totalElements}
                             lazy paginator
                             first={palpites.first}
@@ -194,8 +197,8 @@ export const ListagemPalpites: React.FC<ConsultaPalpitesForm>  = ({
                         <Column field='jogo.data_hora' header="Hora Jogo" />
                         <Column field='data_hora' header="Hora Palpite" />
                         <Column field='jogo.sel1.nome' header="Seleção 1" />
-                        <Column field='gols_sel1' header="Gols Seleção 1" />
-                        <Column field='gols_sel2' header="Gols Seleção 2" />
+                        <Column field='gols_sel1' header="G1" />
+                        <Column field='gols_sel2' header="G2" />
                         <Column field='jogo.sel2.nome' header="Seleção 2" />
                         <Column field='jogo.fase.nome' header="Fase" />
                         <Column field='usuario.nome' header="Apostador" />

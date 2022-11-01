@@ -7,11 +7,11 @@ export const Menu: React.FC = () => {
     //const permissao = session?.user?.email
 
     return (
-        
-        <aside className="column is-2 is-mobile is-tablet is-fullheight is-desktop">
-            <p className="menu-label is-hidden-touch">
+
+        <aside className="column is-2">
+            {/* <p className="menu-label is-hidden-touch">
                 Copa do Mundo
-            </p>
+            </p> */}
             <ul className="menu-list">
                 {
                     (permissao==="adm" || permissao==="usu")  &&
