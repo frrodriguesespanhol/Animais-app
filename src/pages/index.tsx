@@ -54,7 +54,7 @@ const {
   handleChange
 } = useFormik<Ranking>({
   onSubmit: handleSubmit,
-  initialValues: { nome: '' , pontuacao: 0, cravadas: 0  }
+  initialValues: { seq: 0, nome: '' , pontuacao: 0, cravadas: 0  }
 })
 
 
