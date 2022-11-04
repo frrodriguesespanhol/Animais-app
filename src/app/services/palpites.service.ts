@@ -46,7 +46,7 @@ export const usePalpiteService = () => {
 
     const ranking = async (
         page: number = 0,
-        size: number = 10) : Promise<Page<Ranking>> => {
+        size: number = 0) : Promise<Page<Ranking>> => {
         const url = `${resourceURL}/ranking?page=${page}&size=${size}`
         const response: AxiosResponse<Page<Ranking>> = await httpClient.get(url)
         //console.log(response.data)
