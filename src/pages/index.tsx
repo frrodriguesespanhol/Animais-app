@@ -11,6 +11,7 @@ import { Page } from 'app/models/common/page'
 import { useFormik } from 'formik'
 
 export interface Ranking {
+  seq?: number,
   nome?: string
   pontuacao?: number,
   cravadas?: number,
@@ -18,12 +19,14 @@ export interface Ranking {
 }
 
 const formScheme: Ranking = {
+  seq: undefined,
   nome: '',
   pontuacao: undefined,
   cravadas: undefined
 }
 
 export const Home: React.FC<Ranking> = ({
+  seq,
   nome,
   pontuacao,
   cravadas,
@@ -101,15 +104,15 @@ const formik = useFormik<Ranking>({
         </h2>
         <ul>
           <li>A aposta do jogo será aceita até 20 minutos antes de seu início;</li>
-          <li>O apostador que cravar o resultado do jogo, fará 4 pontos;</li>
-          <li>O apostador que acertar pelo vencedor do jogo ou pelo empate, fará 2 pontos;</li>
+          <li>O apostador que cravar o resultado do jogo, fará 2 pontos;</li>
+          <li>O apostador que acertar pelo vencedor do jogo ou pelo empate, fará 1 ponto;</li>
           <li>O apostador que errar o resultado do jogo, não pontuará;</li>
           <li>Todos os dias de jogos o ranking geral será atualizado com a soma das pontuações;</li>
-          <li>Ao final da copa, o primeiro colocado ganhará 50% do valor arrecadado;</li>
-          <li>O segundo colocado ganhará 30% do valor arrecadado;</li>
-          <li>O terceiro colocado ganhará 20% do valor arrecadado;</li>
-          <li>Em caso de empates, não haverá desempate;</li>
-          <li>Dessa forma, o valor será dividido igualmente entre ambos;</li>
+          <li>Ao final da copa, o primeiro colocado ganhará 60% do valor arrecadado;</li>
+          <li>O segundo colocado ganhará 25% do valor arrecadado;</li>
+          <li>O terceiro colocado ganhará 15% do valor arrecadado;</li>
+          <li>Em caso de empate na pontuação, o desempate será pela quantidade de cravadas;</li>
+          <li>Mesmo assim, caso haja empate em pontuação e cravadas, o valor será dividido igualmente entre ambos;</li>
           <li>Ex.: se houver 3 apostadores empatados na segunda posição do ranking, 
               cada um levará 10% do valor arrecadado, pois 30% / 3 = 10%;</li>
           <li>Não haverá prêmio de consolação para o último colocado;</li>
@@ -140,6 +143,7 @@ const formik = useFormik<Ranking>({
                             loading={loading}
                             emptyMessage="Nenhum registro."
                             >
+                        <Column field="seq" header="Colocação" />      
                         <Column field="nome" header="Apostador" />
                         <Column field='pontuacao' header="Pontuação" />
                         <Column field='cravadas' header="Cravadas" />

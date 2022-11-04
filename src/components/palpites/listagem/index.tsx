@@ -8,7 +8,7 @@ import { Page } from 'app/models/common/page'
 import Router from 'next/router'
 import { usePalpiteService } from 'app/services/palpites.service'
 import { Palpites } from 'app/models/palpites'
-import { TextField } from '@mui/material'
+import { InputProps, TextField } from '@mui/material'
 import { Input } from 'components'
 import { useSession } from 'next-auth/client'
 import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete'
@@ -56,6 +56,7 @@ export const ListagemPalpites: React.FC<ConsultaPalpitesForm>  = ({
         size: 0,
         totalElements: 0
     })
+
     
     const handleSubmit = (filtro: ConsultaPalpitesForm) => {
         handlePage(null)
@@ -102,7 +103,7 @@ export const ListagemPalpites: React.FC<ConsultaPalpitesForm>  = ({
         console.log(usuarioSelecionado)
     }
 
-
+    
     const actionTemplate = (registro: Palpites) => {
         const url = `/cadastros/palpites?id=${registro.id}`
         const logado = session?.user?.email===registro.usuario?.email

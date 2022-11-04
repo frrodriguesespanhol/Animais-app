@@ -19,7 +19,7 @@ export const Input: React.FC<InputProps> = ({
     id,
     error,
     formatter,
-    onChange,
+    //onChange,
     ...inputProps
 }: InputProps) => {
 
@@ -29,14 +29,14 @@ export const Input: React.FC<InputProps> = ({
 
         const formattedValue = (formatter && formatter(value as string)) || value
 
-        onChange?({
-            ...event,
-            target: {
-                name,
-                value: formattedValue
-            }
-        })
-        :undefined
+        // onChange?({
+        //     ...event,
+        //     target: {
+        //         name,
+        //         value: formattedValue
+        //     }
+        // })
+        // :undefined
     }
 
     return (

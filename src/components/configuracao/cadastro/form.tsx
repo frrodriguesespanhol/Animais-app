@@ -103,7 +103,7 @@ export const ConfiguracaoForm: React.FC<ConfiguracaoFormProps> = ({
                 </div>
             }
             
-            <Stack spacing={4} direction='row'>
+            <div className='p-fluid'>
                 <div className='p-field'>
                     <AutoComplete    
                         placeholder='Empresa *'   
@@ -119,7 +119,9 @@ export const ConfiguracaoForm: React.FC<ConfiguracaoFormProps> = ({
                         {formik.errors.empresa}
                     </small>
                 </div>
+            </div>
 
+            <div className='p-fluid'>
                 <div className='p-field'>
                     <AutoComplete    
                         placeholder='Copa *'   
@@ -135,7 +137,8 @@ export const ConfiguracaoForm: React.FC<ConfiguracaoFormProps> = ({
                         {formik.errors.copa}
                     </small>
                 </div>
-
+            </div>
+            
                 <div className='p-field'>
                     <TextField 
                         //size='small'
@@ -148,6 +151,8 @@ export const ConfiguracaoForm: React.FC<ConfiguracaoFormProps> = ({
                         >
                     </TextField>
                 </div>
+            
+
 
                 <div className='p-field'>
                     <TextField 
@@ -160,6 +165,8 @@ export const ConfiguracaoForm: React.FC<ConfiguracaoFormProps> = ({
                     </TextField>
                 </div>
 
+
+            
                 <div className='p-field'>
                     <TextField 
                         id='pontos_erro'
@@ -171,7 +178,8 @@ export const ConfiguracaoForm: React.FC<ConfiguracaoFormProps> = ({
                     </TextField>
                 </div>
             
-            </Stack>
+            
+
             
             <div className='field is-grouped'>
                 <div className='control is-link'>
