@@ -108,9 +108,10 @@ const formik = useFormik<Ranking>({
           <li>O apostador que acertar pelo vencedor do jogo ou pelo empate, fará 1 ponto;</li>
           <li>O apostador que errar o resultado do jogo, não pontuará;</li>
           <li>Todos os dias de jogos o ranking geral será atualizado com a soma das pontuações;</li>
-          <li>Ao final da copa, o primeiro colocado ganhará 60% do valor arrecadado;</li>
-          <li>O segundo colocado ganhará 25% do valor arrecadado;</li>
-          <li>O terceiro colocado ganhará 15% do valor arrecadado;</li>
+          <li>Do valor total arrecadado, +- R$ 30,00 será utilizado para pagar a hospedagem do aplicativo, o valor restante (valor total líquido) será dividido entre os vencedores;</li>
+          <li>Ao final da copa, o primeiro colocado ganhará 60% do valor total líquido ;</li>
+          <li>O segundo colocado ganhará 25% do valor total líquido;</li>
+          <li>O terceiro colocado ganhará 15% do valor total líquido;</li>
           <li>Em caso de empate na pontuação, o desempate será pela quantidade de cravadas;</li>
           <li>Mesmo assim, caso haja empate em pontuação e cravadas, o valor será dividido igualmente entre ambos;</li>
           <li>Ex.: se houver 3 apostadores empatados na segunda posição do ranking, 
@@ -134,7 +135,10 @@ const formik = useFormik<Ranking>({
         </div>
         <div className='columns'>
                 <div className='is-full'>
-                    <DataTable value={palpites.content}
+                    <DataTable autoLayout
+                            resizableColumns
+                            columnResizeMode='fit'
+                            value={palpites.content}
                             lazy paginator
                             totalRecords={palpites.totalElements}
                             first={palpites.first}
