@@ -12,7 +12,7 @@ export default NextAuth({
       name: "Bolão Copa Jahu",
 
       credentials: {
-        email: { label: "E-mail", type: "text ", placeholder: "" },
+        email: { label: "Usuário", type: "text ", placeholder: "" },
         senha: { label: "Senha", type: "password" },
       },
 
