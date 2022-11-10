@@ -113,9 +113,9 @@ const formik = useFormik<Ranking>({
           <li>O segundo colocado ganhará 25% do valor total líquido;</li>
           <li>O terceiro colocado ganhará 15% do valor total líquido;</li>
           <li>Em caso de empate na pontuação, o desempate será pela quantidade de cravadas;</li>
-          <li>Mesmo assim, caso haja empate em pontuação e cravadas, o valor será dividido igualmente entre ambos;</li>
-          <li>Ex.: se houver 3 apostadores empatados na segunda posição do ranking, 
-              cada um levará 10% do valor arrecadado, pois 30% / 3 = 10%;</li>
+          <li>Mesmo assim, caso haja empate em pontuação e cravadas (isso vale para as 3 primeiras posições), o valor será dividido igualmente entre ambos;</li>
+          <li>Ex.: se houver 3 apostadores empatados na primeira posição do ranking, 
+              cada um levará 20% do valor líquido, pois 60% / 3 = 20%;</li>
           <li>Não haverá prêmio de consolação para o último colocado;</li>
           <li>Para palpitar, acesse o menu Palpites, escolha a data de um jogo (se desejar), 
               escolha seu nome em Usuário e Consulte, depois clique no botão Palpitar 
