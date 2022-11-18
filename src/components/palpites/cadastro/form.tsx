@@ -12,11 +12,18 @@ import { Palpites } from 'app/models/palpites'
 import { useJogoService } from 'app/services/jogos.service'
 import { Usuario } from 'app/models/usuarios'
 import { useUsuarioService } from 'app/services'
+import { usePalpiteService } from 'app/services/palpites.service'
 
 interface PalpitesFormProps {
     palpites: Palpites
     onSubmit: (palpites: Palpites) => void
 }
+
+interface proximoJogo {
+    data: Date
+    usuario: string 
+}
+
 
 const formScheme: Palpites = {
     jogo: undefined,
@@ -37,6 +44,17 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
         enableReinitialize: true,
         // validationSchema: validationScheme
     })
+
+    const palpiteService = usePalpiteService()
+    const [ loading, setLoading ] = useState<boolean>(false)
+    const [ palpites_, setPalpites_ ] = useState<Page<Palpites>>({
+        content: [],
+        first: 0,
+        number: 0,
+        size: 0,
+        totalElements: 0
+    })
+
 
     const jogoService = useJogoService()
 
@@ -91,6 +109,17 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
     }
 
     const [valueData, setValueData] = useState<Date | null>(null)
+
+
+    const procuraProximoJogo = (parametros: proximoJogo) => {
+        setLoading(true)
+        palpiteService.proximoJogo(formik.values.jogo?.data_hora, formik.values.usuario?.id)
+                        .then(result => {
+                            setPalpites_({...result, first: 0 })
+                        }).finally(() => setLoading(false))
+                        console.log(palpites_.content)
+                      }
+
 
     return (
         <form onSubmit={formik.handleSubmit}>
@@ -224,7 +253,16 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                             { formik.values.id ? "Atualizar" : "Salvar" }
                         </button>
                     </div>
-                    
+
+                    {/* <div className='control is-link'>
+                        <button type='button'
+                                // onClick={e => Router.push("/consultas/palpites")}
+                                onClick={e => procuraProximoJogo }
+                                className='button is-info'>
+                            Apostar no próximo
+                        </button>
+                    </div> */}
+
                     <div className='control is-link'>
                         <button type='button'
                                 onClick={e => Router.push("/consultas/palpites")}
