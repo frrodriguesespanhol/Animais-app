@@ -15,6 +15,7 @@ export interface Ranking {
   nome?: string
   pontuacao?: number,
   cravadas?: number,
+  colocacao?: number,
   onSubmit?: () => void
 }
 
@@ -22,7 +23,8 @@ const formScheme: Ranking = {
   seq: undefined,
   nome: '',
   pontuacao: undefined,
-  cravadas: undefined
+  cravadas: undefined,
+  colocacao: undefined
 }
 
 export const Home: React.FC<Ranking> = ({
@@ -30,6 +32,7 @@ export const Home: React.FC<Ranking> = ({
   nome,
   pontuacao,
   cravadas,
+  colocacao,
   onSubmit
 }) => {
 
@@ -54,7 +57,7 @@ const {
   handleChange
 } = useFormik<Ranking>({
   onSubmit: handleSubmit,
-  initialValues: { seq: 0, nome: '' , pontuacao: 0, cravadas: 0  }
+  initialValues: { seq: 0, nome: '' , pontuacao: 0, cravadas: 0, colocacao: 0 }
 })
 
 
@@ -147,7 +150,7 @@ const formik = useFormik<Ranking>({
                             loading={loading}
                             emptyMessage="Nenhum registro."
                             >
-                        <Column field="seq" header="Colocação" />      
+                        <Column field="colocacao" header="Colocação" />      
                         <Column field="nome" header="Apostador" />
                         <Column field='pontuacao' header="Pontuação" />
                         <Column field='cravadas' header="Cravadas" />
