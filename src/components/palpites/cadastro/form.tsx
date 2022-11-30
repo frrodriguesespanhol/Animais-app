@@ -263,7 +263,7 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                             onClick={event => {
                             setLoading(true)
                             console.log('entrou')
-                            palpiteService.proximoJogo(formik.values.jogo?.data_hora, formik.values.usuario?.id, formik.values.id)
+                            palpiteService.proximoJogo(formik.values.jogo?.data_hora, formik.values.usuario?.id, formik.values.jogo?.id)
                             .then(result => {
                                 setPalpites_({...result, first: 0 })
                                 if ( result.content.length > 0 ) {
