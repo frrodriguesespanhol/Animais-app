@@ -216,7 +216,10 @@ export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
 
             <div className='columns'>
                 <div className='is-full'>
-                    <DataTable value={jogos.content}
+                    <DataTable autoLayout
+                            resizableColumns
+                            columnResizeMode='fit'
+                            value={jogos.content}
                             totalRecords={jogos.totalElements}
                             lazy paginator
                             first={jogos.first}

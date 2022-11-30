@@ -13,6 +13,8 @@ import { useJogoService } from 'app/services/jogos.service'
 import { Usuario } from 'app/models/usuarios'
 import { useUsuarioService } from 'app/services'
 import { usePalpiteService } from 'app/services/palpites.service'
+import { resourceLimits } from 'worker_threads'
+import { Alert } from 'components/common/message'
 
 interface PalpitesFormProps {
     palpites: Palpites
@@ -22,10 +24,12 @@ interface PalpitesFormProps {
 interface proximoJogo {
     data: Date
     usuario: string 
+    id: string
 }
 
 
 const formScheme: Palpites = {
+    id: undefined,
     jogo: undefined,
     data_hora: undefined,
     gols_sel1: '',
@@ -45,6 +49,7 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
         // validationSchema: validationScheme
     })
 
+    const [ messages, setMessages ] = useState<Array<Alert>>([])
     const palpiteService = usePalpiteService()
     const [ loading, setLoading ] = useState<boolean>(false)
     const [ palpites_, setPalpites_ ] = useState<Page<Palpites>>({
@@ -109,16 +114,6 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
     }
 
     const [valueData, setValueData] = useState<Date | null>(null)
-
-
-    const procuraProximoJogo = (parametros: proximoJogo) => {
-        setLoading(true)
-        palpiteService.proximoJogo(formik.values.jogo?.data_hora, formik.values.usuario?.id)
-                        .then(result => {
-                            setPalpites_({...result, first: 0 })
-                        }).finally(() => setLoading(false))
-                        console.log(palpites_.content)
-                      }
 
 
     return (
@@ -256,12 +251,39 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
 
                     {/* <div className='control is-link'>
                         <button type='button'
-                                // onClick={e => Router.push("/consultas/palpites")}
-                                onClick={e => procuraProximoJogo }
+                                onClick={e => Router.push("/cadastros/palpites?id=")}
+                                //onClick={e => procuraProximoJogo }
                                 className='button is-info'>
                             Apostar no próximo
                         </button>
                     </div> */}
+
+                    <div className='control is-link'>
+                    <button type="button"
+                            onClick={event => {
+                            setLoading(true)
+                            console.log('entrou')
+                            palpiteService.proximoJogo(formik.values.jogo?.data_hora, formik.values.usuario?.id, formik.values.id)
+                            .then(result => {
+                                setPalpites_({...result, first: 0 })
+                                if ( result.content.length > 0 ) {
+                                    const aaa = result.content.map(id=> {
+                                        return (id.id)
+                                    })
+                                    const id_ok = aaa.find(id_ok => id_ok )
+                                    console.log(id_ok) // acertar aqui
+                                    Router.push("/cadastros/palpites?id=" + id_ok)
+                                } else {
+                                    alert("Não existem jogos para palpite posterior a esse!")
+                                }
+                            }).finally(() => setLoading(false))
+                                
+                            }
+                        }
+                        className='button is-info'>
+                            Apostar no próximo
+                    </button>
+                    </div>
 
                     <div className='control is-link'>
                         <button type='button'
