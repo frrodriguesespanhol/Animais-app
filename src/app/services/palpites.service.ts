@@ -58,8 +58,10 @@ export const usePalpiteService = () => {
         usuario: string = '',
         id: string = '',
         page: number = 0,
-        size: number = 10) : Promise<Page<Palpites>> => {
-        const url = `${resourceURL}/proximo?data=${data}&usuario=${usuario}&id=${id}&page=${page}&size=${size}`
+        size: number = 90) : Promise<Page<Palpites>> => {
+        const dataf = data?.toString().substring(6,10) + '-' + data?.toString().substring(3,5) + '-' + data?.toString().substring(0,2)
+        console.log(dataf)
+        const url = `${resourceURL}/proximo?data=${dataf}&usuario=${usuario}&id=${id}&page=${page}&size=${size}`
         const response: AxiosResponse<Page<Palpites>> = await httpClient.get(url)
         return response.data
     }
