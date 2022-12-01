@@ -115,6 +115,15 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
 
     const [valueData, setValueData] = useState<Date | null>(null)
 
+    var gols1 = formik.values.gols_sel1
+    if (gols1 === null){
+        gols1 = ''
+    }
+    
+    var gols2 = formik.values.gols_sel2
+    if (gols2 === null){
+        gols2 = ''
+    }
 
     return (
         <form onSubmit={formik.handleSubmit}>
@@ -130,7 +139,7 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                     />
                 </div>
             }
-
+            
             <div className='p-fluid'>
                 <div className='p-field'>
                     <AutoComplete    
@@ -155,7 +164,8 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                         id='gols_sel1'
                         label='Gols'
                         type='number'
-                        value={formik.values.gols_sel1}
+                        //value={formik.values.gols_sel1}
+                        value={gols1}
                         onChange={formik.handleChange}
                         >
                     </TextField>
@@ -172,7 +182,8 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                         id='gols_sel2'
                         label='Gols'
                         type='number'
-                        value={formik.values.gols_sel2}
+                        //value={formik.values.gols_sel2}
+                        value={gols2}
                         onChange={formik.handleChange}
                         >
                     </TextField>
@@ -216,7 +227,7 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                         autoComplete='off'
                         disabled
                         columnClasses='is-half'
-                        value={formik.values.data_hora}
+                        value = {formik.values.data_hora || ''}
                     />
                 </div>
             
@@ -262,7 +273,7 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                     <button type="button"
                             onClick={event => {
                             setLoading(true)
-                            console.log('entrou')
+                            //console.log('entrou')
                             palpiteService.proximoJogo(formik.values.jogo?.data_hora, formik.values.usuario?.id, formik.values.jogo?.id)
                             .then(result => {
                                 setPalpites_({...result, first: 0 })
@@ -271,7 +282,7 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                                         return (id.id)
                                     })
                                     const id_ok = aaa.find(id_ok => id_ok )
-                                    console.log(id_ok) // acertar aqui
+                                    //console.log(id_ok) 
                                     Router.push("/cadastros/palpites?id=" + id_ok)
                                 } else {
                                     alert("Não existem jogos para palpite posterior a esse!")
@@ -285,15 +296,17 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                     </button>
                     </div>
 
-                    <div className='control is-link'>
+                </div>
+
+                <div className='control is-link'>
                         <button type='button'
                                 onClick={e => Router.push("/consultas/palpites")}
                                 className='button'>
                             Voltar
                         </button>
-                    </div>
                 </div>
            
         </form>
+
     )
 }

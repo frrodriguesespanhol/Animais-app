@@ -15,16 +15,23 @@ export const CadastroPalpites: React.FC = () => {
     const router = useRouter()
     const { id } = router.query
 
+    let controle=0
+
     useEffect( () => {
         if(id){
+            controle = 1
+            console.log(controle)
             service.carregarPalpite(id)
                 .then(palpiteEncontrado => setPalpites(palpiteEncontrado) )
         }
     }, [id] )
 
     const handleSubmit = (palpites: Palpites) => {
+
+        console.log(controle)
         
         if(palpites.id){
+            console.log(controle)
             service.atualizar(palpites).then(response => {
                 if (response == "") {
                     //setPalpites()
@@ -37,6 +44,7 @@ export const CadastroPalpites: React.FC = () => {
                         tipo: "warning", texto: "O período de apostas para esse jogo já se encerrou!"
                     }])
                 }
+
             })
         } else {
             // service.salvar(jogos)   // apenas altera
@@ -48,10 +56,20 @@ export const CadastroPalpites: React.FC = () => {
             //         })
         }
     }
+    
+    console.log(controle)
 
-    return (
-        <Layout titulo="Palpites" mensagens={messages}>
-            <PalpitesForm palpites={palpite} onSubmit={handleSubmit} />
-        </Layout>
-    )
+    if (controle==0){
+        return (
+            <Layout titulo="Palpites" mensagens={messages}>
+                <PalpitesForm palpites={palpite} onSubmit={handleSubmit} />
+            </Layout>
+        )
+    }else{
+        return (
+            <Layout titulo="Palpites">
+                <PalpitesForm palpites={palpite} onSubmit={handleSubmit} />
+            </Layout>
+        )
+    }
 }
