@@ -106,6 +106,7 @@ const formik = useFormik<Ranking>({
           Regras Gerais
         </h2>
         <ul>
+          <li><b>Em jogos eliminatórios (das oitavas de final pra frente), vale o placar do jogo ao término da prorrogação, caso haja.</b></li>
           <li>A aposta do jogo será aceita até 20 minutos antes de seu início;</li>
           <li>O apostador que cravar o resultado do jogo, fará 2 pontos;</li>
           <li>O apostador que acertar pelo vencedor do jogo ou pelo empate, fará 1 ponto;</li>
