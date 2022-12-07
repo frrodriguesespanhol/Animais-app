@@ -15,26 +15,22 @@ export const CadastroPalpites: React.FC = () => {
     const router = useRouter()
     const { id } = router.query
 
-    let controle=0
-
     useEffect( () => {
         if(id){
-            controle = 1
-            console.log(controle)
+            setMessages([{
+                tipo: "primary", texto: "Este é o próximo jogo para palpitar!"
+            }])
             service.carregarPalpite(id)
                 .then(palpiteEncontrado => setPalpites(palpiteEncontrado) )
         }
     }, [id] )
 
     const handleSubmit = (palpites: Palpites) => {
-
-        console.log(controle)
         
         if(palpites.id){
-            console.log(controle)
             service.atualizar(palpites).then(response => {
+                //console.log('atualizar')
                 if (response == "") {
-                    //setPalpites()
                     setMessages([{
                         tipo: "success", texto: "Palpite atualizado com sucesso!"
                     }])
@@ -46,7 +42,7 @@ export const CadastroPalpites: React.FC = () => {
                 }
 
             })
-        } else {
+        } else {            
             // service.salvar(jogos)   // apenas altera
             //         .then(jogoSalvo => {
             //             setJogos(jogoSalvo)
@@ -57,19 +53,11 @@ export const CadastroPalpites: React.FC = () => {
         }
     }
     
-    console.log(controle)
 
-    if (controle==0){
         return (
             <Layout titulo="Palpites" mensagens={messages}>
                 <PalpitesForm palpites={palpite} onSubmit={handleSubmit} />
             </Layout>
         )
-    }else{
-        return (
-            <Layout titulo="Palpites">
-                <PalpitesForm palpites={palpite} onSubmit={handleSubmit} />
-            </Layout>
-        )
-    }
+
 }

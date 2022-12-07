@@ -69,7 +69,7 @@ palpiteService.ranking(event?.page, event?.rows)
                     setPalpites({...result, first: event?.first})
                 }).finally(() => setLoading(false))
   
-                console.log(palpites.content)
+                //console.log(palpites.content)
               }
 
 const actionTemplate = () => {
