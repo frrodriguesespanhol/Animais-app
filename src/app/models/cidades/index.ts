@@ -1,7 +1,7 @@
-import { Copa } from "app/models/copas"
+import { Campeonato } from "app/models/campeonatos"
 
 export interface Cidade {
     id?: string
     nome?: string
-    idCopa?: Copa
+    idCampeonato?: Campeonato
 }

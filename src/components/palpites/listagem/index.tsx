@@ -197,10 +197,10 @@ export const ListagemPalpites: React.FC<ConsultaPalpitesForm>  = ({
                             >
                         <Column field='jogo.data_hora' header="Hora Jogo" />
                         <Column field='data_hora' header="Hora Palpite" />
-                        <Column field='jogo.sel1.nome' header="Seleção 1" />
-                        <Column field='gols_sel1' header="G1" />
-                        <Column field='gols_sel2' header="G2" />
-                        <Column field='jogo.sel2.nome' header="Seleção 2" />
+                        <Column field='jogo.eq1.nome' header="Equipe 1" />
+                        <Column field='gols_eq1' header="G1" />
+                        <Column field='gols_eq2' header="G2" />
+                        <Column field='jogo.eq2.nome' header="Equipe 2" />
                         <Column field='jogo.fase.nome' header="Fase" />
                         <Column field='usuario.nome' header="Apostador" />
                         <Column body={actionTemplate} />

@@ -3,12 +3,12 @@ import { Input } from 'components'
 import { useFormik, useFormikContext, validateYupSchema } from 'formik'
 import { validationScheme } from './validationSchema'
 import Router from 'next/router'
-import { useCidadeService, useEstadioService, useSelecaoService } from 'app/services'
+import { useCidadeService, useEstadioService, useEquipeService } from 'app/services'
 import { useState } from 'react'
 import { Page } from 'app/models/common/page'
 import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete'
 import { Jogos } from 'app/models/jogos'
-import { Selecoes } from 'app/models/selecoes'
+import { Equipes } from 'app/models/equipes'
 import { useFaseService } from 'app/services/fases.service'
 import { Fases } from 'app/models/fases'
 
@@ -28,8 +28,8 @@ interface JogosFormProps {
 }
 
 const formScheme: Jogos = {
-    sel1: undefined,
-    sel2: undefined,
+    eq1: undefined,
+    eq2: undefined,
     gols1: '',
     gols2: '',
     estadio: undefined,
@@ -49,9 +49,9 @@ export const JogosForm: React.FC<JogosFormProps> = ({
         // validationSchema: validationScheme
     })
 
-    const selecaoService = useSelecaoService()
+    const EquipeService = useEquipeService()
 
-    const [ listaSelecoes, setListaSelecoes ] = useState<Page<Selecoes>>({
+    const [ listaEquipes, setListaEquipes ] = useState<Page<Equipes>>({
         content: [],
         first: 0,
         number: 0,
@@ -79,25 +79,25 @@ export const JogosForm: React.FC<JogosFormProps> = ({
         totalElements: 0
     })
 
-    const handleSelecaoAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
+    const handleEquipeAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
         const nome = e.query
-        selecaoService
+        equipeService
             .find(nome, 0, 20)
-            .then(selecoes => setListaSelecoes(selecoes))
+            .then(equipes => setListaEquipes(equipes))
             //console.log(listaSelecoes.content)
 
     }
 
-    const handleSelecaoChange = (e: AutoCompleteChangeParams) => {
-        const selecaoSelecionada: Selecoes = e.value
-        formik.setFieldValue("sel1", selecaoSelecionada)
-        console.log(selecaoSelecionada)
+    const handleEquipeChange = (e: AutoCompleteChangeParams) => {
+        const equipeSelecionada: Equipes = e.value
+        formik.setFieldValue("eq1", equipeSelecionada)
+        console.log(equipeSelecionada)
     }
 
-    const handleSelecaoChange2 = (e: AutoCompleteChangeParams) => {
-        const selecaoSelecionada: Selecoes = e.value
-        formik.setFieldValue("sel2", selecaoSelecionada)
-        console.log(selecaoSelecionada)
+    const handleEquipeChange2 = (e: AutoCompleteChangeParams) => {
+        const equipeSelecionada: Equipes = e.value
+        formik.setFieldValue("eq2", equipeSelecionada)
+        console.log(equipeSelecionada)
     }
 
     const handleEstadioAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
@@ -148,17 +148,17 @@ export const JogosForm: React.FC<JogosFormProps> = ({
             <div className='p-fluid'>
                 <div className='p-field'>
                     <AutoComplete
-                        placeholder='Seleção 1 *'   
-                        suggestions={listaSelecoes.content}
-                        completeMethod={handleSelecaoAutoComplete}
-                        value={formik.values.sel1}
+                        placeholder='Equipe 1 *'   
+                        suggestions={listaEquipes.content}
+                        completeMethod={handleEquipeAutoComplete}
+                        value={formik.values.eq1}
                         field="nome"
-                        id="sel1"
-                        name="sel1"
-                        onChange={handleSelecaoChange}
+                        id="eq1"
+                        name="eq1"
+                        onChange={handleEquipeChange}
                     />
                     <small className='p-error p-d-block'>
-                        {formik.errors.sel1}
+                        {formik.errors.eq1}
                     </small>
                 </div>
             </div>
@@ -199,17 +199,17 @@ export const JogosForm: React.FC<JogosFormProps> = ({
             <div className='p-fluid'>    
                 <div className='p-field'>
                     <AutoComplete    
-                        placeholder='Seleção 2 *'   
-                        suggestions={listaSelecoes.content}
-                        completeMethod={handleSelecaoAutoComplete}
-                        value={formik.values.sel2}
+                        placeholder='Equipe 2 *'   
+                        suggestions={listaEquipes.content}
+                        completeMethod={handleEquipeAutoComplete}
+                        value={formik.values.eq2}
                         field="nome"
-                        id="sel2"
-                        name="sel2"
-                        onChange={handleSelecaoChange2}
+                        id="eq2"
+                        name="eq2"
+                        onChange={handleEquipeChange2}
                         />
                     <small className='p-error p-d-block'>
-                        {formik.errors.sel2}
+                        {formik.errors.eq2}
                     </small>
                 </div>
             </div>

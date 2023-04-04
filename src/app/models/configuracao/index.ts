@@ -1,10 +1,10 @@
 import { Empresas } from '../empresas'
-import { Copa } from '../copas'
+import { Campeonato } from '../campeonatos'
 
 export interface Configuracao {
     id?: string
     empresa?: Empresas
-    copa?: Copa
+    campeonato?: Campeonato
     pontos_cravada?: number
     pontos_acerto?: number
     pontos_erro?: number

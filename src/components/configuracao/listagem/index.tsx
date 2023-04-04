@@ -12,31 +12,31 @@ import Router from 'next/router'
 import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete'
 import { Empresas } from 'app/models/empresas'
 import { Configuracao } from 'app/models/configuracao'
-import { Copa } from 'app/models/copas'
-import { useCopaService, useEmpresaService } from 'app/services'
+import { Campeonato } from 'app/models/campeonatos'
+import { useCampeonatoService, useEmpresaService } from 'app/services'
 import { useConfiguracaoService } from 'app/services/configuracao.service'
 
 let cS_empresa: string | undefined
-let cs_copa: string | undefined
+let cs_campeonato: string | undefined
 
 interface ConsultaConfiguracaoForm {
     empresa?: Empresas,
     empresa_1?: number,
-    copa?: Copa,
-    copa_1?: number,
+    campeonato?: Campeonato,
+    campeonato_1?: number,
     onSubmit?: (configuracao: Configuracao) => void
 }
 
 const formScheme: Configuracao = {
     empresa: undefined,
-    copa: undefined
+    campeonato: undefined
 }
 
 export const ListagemConfiguracao: React.FC<ConsultaConfiguracaoForm> = ({
         empresa,
         empresa_1,
-        copa,
-        copa_1,
+        campeonato,
+        campeonato_1,
         onSubmit
     }) => {
 
@@ -49,8 +49,8 @@ export const ListagemConfiguracao: React.FC<ConsultaConfiguracaoForm> = ({
         totalElements: 0
     })
 
-    const copaService = useCopaService()
-    const [ listaCopas, setListaCopas ] = useState<Page<Copa>>({
+    const campeonatoService = useCampeonatoService()
+    const [ listaCampeonatos, setListaCampeonatos ] = useState<Page<Campeonato>>({
         content: [],
         first: 0,
         number: 0,
@@ -77,13 +77,13 @@ export const ListagemConfiguracao: React.FC<ConsultaConfiguracaoForm> = ({
         values: filtro,
     } = useFormik<ConsultaConfiguracaoForm>({
         onSubmit: handleSubmit,
-        initialValues: { empresa: undefined, empresa_1: 0, copa: undefined, copa_1: 0 }
+        initialValues: { empresa: undefined, empresa_1: 0, campeonato: undefined, campeonato_1: 0 }
     })
 
     const handlePage = (event: DataTablePageParams | any) => {
         setLoading(true)
-        console.log(cS_empresa + " - " + cs_copa)
-        configuracaoService.find(cS_empresa, cs_copa, event?.page, event?.rows)
+        console.log(cS_empresa + " - " + cs_campeonato)
+        configuracaoService.find(cS_empresa, cs_campeonato, event?.page, event?.rows)
                 .then(result => {
                     setConfiguracao({...result, first: event?.first})
                 }).finally(() => setLoading(false))
@@ -140,18 +140,18 @@ export const ListagemConfiguracao: React.FC<ConsultaConfiguracaoForm> = ({
         console.log(empresaSelecionada)
     }
 
-    const handleCopaAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
+    const handleCampeonatoAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
         const nome = e.query
-        copaService
+        campeonatoService
             .find(nome, '', 0, 20)
-            .then(copas => setListaCopas(copas))
+            .then(campeonatos => setListaCampeonatos(campeonatos))
     }
 
-    const handleCopaChange = (e: AutoCompleteChangeParams) => {
-        const copaSelecionada: Copa = e.value
-        formik.setFieldValue("copa", copaSelecionada)
-        cs_copa = copaSelecionada.id
-        console.log(copaSelecionada)
+    const handleCampeonatoChange = (e: AutoCompleteChangeParams) => {
+        const campeonatoSelecionado: Campeonato = e.value
+        formik.setFieldValue("campeonato", campeonatoSelecionado)
+        cs_campeonato = campeonatoSelecionado.id
+        console.log(campeonatoSelecionado)
     }
 
 
@@ -178,18 +178,18 @@ export const ListagemConfiguracao: React.FC<ConsultaConfiguracaoForm> = ({
                 </div>
 
                 <div className='p-field'>
-                    <label htmlFor="copa">Copa: *</label>
+                    <label htmlFor="campeonato">Campeonato: *</label>
                     <AutoComplete
-                        suggestions={listaCopas.content}
-                        completeMethod={handleCopaAutoComplete}
-                        value={formik.values.copa}
+                        suggestions={listaCampeonatos.content}
+                        completeMethod={handleCampeonatoAutoComplete}
+                        value={formik.values.campeonato}
                         field="nome"
-                        id="copa"
-                        name="copa"
-                        onChange={handleCopaChange}
+                        id="campeonato"
+                        name="campeonato"
+                        onChange={handleCampeonatoChange}
                         />
                     <small className='p-error p-d-block'>
-                        {formik.errors.copa}
+                        {formik.errors.campeonato}
                     </small>
             
                 </div>
@@ -225,7 +225,7 @@ export const ListagemConfiguracao: React.FC<ConsultaConfiguracaoForm> = ({
                             emptyMessage="Nenhum registro."
                             >
                         <Column field='empresa.nome' header="Empresa" />
-                        <Column field='copa.nome' header="Copa" />
+                        <Column field='campeonato.nome' header="Campeonato" />
                         <Column field='pontos_cravada' header="Pontos - Cravada" />
                         <Column field='pontos_acerto' header="Pontos - Acerto" />
                         <Column field='pontos_erro' header="Pontos - Erro" />

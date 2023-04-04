@@ -6,8 +6,8 @@ const campoObrigatorioEmLista = Yup.object().nullable(true).required(campoObriga
 
 export const validationScheme = Yup.object().shape({
 
-    sel1: campoObrigatorioEmLista,
-    sel2: campoObrigatorioEmLista,
+    eq1: campoObrigatorioEmLista,
+    eq2: campoObrigatorioEmLista,
     cidade: campoObrigatorioEmLista,
     data_hora: campoObrigatorioValidation,
     fase: campoObrigatorioEmLista

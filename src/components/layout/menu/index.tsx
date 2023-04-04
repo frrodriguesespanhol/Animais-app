@@ -10,7 +10,7 @@ export const Menu: React.FC = () => {
 
         <aside className="column is-2">
             {/* <p className="menu-label is-hidden-touch">
-                Copa do Mundo
+                Campeonato Brasileiro
             </p> */}
             <ul className="menu-list">
                 {
@@ -23,7 +23,7 @@ export const Menu: React.FC = () => {
                 }
                 {
                     (permissao==="adm")  &&
-                        <MenuItem href="/consultas/copas" label="Copas" />
+                        <MenuItem href="/consultas/campeonatos" label="Campeonatos" />
                 }
                 {
                     (permissao==="adm")  &&
@@ -35,7 +35,7 @@ export const Menu: React.FC = () => {
                 }
                 {
                     (permissao==="adm")  &&
-                        <MenuItem href="/consultas/selecoes" label="Seleções" />
+                        <MenuItem href="/consultas/equipes" label="Equipes" />
                 }
                 {
                     (permissao==="adm")  &&

@@ -2,16 +2,16 @@ import { Input } from 'components'
 import { useFormik, useFormikContext, validateYupSchema } from 'formik'
 import { validationScheme } from './validationSchema'
 import Router from 'next/router'
-import { useCidadeService, useCopaService, useEmpresaService, useEstadioService, useSelecaoService } from 'app/services'
+import { useCidadeService, useCampeonatoService, useEmpresaService, useEstadioService, useEquipeService } from 'app/services'
 import { useState } from 'react'
 import { Page } from 'app/models/common/page'
 import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete'
 import { Jogos } from 'app/models/jogos'
-import { Selecoes } from 'app/models/selecoes'
+import { Equipes } from 'app/models/equipes'
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import { Copa } from 'app/models/copas'
+import { Campeonato } from 'app/models/campeonatos'
 import { Empresas } from 'app/models/empresas'
 import { Configuracao } from 'app/models/configuracao'
 
@@ -22,7 +22,7 @@ interface ConfiguracaoFormProps {
 
 const formScheme: Configuracao = {
     empresa: undefined,
-    copa: undefined,
+    campeonato: undefined,
     pontos_cravada: undefined,
     pontos_acerto: undefined,
     pontos_erro: undefined
@@ -50,9 +50,9 @@ export const ConfiguracaoForm: React.FC<ConfiguracaoFormProps> = ({
         totalElements: 0
     })
 
-    const copaService = useCopaService()
+    const campeonatoService = useCampeonatoService()
 
-    const [ listaCopas, setListaCopas ] = useState<Page<Copa>>({
+    const [ listaCampeonatos, setListaCampeonatos ] = useState<Page<Campeonato>>({
         content: [],
         first: 0,
         number: 0,
@@ -75,16 +75,16 @@ export const ConfiguracaoForm: React.FC<ConfiguracaoFormProps> = ({
         console.log(empresaSelecionada)
     }
     
-    const handleCopaAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
+    const handleCampeonatoAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
         const nome = e.query
-        copaService
+        campeonatoService
             .find(nome, "", 0, 20)
-            .then(copas => setListaCopas(copas))
+            .then(campeonatos => setListaCampeonatos(campeonatos))
     }
 
-    const handleCopaChange = (e: AutoCompleteChangeParams) => {
-        const copaSelecionada: Copa = e.value
-        formik.setFieldValue("copa", copaSelecionada)
+    const handleCampeonatoChange = (e: AutoCompleteChangeParams) => {
+        const campeonatoSelecionado: Campeonato = e.value
+        formik.setFieldValue("campeonato", campeonatoSelecionado)
         //console.log(cidadeSelecionado)
     }
             
@@ -124,17 +124,17 @@ export const ConfiguracaoForm: React.FC<ConfiguracaoFormProps> = ({
             <div className='p-fluid'>
                 <div className='p-field'>
                     <AutoComplete    
-                        placeholder='Copa *'   
-                        suggestions={listaCopas.content}
-                        completeMethod={handleCopaAutoComplete}
-                        value={formik.values.copa}
+                        placeholder='Campeonato *'   
+                        suggestions={listaCampeonatos.content}
+                        completeMethod={handleCampeonatoAutoComplete}
+                        value={formik.values.campeonato}
                         field="nome"
-                        id="copa"
-                        name="copa"
-                        onChange={handleCopaChange}
+                        id="campeonato"
+                        name="campeonato"
+                        onChange={handleCampeonatoChange}
                         />
                     <small className='p-error p-d-block'>
-                        {formik.errors.copa}
+                        {formik.errors.campeonato}
                     </small>
                 </div>
             </div>

@@ -114,7 +114,7 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
             </div>
 
             <div className='p-field'>
-                    <label htmlFor="copa">Empresa: *</label>
+                    <label htmlFor="empresa">Empresa: *</label>
                     <AutoComplete
                         suggestions={listaEmpresas.content}
                         completeMethod={handleEmpresaAutoComplete}

@@ -32,10 +32,10 @@ export const useConfiguracaoService = () => {
 
     const find = async (
         empresa: string = '',
-        copa: string = '',
+        campeonato: string = '',
         page: number = 0,
         size: number = 10) : Promise<Page<Configuracao>> => {
-        const url = `${resourceURL}?empresa=${empresa}&copa=${copa}&page=${page}&size=${size}`
+        const url = `${resourceURL}?empresa=${empresa}&campeonato=${campeonato}&page=${page}&size=${size}`
         const response: AxiosResponse<Page<Configuracao>> = await httpClient.get(url)
         return response.data
     }

@@ -5,7 +5,7 @@ export interface Palpites {
     id?: string
     jogo?: Jogos
     data_hora?: string
-    gols_sel1?: string
-    gols_sel2?: string
+    gols_eq1?: string
+    gols_eq2?: string
     usuario?: Usuario
 }

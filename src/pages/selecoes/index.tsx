@@ -1,4 +1,4 @@
-import { CadastroSelecao, RotaAutenticada } from "components"
+import { CadastroEquipe, RotaAutenticada } from "components"
 import { useSession } from 'next-auth/client'
 
 
@@ -10,7 +10,7 @@ return (
 
     <RotaAutenticada>
         {permissao==="adm" &&
-            <CadastroSelecao />
+            <CadastroEquipe />
         }
     </RotaAutenticada>
 

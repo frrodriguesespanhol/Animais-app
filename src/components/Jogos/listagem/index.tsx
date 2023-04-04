@@ -8,9 +8,9 @@ import { Button } from 'primereact/button'
 import { confirmDialog } from 'primereact/confirmdialog'
 import { validationScheme } from './validationSchema'
 import { Page } from 'app/models/common/page'
-import { useSelecaoService } from 'app/services'
+import { useEquipeService } from 'app/services'
 import Router from 'next/router'
-import { Selecoes } from 'app/models/selecoes'
+import { Equipes } from 'app/models/equipes'
 import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete'
 import { Jogos } from 'app/models/jogos'
 import { useJogoService } from 'app/services/jogos.service'
@@ -21,28 +21,28 @@ let cS: string | undefined
 let cs_fase: string | undefined
 
 interface ConsultaJogosForm {
-    sel1?: Selecoes,
-    sel1_1?: number,
+    eq1?: Equipes,
+    eq1_1?: number,
     fase?: Fases,
     fase_1?: number,
     onSubmit?: (jogo: Jogos) => void
 }
 
 const formScheme: Jogos = {
-    sel1: undefined,
+    eq1: undefined,
     fase: undefined
 }
 
 export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
-        sel1,
-        sel1_1,
+        eq1,
+        eq1_1,
         fase,
         fase_1,
         onSubmit
     }) => {
 
-    const selecoesService = useSelecaoService()
-    const [ listaSelecoes, setListaSelecoes ] = useState<Page<Selecoes>>({
+    const equipesService = useEquipeService()
+    const [ listaEquipes, setListaEquipes ] = useState<Page<Equipes>>({
         content: [],
         first: 0,
         number: 0,
@@ -78,7 +78,7 @@ export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
         values: filtro,
     } = useFormik<ConsultaJogosForm>({
         onSubmit: handleSubmit,
-        initialValues: { sel1: undefined, sel1_1: 0, fase: undefined, fase_1: 0 }
+        initialValues: { eq1: undefined, eq1_1: 0, fase: undefined, fase_1: 0 }
     })
 
     const handlePage = (event: DataTablePageParams | any) => {
@@ -127,18 +127,18 @@ export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
         //validationSchema: validationScheme
     })
 
-    const handleSelecoesAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
+    const handleEquipesAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
         const nome = e.query
-        selecoesService
+        equipesService
             .find(nome, 0, 20)
-            .then(selecoes => setListaSelecoes(selecoes))
+            .then(equipes => setListaEquipes(equipes))
     }
 
-    const handleSelecaoChange = (e: AutoCompleteChangeParams) => {
-        const selecaoSelecionada: Selecoes = e.value
-        formik.setFieldValue("sel1", selecaoSelecionada)
-        cS = selecaoSelecionada.id
-        console.log(selecaoSelecionada)
+    const handleEquipeChange = (e: AutoCompleteChangeParams) => {
+        const equipeSelecionada: Equipes = e.value
+        formik.setFieldValue("eq1", equipeSelecionada)
+        cS = equipeSelecionada.id
+        console.log(equipeSelecionada)
     }
 
     const handleFasesAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
@@ -163,7 +163,7 @@ export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
             <div className='p-fluid'>
                 
                 <div className='p-field'>
-                    <label htmlFor="copa">Fase: *</label>
+                    <label htmlFor="fase">Fase: *</label>
                     <AutoComplete
                         suggestions={listaFases.content}
                         completeMethod={handleFasesAutoComplete}
@@ -179,18 +179,18 @@ export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
                 </div>
 
                 <div className='p-field'>
-                    <label htmlFor="copa">Seleção: *</label>
+                    <label htmlFor="campeonato">Equipe: *</label>
                     <AutoComplete
-                        suggestions={listaSelecoes.content}
-                        completeMethod={handleSelecoesAutoComplete}
-                        value={formik.values.sel1}
+                        suggestions={listaEquipes.content}
+                        completeMethod={handleEquipesAutoComplete}
+                        value={formik.values.eq1}
                         field="nome"
-                        id="sel1"
-                        name="sel1"
-                        onChange={handleSelecaoChange}
+                        id="eq1"
+                        name="eq1"
+                        onChange={handleEquipeChange}
                         />
                     <small className='p-error p-d-block'>
-                        {formik.errors.sel1}
+                        {formik.errors.eq1}
                     </small>
             
                 </div>
@@ -229,8 +229,8 @@ export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
                             emptyMessage="Nenhum registro."
                             >
                         <Column field='data_hora' header="Data e Hora" />
-                        <Column field='sel1.nome' header="Seleção 1" />
-                        <Column field='sel2.nome' header="Seleção 2" />
+                        <Column field='eq1.nome' header="Equipe 1" />
+                        <Column field='eq2.nome' header="Equipe 2" />
                         <Column field='estadio.nome' header="Estádio" />
                         <Column field='fase.nome' header="Fase" />
                         <Column body={actionTemplate} />

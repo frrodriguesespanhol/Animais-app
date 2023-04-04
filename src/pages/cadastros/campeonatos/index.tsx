@@ -1,17 +1,18 @@
-import { ListagemSelecoes, RotaAutenticada } from "components";
+import { CadastroCampeonato, RotaAutenticada } from "components"
 import { useSession } from 'next-auth/client'
+
 
 export default () => {
     const [session] = useSession()
     const permissao = session?.user?.email?.substring(session?.user?.email.length-3, session?.user?.email.length)
-
-return (
     
+return (
+
     <RotaAutenticada>
         {permissao==="adm" &&
-            <ListagemSelecoes />
+            <CadastroCampeonato />
         }
     </RotaAutenticada>
-    
-) 
+
+)
 }

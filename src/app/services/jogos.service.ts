@@ -31,11 +31,11 @@ export const useJogoService = () => {
     }
 
     const find = async (
-        sel1: string = '',
+        eq1: string = '',
         fase: string = '',
         page: number = 0,
         size: number = 10) : Promise<Page<Jogos>> => {
-        const url = `${resourceURL}?sel1=${sel1}&fase=${fase}&page=${page}&size=${size}`
+        const url = `${resourceURL}?eq1=${eq1}&fase=${fase}&page=${page}&size=${size}`
         const response: AxiosResponse<Page<Jogos>> = await httpClient.get(url)
         return response.data
     }

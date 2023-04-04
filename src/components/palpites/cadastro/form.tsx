@@ -32,8 +32,8 @@ const formScheme: Palpites = {
     id: undefined,
     jogo: undefined,
     data_hora: undefined,
-    gols_sel1: '',
-    gols_sel2: '',
+    gols_eq1: '',
+    gols_eq2: '',
     usuario: undefined
 }
 
@@ -90,13 +90,13 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
 
     const handleJogoChange = (e: AutoCompleteChangeParams | any) => {
         const jogoSelecionado: Jogos = e.value
-        formik.setFieldValue("jogo_sel1", jogoSelecionado)
+        formik.setFieldValue("jogo_eq1", jogoSelecionado)
         //console.log(jogoSelecionado)
     }
 
     const handleJogoChange2 = (e: AutoCompleteChangeParams) => {
         const jogoSelecionado: Jogos = e.value
-        formik.setFieldValue("jogo_sel2", jogoSelecionado)
+        formik.setFieldValue("jogo_eq2", jogoSelecionado)
         //console.log(jogoSelecionado)
     }
     
@@ -115,12 +115,12 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
 
     const [valueData, setValueData] = useState<Date | null>(null)
 
-    var gols1 = formik.values.gols_sel1
+    var gols1 = formik.values.gols_eq1
     if (gols1 === null){
         gols1 = ''
     }
     
-    var gols2 = formik.values.gols_sel2
+    var gols2 = formik.values.gols_eq2
     if (gols2 === null){
         gols2 = ''
     }
@@ -144,11 +144,11 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                 <div className='p-field'>
                     <AutoComplete    
                         disabled
-                        placeholder='Seleção 1 *'   
+                        placeholder='Equipe 1 *'   
                         suggestions={listaJogos.content}
                         completeMethod={handleJogosAutoComplete}
                         value={formik.values.jogo}
-                        field="sel1.nome"
+                        field="eq1.nome"
                         id="jogo"
                         name="jogo"
                         onChange={handleJogoChange}
@@ -161,10 +161,10 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
 
                 <div className='p-field'>
                     <TextField 
-                        id='gols_sel1'
+                        id='gols_eq1'
                         label='Gols'
                         type='number'
-                        //value={formik.values.gols_sel1}
+                        //value={formik.values.gols_eq1}
                         value={gols1}
                         onChange={formik.handleChange}
                         >
@@ -179,10 +179,10 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
 
                 <div className='p-field'>
                     <TextField 
-                        id='gols_sel2'
+                        id='gols_eq2'
                         label='Gols'
                         type='number'
-                        //value={formik.values.gols_sel2}
+                        //value={formik.values.gols_eq2}
                         value={gols2}
                         onChange={formik.handleChange}
                         >
@@ -193,13 +193,13 @@ export const PalpitesForm: React.FC<PalpitesFormProps> = ({
                 <div className='p-field'>
                     <AutoComplete    
                         disabled
-                        placeholder='Seleção 2 *'   
+                        placeholder='Equipe 2 *'   
                         suggestions={listaJogos.content}
                         completeMethod={handleJogosAutoComplete}
                         value={formik.values.jogo}
-                        field="sel2.nome"
-                        id="sel2"
-                        name="sel2"
+                        field="eq2.nome"
+                        id="eq2"
+                        name="eq2"
                         onChange={handleJogoChange2}
                         />
                     <small className='p-error p-d-block'>

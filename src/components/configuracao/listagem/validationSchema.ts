@@ -7,5 +7,5 @@ const campoObrigatorioId = Yup.object().nullable(true).required(campoObrigatorio
 export const validationScheme = Yup.object().shape({
 
     empresa: campoObrigatorioId,
-    copa: campoObrigatorioId
+    campeonato: campoObrigatorioId
 })

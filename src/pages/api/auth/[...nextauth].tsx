@@ -9,7 +9,7 @@ const resourceURL: string = "api/usuarios/validarSenha"
 export default NextAuth({
   providers: [
     Providers.Credentials({
-      name: "Bolão Copa Jahu",
+      name: "Bolão Campeonato Brasileiro",
 
       credentials: {
         email: { label: "Usuário", type: "text ", placeholder: "" },
