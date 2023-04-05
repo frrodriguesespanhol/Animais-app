@@ -21,21 +21,21 @@ let cS: string | undefined
 let cs_fase: string | undefined
 
 interface ConsultaJogosForm {
-    eq1?: Equipes,
-    eq1_1?: number,
+    equ1?: Equipes,
+    equ1_1?: number,
     fase?: Fases,
     fase_1?: number,
     onSubmit?: (jogo: Jogos) => void
 }
 
 const formScheme: Jogos = {
-    eq1: undefined,
+    equ1: undefined,
     fase: undefined
 }
 
 export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
-        eq1,
-        eq1_1,
+        equ1,
+        equ1_1,
         fase,
         fase_1,
         onSubmit
@@ -78,7 +78,7 @@ export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
         values: filtro,
     } = useFormik<ConsultaJogosForm>({
         onSubmit: handleSubmit,
-        initialValues: { eq1: undefined, eq1_1: 0, fase: undefined, fase_1: 0 }
+        initialValues: { equ1: undefined, equ1_1: 0, fase: undefined, fase_1: 0 }
     })
 
     const handlePage = (event: DataTablePageParams | any) => {
@@ -136,7 +136,7 @@ export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
 
     const handleEquipeChange = (e: AutoCompleteChangeParams) => {
         const equipeSelecionada: Equipes = e.value
-        formik.setFieldValue("eq1", equipeSelecionada)
+        formik.setFieldValue("equ1", equipeSelecionada)
         cS = equipeSelecionada.id
         console.log(equipeSelecionada)
     }
@@ -183,14 +183,14 @@ export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
                     <AutoComplete
                         suggestions={listaEquipes.content}
                         completeMethod={handleEquipesAutoComplete}
-                        value={formik.values.eq1}
+                        value={formik.values.equ1}
                         field="nome"
-                        id="eq1"
-                        name="eq1"
+                        id="equ1"
+                        name="equ1"
                         onChange={handleEquipeChange}
                         />
                     <small className='p-error p-d-block'>
-                        {formik.errors.eq1}
+                        {formik.errors.equ1}
                     </small>
             
                 </div>
@@ -229,8 +229,8 @@ export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
                             emptyMessage="Nenhum registro."
                             >
                         <Column field='data_hora' header="Data e Hora" />
-                        <Column field='eq1.nome' header="Equipe 1" />
-                        <Column field='eq2.nome' header="Equipe 2" />
+                        <Column field='equ1.nome' header="Equipe 1" />
+                        <Column field='equ2.nome' header="Equipe 2" />
                         <Column field='estadio.nome' header="Estádio" />
                         <Column field='fase.nome' header="Fase" />
                         <Column body={actionTemplate} />

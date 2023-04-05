@@ -5,8 +5,8 @@ import { Estadio } from '../estadios'
 
 export interface Jogos {
     id?: string
-    eq1?: Equipes
-    eq2?: Equipes
+    equ1?: Equipes
+    equ2?: Equipes
     gols1?: string
     gols2?: string
     estadio?: Estadio
