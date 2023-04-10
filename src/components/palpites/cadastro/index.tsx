@@ -30,12 +30,14 @@ export const CadastroPalpites: React.FC = () => {
         if(palpites.id){
             service.atualizar(palpites).then(response => {
                 //console.log('atualizar')
-                if (response == "".toString) {
+                //if (response == "") { // mudei isso pois começou a ficar vermelho
+                if (! response ) {
                     setMessages([{
                         tipo: "success", texto: "Palpite atualizado com sucesso!"
                     }])
                 }  
-                if (response == "erro_data".toString) {
+                //if (response == "erro_data") { // mudei isso pois começou a ficar vermelho
+                if ( response ) {
                     setMessages([{
                         tipo: "warning", texto: "O período de apostas para esse jogo já se encerrou!"
                     }])

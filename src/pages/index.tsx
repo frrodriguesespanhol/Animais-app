@@ -106,30 +106,38 @@ const formik = useFormik<Ranking>({
           Regras Gerais
         </h2>
         <ul>
-          <li><b>Em jogos eliminatórios (das oitavas de final pra frente), vale o placar do jogo ao término da prorrogação, caso haja.</b></li>
-          <li>A aposta do jogo será aceita até 20 minutos antes de seu início;</li>
-          <li>O apostador que cravar o resultado do jogo, fará 2 pontos;</li>
-          <li>O apostador que acertar pelo vencedor do jogo ou pelo empate, fará 1 ponto;</li>
-          <li>O apostador que errar o resultado do jogo, não pontuará;</li>
-          <li>Todos os dias de jogos o ranking geral será atualizado com a soma das pontuações;</li>
-          <li>Do valor total arrecadado, +- R$ 30,00 será utilizado para pagar a hospedagem do aplicativo, o valor restante (valor total líquido) será dividido entre os vencedores;</li>
-          <li>Ao final do campeonato, o primeiro colocado ganhará 60% do valor total líquido ;</li>
-          <li>O segundo colocado ganhará 25% do valor total líquido;</li>
-          <li>O terceiro colocado ganhará 15% do valor total líquido;</li>
-          <li>Em caso de empate na pontuação, o desempate será pela quantidade de cravadas;</li>
-          <li>Mesmo assim, caso haja empate em pontuação e cravadas (isso vale para as 3 primeiras posições), o valor será dividido igualmente entre ambos;</li>
-          <li>Ex.: se houver 3 apostadores empatados na primeira posição do ranking, 
-              cada um levará 20% do valor líquido, pois 60% / 3 = 20%;</li>
-          <li>Não haverá prêmio de consolação para o último colocado;</li>
-          <li>Para palpitar, acesse o menu Palpites, escolha a data de um jogo (se desejar), 
-              escolha seu nome em Usuário e Consulte, depois clique no botão Palpitar 
-              na frente das informações do jogo, daí basta informar o palpite para 
-              o jogo e salvar;
-          </li>
-          <li>Para visualizar os palpites dos concorrentes, entre em Palpites, 
-              selecione a data de um jogo (se desejar), escolha um outro Usuário Apostador 
-              e Consulte suas apostas.
-          </li>
+          <li>O valor será de R$ 100,00 por cota, podendo ser pago em 2 vezes, R$ 50,00 até 14 de abril e R$ 50,00 até 10 de maio;</li>
+          <li>O Administrador do bolão não participará, mas será cobrado 25% (R$ 25,00 de cada cota adquirida) de taxa de administração (hospedagem inclusa), lembrando que a hospedagem pode variar (valores em dólar, não é valor fixo, depende do uso dos apostadores, da cotação do dólar e serão 8 meses de campeonato);</li>
+          <li>A aposta para um jogo poderá ser feita até 5 minutos antes do início da partida;</li>
+          <li>A visualização dos palpites dos outros apostadores só será permitida após o início da partida (em desenvolvimento);</li>
+          <li>O apostador poderá comprar mais de uma cota;</li>
+        </ul>
+        <h3>Pontuação:</h3>
+        <ul>
+          <li>2,0 para cravar o placar ao final do jogo, quando vitória ou empate;</li>
+          <li>1,0 para quando acertar o vencedor ou empate (porém, sem cravar);</li>
+          <li>0,0 para quando errar o vencedor ou empate;</li>
+          <li>A pontuação de todos os participantes será exibida num ranking (Classificação);</li>
+        </ul>
+        <h3>Premiação:</h3>
+        <ul>
+          <li>Total líquido = R$ 75,00 * quantidade de cotas vendidas;</li>
+          <li>Premiação: 1º lugar leva 50% do total líquido, 2º lugar leva 20%, 3º lugar leva 15%, 4º lugar leva 10% e 5º lugar leva 5%;</li>
+        </ul>
+        <h3>Desempate:</h3>
+        <ul>
+          <li>Empates provavelmente serão raros no ranking desse bolão, pois existem muitas rodadas e muitos jogos nesse campeonato;</li>
+          <li>A única regra é pela maior quantidade de placares certos (cravadas);</li>
+          <li>Caso permaneça o empate, o valor será dividido entre os participantes empatados, segue o exemplo abaixo:</li>
+          <li>1º Zé = receberá 50% do total líquido</li>
+          <li>2º Tonho = receberá 5% (20% / 4) do total líquido</li>
+          <li>2º Zelão = receberá 5% (20% / 4) do total líquido</li>
+          <li>2º Ana = receberá 5% (20% / 4) do total líquido</li>
+          <li>2º Jeff = receberá 5% (20% / 4) do total líquido</li>
+          <li>3º Cátia = receberá 15% do total líquido</li>
+          <li>4º Tico = receberá 10% do total líquido</li>
+          <li>5º Camilo = receberá 5% do total líquido</li>
+          <li>6º Betinho = receberá 0% do total líquido, assim como os demais abaixo</li>
         </ul>
         <h2>
           Ranking Geral
