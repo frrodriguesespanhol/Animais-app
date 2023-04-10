@@ -128,6 +128,29 @@ export const ListagemPalpites: React.FC<ConsultaPalpitesForm>  = ({
         )
     }
 
+    const actionGols1 = (registro: Palpites) => {
+        const url = `/cadastros/palpites?id=${registro.id}`
+        const logado = session?.user?.email===registro.usuario?.email
+        let valor = registro.gols_equ1
+        if (logado === true){
+            valor = valor
+        }else{
+            valor='XX'
+        }
+        return (valor)
+    }
+
+    const actionGols2 = (registro: Palpites) => {
+        const url = `/cadastros/palpites?id=${registro.id}`
+        const logado = session?.user?.email===registro.usuario?.email
+        let valor = registro.gols_equ2
+        if (logado === true){
+            valor = valor
+        }else{
+            valor='XX'
+        }
+        return (valor)
+    }
 
 
     return (
@@ -198,8 +221,8 @@ export const ListagemPalpites: React.FC<ConsultaPalpitesForm>  = ({
                         <Column field='jogo.data_hora' header="Hora Jogo" />
                         <Column field='data_hora' header="Hora Palpite" />
                         <Column field='jogo.equ1.nome' header="Equipe 1" />
-                        <Column field='gols_equ1' header="G1" />
-                        <Column field='gols_equ2' header="G2" />
+                        <Column body={actionGols1}  header="G1" />
+                        <Column body={actionGols2}  header="G2" />
                         <Column field='jogo.equ2.nome' header="Equipe 2" />
                         <Column field='jogo.fase.nome' header="Fase" />
                         <Column field='usuario.nome' header="Apostador" />
