@@ -106,8 +106,8 @@ const formik = useFormik<Ranking>({
           Regras Gerais
         </h2>
         <ul>
-          <li>O valor será de R$ 100,00 por cota, podendo ser pago em 2 vezes, R$ 50,00 até 14 de abril e R$ 50,00 até 10 de maio;</li>
-          <li>O Administrador do bolão não participará, mas será cobrado 25% (R$ 25,00 de cada cota adquirida) de taxa de administração (hospedagem inclusa), lembrando que a hospedagem pode variar (valores em dólar, não é valor fixo, depende do uso dos apostadores, da cotação do dólar e serão 8 meses de campeonato);</li>
+          <li>O valor será de R$ 100,00 por cota;</li>
+          <li>Será cobrado 25% (R$ 25,00 de cada cota adquirida) de taxa de administração (hospedagem inclusa), lembrando que a hospedagem pode variar (valores em dólar, não é valor fixo, depende do uso dos apostadores, da cotação do dólar e serão 8 meses de campeonato);</li>
           <li>A aposta para um jogo poderá ser feita até 5 minutos antes do início da partida;</li>
           <li>A visualização dos palpites dos outros apostadores só será permitida após o início da partida (em desenvolvimento);</li>
           <li>O apostador poderá comprar mais de uma cota;</li>
