@@ -1,5 +1,5 @@
 import { Usuario } from '../usuarios'
-import { Jogos } from '../jogos/index'
+import { Jogos } from '../jogos'
 
 export interface Palpites {
     id?: string
