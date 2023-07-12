@@ -1,4 +1,4 @@
-import { Equipes } from 'app/models/equipes'
+import { Equipes } from '../equipes'
 import { Fases } from '../fases'
 import { Estadio } from '../estadios'
 
