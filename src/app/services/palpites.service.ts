@@ -37,9 +37,11 @@ export const usePalpiteService = () => {
     const find = async (
         data: string = '',
         usuario: string = '',
+        logado: string = '',
         page: number = 0,
         size: number = 10) : Promise<Page<Palpites>> => {
-        const url = `${resourceURL}?data=${data}&usuario=${usuario}&page=${page}&size=${size}`
+        const url = `${resourceURL}?data=${data}&usuario=${usuario}&logado=${logado}&page=${page}&size=${size}`
+        console.log(url)
         const response: AxiosResponse<Page<Palpites>> = await httpClient.get(url)
         return response.data
     }
@@ -66,6 +68,12 @@ export const usePalpiteService = () => {
         return response.data
     }
 
+    const horaBanco = async () : Promise<Date|undefined> => {
+        const url = `${resourceURL}/hora`
+        const response: AxiosResponse = await httpClient.get(url)
+        return response.data
+    }
+
     return {
         //salvar,
         atualizar,
@@ -73,6 +81,7 @@ export const usePalpiteService = () => {
         //deletar,
         find,
         ranking,
-        proximoJogo
+        proximoJogo,
+        horaBanco
     }
 }

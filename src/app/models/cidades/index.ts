@@ -1,7 +1,7 @@
-import { Campeonato } from "app/models/campeonatos"
+import { Paises } from "app/models/paises"
 
 export interface Cidade {
     id?: string
     nome?: string
-    idCampeonato?: Campeonato
+    idPais?: Paises
 }

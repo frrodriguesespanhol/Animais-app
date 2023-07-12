@@ -15,8 +15,10 @@ import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParam
 import { useUsuarioService } from 'app/services'
 import { Usuario } from 'app/models/usuarios'
 
-let cs_usuario: string | undefined
+import { httpClient } from "app/http";
+import { AxiosResponse } from "axios";
 
+let cs_usuario: string | undefined
 interface ConsultaPalpitesForm {
     data?: ''
     usuario?: Usuario
@@ -29,6 +31,17 @@ interface ConsultaPalpitesForm {
      usuario: undefined
  }
 
+
+// export async function getStaticProps() {
+//     const dados =  await fetch("http://localhost:8080/api/palpites/hora")
+//     const resp = await dados.json()
+//     console.log(resp)
+//     return {
+//         props: { resp }
+//     }
+// }
+
+
 export const ListagemPalpites: React.FC<ConsultaPalpitesForm>  = ({
          data,
          usuario,
@@ -36,8 +49,12 @@ export const ListagemPalpites: React.FC<ConsultaPalpitesForm>  = ({
          onSubmit
     }) => {
 
+    const [ hora1, setHora1 ] = useState({
+        content: []
+    })
+
     const [ session ] = useSession()
-    
+
     const palpiteService = usePalpiteService()
     const [ loading, setLoading ] = useState<boolean>(false)
     const [ palpites, setPalpites ] = useState<Page<Palpites>>({
@@ -73,8 +90,8 @@ export const ListagemPalpites: React.FC<ConsultaPalpitesForm>  = ({
 
     const handlePage = (event: DataTablePageParams | any) => {
         setLoading(true)
-        console.log(filtro.data + " - " + cs_usuario)
-        palpiteService.find(filtro.data, cs_usuario, event?.page, event?.rows)
+        console.log(filtro.data + " - " + cs_usuario + " - " + session?.user?.email?.toString())
+        palpiteService.find(filtro.data, cs_usuario, session?.user?.email?.toString(), event?.page, event?.rows)
                 .then(result => {
                     setPalpites({...result, first: event?.first})
                 }).finally(() => setLoading(false))
@@ -128,26 +145,42 @@ export const ListagemPalpites: React.FC<ConsultaPalpitesForm>  = ({
         )
     }
 
+   
+    //const hora = palpiteService.horaBanco()
+    // 2023-04-19T06:02:10.932-03:00
     const actionGols1 = (registro: Palpites) => {
+
+        const hora_jogo: Date|undefined = registro.jogo?.data_hora
         const url = `/cadastros/palpites?id=${registro.id}`
         const logado = session?.user?.email===registro.usuario?.email
         let valor = registro.gols_equ1
+        // console.log(hora)
+        // console.log(hora_jogo)
         if (logado === true){
             valor = valor
-        }else{
-            valor='XX'
+        // }else{
+        //     if ( hora > hora_jogo ){
+        //         valor = valor
+        //     }else{
+        //         valor='XX'
+        //     }
         }
         return (valor)
     }
 
     const actionGols2 = (registro: Palpites) => {
+        const hora_jogo: Date|undefined = registro.jogo?.data_hora
         const url = `/cadastros/palpites?id=${registro.id}`
         const logado = session?.user?.email===registro.usuario?.email
         let valor = registro.gols_equ2
         if (logado === true){
             valor = valor
-        }else{
-            valor='XX'
+        // }else{
+        //     if (hora > hora_jogo){
+        //         valor = valor
+        //     }else{
+        //         valor='XX'
+        //     }
         }
         return (valor)
     }

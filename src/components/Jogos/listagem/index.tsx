@@ -230,6 +230,8 @@ export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
                             >
                         <Column field='data_hora' header="Data e Hora" />
                         <Column field='equ1.nome' header="Equipe 1" />
+                        <Column field='gols1' header="G1" />
+                        <Column field='gols2' header="G2" />
                         <Column field='equ2.nome' header="Equipe 2" />
                         <Column field='estadio.nome' header="Estádio" />
                         <Column field='fase.nome' header="Fase" />

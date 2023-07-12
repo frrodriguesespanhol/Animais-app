@@ -3,10 +3,10 @@ import { Input } from 'components'
 import { useFormik } from 'formik'
 import { validationScheme } from './validationSchema'
 import Router from 'next/router'
-import { useCampeonatoService } from 'app/services'
+import { usePaisesService } from 'app/services/paises.service'
 import { useState } from 'react'
 import { Page } from 'app/models/common/page'
-import { Campeonato } from 'app/models/campeonatos'
+import { Paises } from 'app/models/paises'
 import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete'
 
 interface CidadeFormProps {
@@ -15,7 +15,7 @@ interface CidadeFormProps {
 }
 
 const formScheme: Cidade = {
-    idCampeonato: undefined,
+    idPais: undefined,
     nome: ''
 }
 
@@ -24,8 +24,8 @@ export const CidadeForm: React.FC<CidadeFormProps> = ({
     onSubmit
 }) => {
 
-    const campeonatoService = useCampeonatoService()
-    const [ listaCampeonatos, setListaCampeonatos ] = useState<Page<Campeonato>>({
+    const paisesService = usePaisesService()
+    const [ listaPaises, setListaPaises ] = useState<Page<Paises>>({
         content: [],
         first: 0,
         number: 0,
@@ -41,17 +41,17 @@ export const CidadeForm: React.FC<CidadeFormProps> = ({
         validationSchema: validationScheme
     })
 
-    const handleCampeonatoAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
+    const handlePaisAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
         const nome = e.query
-        campeonatoService
-            .find(nome, '', 0, 20)
-            .then(campeonatos => setListaCampeonatos(campeonatos))
+        paisesService
+            .find(nome, 0, 20)
+            .then(paises => setListaPaises(paises))
     }
 
-    const handleCampeonatoChange = (e: AutoCompleteChangeParams) => {
-        const campeonatoSelecionado: Campeonato = e.value
-        formik.setFieldValue("idCampeonato", campeonatoSelecionado)
-        console.log(campeonatoSelecionado)
+    const handlePaisChange = (e: AutoCompleteChangeParams) => {
+        const paisSelecionado: Paises = e.value
+        formik.setFieldValue("idPais", paisSelecionado)
+        console.log(paisSelecionado)
     }
 
     return (
@@ -82,18 +82,18 @@ export const CidadeForm: React.FC<CidadeFormProps> = ({
             </div>
 
             <div className='p-field'>
-                    <label htmlFor="campeonato">Campeonato: *</label>
+                    <label htmlFor="pais">País: *</label>
                     <AutoComplete
-                        suggestions={listaCampeonatos.content}
-                        completeMethod={handleCampeonatoAutoComplete}
-                        value={formik.values.idCampeonato}
+                        suggestions={listaPaises.content}
+                        completeMethod={handlePaisAutoComplete}
+                        value={formik.values.idPais}
                         field="nome"
-                        id="idCampeonato"
-                        name="idCampeonato"
-                        onChange={handleCampeonatoChange}
+                        id="idPais"
+                        name="idPais"
+                        onChange={handlePaisChange}
                         />
                     <small className='p-error p-d-block'>
-                        {formik.errors.idCampeonato}
+                        {formik.errors.idPais}
                     </small>
             </div>
         

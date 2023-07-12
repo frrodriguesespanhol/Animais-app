@@ -1,4 +1,3 @@
-import { Campeonato } from 'app/models/campeonatos'
 import { Layout } from 'components'
 import { Input } from 'components'
 import { useFormik } from 'formik'
@@ -9,34 +8,36 @@ import { Button } from 'primereact/button'
 import { confirmDialog } from 'primereact/confirmdialog'
 import { validationScheme } from './validationSchema'
 import { Page } from 'app/models/common/page'
-import { useCidadeService, useCampeonatoService } from 'app/services'
+import { useCidadeService} from 'app/services'
+import { usePaisesService} from 'app/services/paises.service'
 import Router from 'next/router'
 import { Cidade } from 'app/models/cidades'
 import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete'
+import { Paises } from 'app/models/paises'
 
 let cS: string | undefined
 
 interface ConsultaCidadesForm {
     nome?: string
-    idCampeonato?: Campeonato
-    id_campeonato?: number
+    idPais?: Paises
+    id_pais?: number
     onSubmit?: (cidade: Cidade) => void
 }
 
 const formScheme: Cidade = {
-    idCampeonato: undefined,
+    idPais: undefined,
     nome: ''
 }
 
 export const ListagemCidades: React.FC<ConsultaCidadesForm> = ({
         nome,
-        idCampeonato,
-        id_campeonato,
+        idPais,
+        id_pais,
         onSubmit
     }) => {
 
-    const campeonatoService = useCampeonatoService()
-    const [ listaCampeonatos, setListaCampeonatos ] = useState<Page<Campeonato>>({
+    const paisService = usePaisesService()
+    const [ listaPaises, setListaPaises ] = useState<Page<Paises>>({
         content: [],
         first: 0,
         number: 0,
@@ -64,7 +65,7 @@ export const ListagemCidades: React.FC<ConsultaCidadesForm> = ({
         handleChange
     } = useFormik<ConsultaCidadesForm>({
         onSubmit: handleSubmit,
-        initialValues: { nome: '', idCampeonato: undefined , id_campeonato: 0  }
+        initialValues: { nome: '', idPais: undefined , id_pais: 0  }
     })
 
     const handlePage = (event: DataTablePageParams | any) => {
@@ -113,18 +114,18 @@ export const ListagemCidades: React.FC<ConsultaCidadesForm> = ({
         validationSchema: validationScheme
     })
 
-    const handleCampeonatoAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
+    const handlePaisAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
         const nome = e.query
-        campeonatoService
-            .find(nome, '', 0, 20)
-            .then(campeonatos => setListaCampeonatos(campeonatos))
+        paisService
+            .find(nome, 0, 20)
+            .then(paises => setListaPaises(paises))
     }
 
-    const handleCampeonatoChange = (e: AutoCompleteChangeParams) => {
-        const campeonatoSelecionado: Campeonato = e.value
-        formik.setFieldValue("idCampeonato", campeonatoSelecionado)
-        cS = campeonatoSelecionado.id
-        console.log(campeonatoSelecionado)
+    const handlePaisChange = (e: AutoCompleteChangeParams) => {
+        const paisSelecionado: Paises = e.value
+        formik.setFieldValue("idPais", paisSelecionado)
+        cS = paisSelecionado.id
+        console.log(paisSelecionado)
     }
 
     return (
@@ -139,18 +140,18 @@ export const ListagemCidades: React.FC<ConsultaCidadesForm> = ({
                         name="nome" value={filtro.nome} />
                 </div>
                 <div className='p-field'>
-                    <label htmlFor="campeonato">Campeonato: *</label>
+                    <label htmlFor="pais">País: *</label>
                     <AutoComplete
-                        suggestions={listaCampeonatos.content}
-                        completeMethod={handleCampeonatoAutoComplete}
-                        value={formik.values.idCampeonato}
+                        suggestions={listaPaises.content}
+                        completeMethod={handlePaisAutoComplete}
+                        value={formik.values.idPais}
                         field="nome"
-                        id="idCampeonato"
-                        name="idCampeonato"
-                        onChange={handleCampeonatoChange}
+                        id="idPais"
+                        name="idPais"
+                        onChange={handlePaisChange}
                         />
                     <small className='p-error p-d-block'>
-                        {formik.errors.idCampeonato}
+                        {formik.errors.idPais}
                     </small>
             
                 </div>
@@ -187,7 +188,7 @@ export const ListagemCidades: React.FC<ConsultaCidadesForm> = ({
                             >
                         <Column field='id' header="Código" />
                         <Column field='nome' header="Nome" />
-                        <Column field='idCampeonato.nome' header="Campeonato" />
+                        <Column field='idPais.nome' header="País" />
                         <Column body={actionTemplate} />
                     </DataTable>
 

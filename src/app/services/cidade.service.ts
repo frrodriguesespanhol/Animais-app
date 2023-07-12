@@ -2,7 +2,7 @@ import { httpClient } from "app/http";
 import { Cidade } from "app/models/cidades";
 import { AxiosResponse } from "axios";
 import { Page } from 'app/models/common/page'
-import { Campeonato } from "app/models/campeonatos";
+import { Paises } from "app/models/paises";
 
 const resourceURL: string = "/api/cidades"
 
@@ -34,10 +34,10 @@ export const useCidadeService = () => {
 
     const find = async (
         nome: string = '',
-        idCampeonato: string = '',
+        idPais: string = '',
         page: number = 0,
         size: number = 10) : Promise<Page<Cidade>> => {
-        const url = `${resourceURL}?nome=${nome}&idCampeonato=${idCampeonato}&page=${page}&size=${size}`
+        const url = `${resourceURL}?nome=${nome}&idPais=${idPais}&page=${page}&size=${size}`
         const response: AxiosResponse<Page<Cidade>> = await httpClient.get(url)
         return response.data
     }

@@ -27,6 +27,10 @@ export const Menu: React.FC = () => {
                 }
                 {
                     (permissao==="adm")  &&
+                        <MenuItem href="/consultas/paises" label="Países" />
+                }
+                {
+                    (permissao==="adm")  &&
                         <MenuItem href="/consultas/cidades" label="Cidades" />
                 }
                 {
