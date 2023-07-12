@@ -9,6 +9,7 @@ export { CadastroEmpresa, ListagemEmpresas } from './empresas'
 export { CadastroUsuarios, ListagemUsuarios } from './usuarios'
 export { CadastroConfiguracao, ListagemConfiguracao } from './configuracao'
 export { CadastroPalpites, ListagemPalpites } from './palpites'
+export { CadastroEquipe, ListagemEquipes } from './equipes'
 export { RotaAutenticada } from './rotaautenticada'
 export {
     Input,
