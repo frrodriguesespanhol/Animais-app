@@ -3,6 +3,7 @@ import { Input } from 'components'
 import { useFormik } from 'formik'
 import { validationScheme } from './validationSchema'
 import Router from 'next/router'
+//teste
 
 interface CampeonatoFormProps {
     campeonato: Campeonato
