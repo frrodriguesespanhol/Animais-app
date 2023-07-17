@@ -1,6 +1,7 @@
 import { Equipes } from '../equipes'
 import { Fases } from '../fases'
 import { Estadio } from '../estadios'
+import { Campeonato } from '../campeonatos'
 
 
 export interface Jogos {
@@ -12,4 +13,5 @@ export interface Jogos {
     estadio?: Estadio
     data_hora?: Date
     fase?: Fases
+    campeonato?: Campeonato
 }

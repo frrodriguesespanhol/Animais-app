@@ -3,7 +3,7 @@ import { Input } from 'components'
 import { useFormik, useFormikContext, validateYupSchema } from 'formik'
 import { validationScheme } from './validationSchema'
 import Router from 'next/router'
-import { useCidadeService, useEstadioService, useEquipeService } from 'app/services'
+import { useCidadeService, useEstadioService, useEquipeService, useCampeonatoService } from 'app/services'
 import { useState } from 'react'
 import { Page } from 'app/models/common/page'
 import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete'
@@ -11,6 +11,7 @@ import { Jogos } from 'app/models/jogos'
 import { Equipes } from 'app/models/equipes'
 import { useFaseService } from 'app/services/fases.service'
 import { Fases } from 'app/models/fases'
+import { Campeonato } from 'app/models/campeonatos'
 
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
@@ -34,7 +35,8 @@ const formScheme: Jogos = {
     gols2: '',
     estadio: undefined,
     data_hora: undefined,
-    fase: undefined
+    fase: undefined,
+    campeonato: undefined
 }
 
 export const JogosForm: React.FC<JogosFormProps> = ({
@@ -72,6 +74,16 @@ export const JogosForm: React.FC<JogosFormProps> = ({
     const faseService = useFaseService()
 
     const [ listaFases, setListaFases ] = useState<Page<Fases>>({
+        content: [],
+        first: 0,
+        number: 0,
+        size: 0,
+        totalElements: 0
+    })
+
+    const campeonatoService = useCampeonatoService()
+
+    const [ listaCampeonatos, setListaCampeonatos ] = useState<Page<Campeonato>>({
         content: [],
         first: 0,
         number: 0,
@@ -126,6 +138,19 @@ export const JogosForm: React.FC<JogosFormProps> = ({
         console.log(faseSelecionada)
     }
 
+
+    const handleCampeonatoAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
+        const nome = e.query
+        campeonatoService
+            .find(nome, undefined, 0, 20)
+            .then(campeonatos => setListaCampeonatos(campeonatos))
+    }
+
+    const handleCampeonatoChange = (e: AutoCompleteChangeParams) => {
+        const campeonatoSelecionado: Campeonato = e.value
+        formik.setFieldValue("campeonato", campeonatoSelecionado)
+        console.log(campeonatoSelecionado)
+    }
 
     const [valueData, setValueData] = useState<Date | null>(null)
         
@@ -274,6 +299,24 @@ export const JogosForm: React.FC<JogosFormProps> = ({
                             />
                         <small className='p-error p-d-block'>
                             {formik.errors.fase}
+                        </small>
+                </div>
+            </div>
+
+            <div className='p-fluid'>  
+                <div className='p-field'>
+                        <AutoComplete
+                            placeholder='Campeonato *'
+                            suggestions={listaCampeonatos.content}
+                            completeMethod={handleCampeonatoAutoComplete}
+                            value={formik.values.campeonato}
+                            field="nome"
+                            id="campeonato"
+                            name="campeonato"
+                            onChange={handleCampeonatoChange}
+                            />
+                        <small className='p-error p-d-block'>
+                            {formik.errors.campeonato}
                         </small>
                 </div>
             </div>

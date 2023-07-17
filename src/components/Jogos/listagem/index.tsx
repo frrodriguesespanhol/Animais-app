@@ -235,6 +235,7 @@ export const ListagemJogos: React.FC<ConsultaJogosForm> = ({
                         <Column field='equ2.nome' header="Equipe 2" />
                         <Column field='estadio.nome' header="Estádio" />
                         <Column field='fase.nome' header="Fase" />
+                        <Column field='campeonato.nome' header="Campeonato" />
                         <Column body={actionTemplate} />
                     </DataTable>
 

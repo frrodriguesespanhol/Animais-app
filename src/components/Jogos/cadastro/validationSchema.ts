@@ -10,6 +10,7 @@ export const validationScheme = Yup.object().shape({
     eq2: campoObrigatorioEmLista,
     cidade: campoObrigatorioEmLista,
     data_hora: campoObrigatorioValidation,
-    fase: campoObrigatorioEmLista
+    fase: campoObrigatorioEmLista,
+    campeonato: campoObrigatorioEmLista,
 
 })
