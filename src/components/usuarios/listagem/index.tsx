@@ -1,4 +1,3 @@
-import { Empresas } from 'app/models/empresas'
 import { Layout } from 'components'
 import { Input } from 'components'
 import { useFormik } from 'formik'
@@ -12,7 +11,6 @@ import { Page } from 'app/models/common/page'
 import Router from 'next/router'
 import { Usuario } from 'app/models/usuarios'
 import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete'
-import { useEmpresaService } from 'app/services/empresas.service'
 import { useUsuarioService } from 'app/services/usuario.service'
 
 let cS: string | undefined
@@ -21,8 +19,6 @@ interface ConsultaUsuariosForm {
     nome?: string
     email?: string
     senha?: string
-    idEmpresa?: Empresas
-    id_empresa?: number
     tipo?: string
     onSubmit?: (usuario: Usuario) => void
 }
@@ -31,25 +27,13 @@ const formScheme: Usuario = {
     nome: '',
     email: '',
     senha: '',
-    idEmpresa: undefined,
     tipo: ''
 }
 
 export const ListagemUsuarios: React.FC<ConsultaUsuariosForm> = ({
         nome,
-        idEmpresa,
-        id_empresa,
         onSubmit
     }) => {
-
-    const empresaService = useEmpresaService()
-    const [ listaEmpresas, setListaEmpresas ] = useState<Page<Empresas>>({
-        content: [],
-        first: 0,
-        number: 0,
-        size: 0,
-        totalElements: 0
-    })
 
     const service = useUsuarioService()
     const [ loading, setLoading ] = useState<boolean>(false)
@@ -71,7 +55,7 @@ export const ListagemUsuarios: React.FC<ConsultaUsuariosForm> = ({
         handleChange
     } = useFormik<ConsultaUsuariosForm>({
         onSubmit: handleSubmit,
-        initialValues: { nome: '', email: '', senha: '', idEmpresa: undefined , id_empresa: 0, tipo: ''  }
+        initialValues: { nome: '', email: '', senha: '', tipo: ''  }
     })
 
     const handlePage = (event: DataTablePageParams | any) => {
@@ -120,20 +104,6 @@ export const ListagemUsuarios: React.FC<ConsultaUsuariosForm> = ({
         validationSchema: validationScheme
     })
 
-    const handleEmpresaAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
-        const nome = e.query
-        empresaService
-            .find(nome, 0, 20)
-            .then(empresas => setListaEmpresas(empresas))
-    }
-
-    const handleEmpresaChange = (e: AutoCompleteChangeParams) => {
-        const empresaSelecionada: Empresas = e.value
-        formik.setFieldValue("idEmpresa", empresaSelecionada)
-        cS = empresaSelecionada.id
-        console.log(empresaSelecionada)
-    }
-
     return (
         <Layout titulo="Usuários">
             <form onSubmit={formikSubmit}>
@@ -145,22 +115,7 @@ export const ListagemUsuarios: React.FC<ConsultaUsuariosForm> = ({
                         onChange={handleChange}
                         name="nome" value={filtro.nome} />
                 </div>
-                <div className='p-field'>
-                    <label htmlFor="empresa">Empresa: *</label>
-                    <AutoComplete
-                        suggestions={listaEmpresas.content}
-                        completeMethod={handleEmpresaAutoComplete}
-                        value={formik.values.idEmpresa}
-                        field="empresa"
-                        id="idEmpresa"
-                        name="idEmpresa"
-                        onChange={handleEmpresaChange}
-                        />
-                    <small className='p-error p-d-block'>
-                        {formik.errors.idEmpresa}
-                    </small>
-            
-                </div>
+               
                 <div className='field is-grouped'>
                     <div className='control is-link'>
                         <button type='submit' className='button is-success'>
@@ -194,8 +149,7 @@ export const ListagemUsuarios: React.FC<ConsultaUsuariosForm> = ({
                             >
                         <Column field='id' header="Código" />
                         <Column field='nome' header="Nome" />
-                        <Column field='email' header="E-mail" />
-                        <Column field='idEmpresa.nome' header="Empresa" />
+                        <Column field='email' header="E-mail" />                        
                         <Column body={actionTemplate} />
                     </DataTable>
 

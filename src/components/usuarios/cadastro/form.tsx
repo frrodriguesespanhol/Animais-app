@@ -6,8 +6,6 @@ import Router from 'next/router'
 import { useState } from 'react'
 import { Page } from 'app/models/common/page'
 import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete'
-import { Empresas } from 'app/models/empresas'
-import { useEmpresaService } from 'app/services/empresas.service'
 import { Dropdown } from 'primereact/dropdown'
 
 interface UsuarioFormProps {
@@ -19,7 +17,6 @@ const formScheme: Usuario = {
     nome: '',
     email:'',
     senha:'',
-    idEmpresa: undefined,
     tipo: ''
     
 }
@@ -29,15 +26,6 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
     onSubmit
 }) => {
 
-    const EmpresaService = useEmpresaService()
-    const [ listaEmpresas, setListaEmpresas ] = useState<Page<Empresas>>({
-        content: [],
-        first: 0,
-        number: 0,
-        size: 0,
-        totalElements: 0
-    })
-
 
     const formik = useFormik<Usuario>({
         initialValues: {...formScheme, ...usuario},
@@ -46,18 +34,6 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
         validationSchema: validationScheme
     })
 
-    const handleEmpresaAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
-        const nome = e.query
-        EmpresaService
-            .find(nome, 0, 20)
-            .then(empresas => setListaEmpresas(empresas))
-    }
-
-    const handleEmpresaChange = (e: AutoCompleteChangeParams) => {
-        const empresaSelecionada: Empresas = e.value
-        formik.setFieldValue("idEmpresa", empresaSelecionada)
-        console.log(empresaSelecionada)
-    }
 
     const tipoUsuario: String[] = ["Usuário", "Administrador", "Administrador Geral"]
 
@@ -111,22 +87,6 @@ export const UsuarioForm: React.FC<UsuarioFormProps> = ({
                        onChange={formik.handleChange}
                        error={formik.errors.senha}
                 />
-            </div>
-
-            <div className='p-field'>
-                    <label htmlFor="empresa">Empresa: *</label>
-                    <AutoComplete
-                        suggestions={listaEmpresas.content}
-                        completeMethod={handleEmpresaAutoComplete}
-                        value={formik.values.idEmpresa}
-                        field="nome"
-                        id="idEmpresa"
-                        name="idEmpresa"
-                        onChange={handleEmpresaChange}
-                        />
-                    <small className='p-error p-d-block'>
-                        {formik.errors.idEmpresa}
-                    </small>
             </div>
 
             <div className='p-field'>

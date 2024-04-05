@@ -10,7 +10,7 @@ export const Menu: React.FC = () => {
 
         <aside className="column is-2">
             {/* <p className="menu-label is-hidden-touch">
-                Campeonato Brasileiro
+                Animais Silvestres
             </p> */}
             <ul className="menu-list">
                 {
@@ -19,11 +19,19 @@ export const Menu: React.FC = () => {
                 }
                 {
                     (permissao==="adm")  &&
-                        <MenuItem href="/consultas/configuracao" label="Config." />
+                        <MenuItem href="/consultas/animais" label="Animais" />
                 }
                 {
                     (permissao==="adm")  &&
-                        <MenuItem href="/consultas/campeonatos" label="Campeonatos" />
+                        <MenuItem href="/consultas/grupos" label="Grupos" />
+                }
+                {
+                    (permissao==="adm")  &&
+                        <MenuItem href="/consultas/classificacoes" label="Classificações" />
+                }
+                {
+                    (permissao==="adm")  &&
+                        <MenuItem href="/consultas/especies" label="Espécies" />
                 }
                 {
                     (permissao==="adm")  &&
@@ -33,33 +41,10 @@ export const Menu: React.FC = () => {
                     (permissao==="adm")  &&
                         <MenuItem href="/consultas/cidades" label="Cidades" />
                 }
-                {
-                    (permissao==="adm")  &&
-                        <MenuItem href="/consultas/estadios" label="Estádios" />
-                }
-                {
-                    (permissao==="adm")  &&
-                        <MenuItem href="/consultas/equipes" label="Equipes" />
-                }
-                {
-                    (permissao==="adm")  &&
-                        <MenuItem href="/consultas/jogos" label="Jogos" />
-                }
-                {
-                    (permissao==="adm")  &&
-                        <MenuItem href="/consultas/fases" label="Fases" />
-                }
-                {
-                    (permissao==="adm")  &&
-                        <MenuItem href="/consultas/empresas" label="Empresas" />
-                }
+
                 {
                     (permissao==="adm")  &&
                         <MenuItem href="/consultas/usuarios" label="Usuários" />
-                }
-                {
-                    (permissao==="adm" || permissao==="usu")  &&
-                        <MenuItem href="/consultas/palpites" label="Palpites" />
                 }
                 {
                     (permissao==="adm" || permissao==="usu")  &&

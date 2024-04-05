@@ -1,16 +1,13 @@
 export { Layout } from './layout'
 export { CadastroCidades, ListagemCidades } from './cidades'
-export { CadastroEstadios, ListagemEstadios } from './estadios'
-export { CadastroCampeonato, ListagemCampeonatos } from './campeonatos'
 export { CadastroPaises, ListagemPaises } from './paises'
-export { CadastroJogos, ListagemJogos } from './jogos'
-export { CadastroFase, ListagemFases } from './fases'
-export { CadastroEmpresa, ListagemEmpresas } from './empresas'
 export { CadastroUsuarios, ListagemUsuarios } from './usuarios'
-export { CadastroConfiguracao, ListagemConfiguracao } from './configuracao'
-export { CadastroPalpites, ListagemPalpites } from './palpites'
-export { CadastroEquipe, ListagemEquipes } from './equipes'
+export { CadastroGrupo, ListagemGrupos } from './grupos'
+export { CadastroClassificacao, ListagemClassificacoes } from './classificacoes'
+export { CadastroEspecie, ListagemEspecies } from './especies'
+export { CadastroAnimais, ListagemAnimais } from './animais'
 export { RotaAutenticada } from './rotaautenticada'
+
 export {
     Input,
     InputMoney,
