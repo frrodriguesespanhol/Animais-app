@@ -8,8 +8,10 @@ export interface Animais {
     idGrupoAnimal?: Grupos
     idClassificacaoAnimal?: Classificacao
     idEspecieAnimal?: Especie
+    especie?: string
     localizacao?: string
     cadastradopor?: string
+    email?: string
     estado?: string
     comentario?: string
     foto1?: string

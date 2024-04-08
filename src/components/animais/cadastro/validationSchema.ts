@@ -7,9 +7,10 @@ const campoObrigatorioIds = Yup.object().nullable(true).required(campoObrigatori
 export const validationScheme = Yup.object().shape({
 
     data: campoObrigatorioValidation,
-    idGrupoAnimal: campoObrigatorioIds,
-    idClassificacaoAnimal: campoObrigatorioIds,
-    idEspecieAnimal: campoObrigatorioIds,
+    // idGrupoAnimal: campoObrigatorioIds,
+    // idClassificacaoAnimal: campoObrigatorioIds,
+    // idEspecieAnimal: campoObrigatorioIds,
+    especie: campoObrigatorioValidation,
     localizacao: campoObrigatorioValidation,
     cadastradopor: campoObrigatorioValidation,
     estado: campoObrigatorioValidation,

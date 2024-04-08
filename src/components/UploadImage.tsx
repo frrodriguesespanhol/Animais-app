@@ -183,7 +183,7 @@ export function UploadImage({ setImageURL, setIsLoading, pastaId, numImagem, set
   return (
     <div className="box">
       {/* <h1 className="text-gray-500 text-xl">Anexe a imagem {numImagem}</h1> */}
-      <h1 className="has-text-centered has-text-grey">Anexe a imagem {numImagem}</h1>
+      <h1 className="has-text-centered has-text-grey">Anexe a foto {numImagem}</h1>
       <p className=" has-text-centered has-text-grey-light">Imagem pode ser Jpeg, Png,...</p>
 
       <div

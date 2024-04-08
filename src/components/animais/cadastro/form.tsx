@@ -31,8 +31,10 @@ const formScheme: Animais = {
     idGrupoAnimal: undefined,
     idClassificacaoAnimal: undefined,
     idEspecieAnimal: undefined,
+    especie: '',
     localizacao: '',
     cadastradopor: '',
+    email: '',
     estado: '',
     comentario: '',
     foto1: '',
@@ -160,7 +162,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                 <div className='columns'>
                     <Input id="data"
                         name="data"
-                        label="Data: *"
+                        label="Data do encontro com o animal: *"
                         autoComplete='off'
                         columnClasses='is-full'
                         value={formik.values.data?.toString()}
@@ -171,7 +173,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                 </div>
 
                 <div className='p-field'>
-                        <label htmlFor="grupo">Grupo: *</label>
+                        <label htmlFor="grupo">Grupo: (não obrigatório)</label>
                         <AutoComplete
                             suggestions={listaGrupos.content}
                             completeMethod={handleGrupoAutoComplete}
@@ -187,7 +189,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                 </div>
 
                 <div className='p-field'>
-                    <label htmlFor="classificacao">Classificação: *</label>
+                    <label htmlFor="classificacao">Classificação: (não obrigatória)</label>
                         <AutoComplete
                             suggestions={listaClassificacoes.content}
                             completeMethod={handleClassificacaoAutoComplete}
@@ -203,7 +205,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                 </div>
 
                 <div className='p-field'>
-                    <label htmlFor="classificacao">Espécie: *</label>
+                    <label htmlFor="classificacao">Espécie: (não obrigatória)</label>
                         <AutoComplete
                             suggestions={listaEspecies.content}
                             completeMethod={handleEspecieAutoComplete}
@@ -216,6 +218,18 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         <small className='p-error p-d-block'>
                             {formik.errors.idEspecieAnimal}
                         </small>
+                </div>
+
+                <div className='columns'>
+                    <Input id="especie"
+                        name="especie"
+                        label="Informe a provável espécie do animal: *"
+                        autoComplete='off'
+                        columnClasses='is-full'
+                        value={formik.values.especie}
+                        onChange={formik.handleChange}
+                        error={formik.errors.especie}
+                    />
                 </div>
 
                 <br/>
@@ -255,12 +269,24 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                 <div className='columns'>
                     <Input id="cadastradopor"
                         name="cadastradopor"
-                        label="Cadastrado por (nome da pessoa): *"
+                        label="Cadastrado por (informe seu nome): *"
                         autoComplete='off'
                         columnClasses='is-full'
                         value={formik.values.cadastradopor}
                         onChange={formik.handleChange}
                         error={formik.errors.cadastradopor}
+                    />
+                </div>
+
+                <div className='columns'>
+                    <Input id="email"
+                        name="email"
+                        label="Informe seu e-mail para eventuais notificações: (não obrigatório)"
+                        autoComplete='off'
+                        columnClasses='is-full'
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        error={formik.errors.email}
                     />
                 </div>
 
@@ -314,6 +340,13 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                     />
                 </div>
 
+                <p>
+                <b>*</b> = campos obrigatórios
+                </p>
+                <p>
+                Ao salvar o registro, você não poderá excluí-lo, ele será validado pela Associação para que as informações se tornem públicas, ou não.
+                </p>
+
                 <div className='field is-grouped'>
                     <div className='control is-link'>
                         <button id='salvar' type='submit' className='button is-success'>
@@ -330,11 +363,13 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                     </div>
                 </div>
 
+
                 {/* <> */}
                     {/* <Toast /> */}
                     {/* <main className="bg-background w-full h-screen flex items-center justify-center"> */}
                         {/* <div className="w-full max-w-[420px] bg-white rounded-xl drop-shadow-md p-8"> */}
                         
+                        <h1 className="has-text-centered has-text-grey">Fotos do Animal </h1>
                         <br/>
 
                         {formik.values.id &&
