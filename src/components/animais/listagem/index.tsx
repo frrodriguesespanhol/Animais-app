@@ -15,6 +15,7 @@ import { Grupos } from 'app/models/grupos'
 import { Classificacao } from 'app/models/classificacao'
 import { Especie } from 'app/models/especies'
 import { validationScheme } from './validationSchema'
+import { TableRow } from '@mui/material'
 
 let cS_grupo: string | undefined
 let cS_classificacao: string | undefined
@@ -114,10 +115,10 @@ export const ListagemAnimais: React.FC<ConsultaAnimaisForm> = ({
 
     const actionTemplate = (registro: Animais) => {
         const url = `/cadastros/animais?id=${registro.id}`
-        return (
+        return (            
             <div>
                 <Button label="Editar"
-                        className="p-button-rounded p-button-info"
+                        className="button is-small is-responsive p-button-info"
                         onClick={e => Router.push(url)}
                         />
                 <Button label="Deletar" onClick={event => {
@@ -129,7 +130,7 @@ export const ListagemAnimais: React.FC<ConsultaAnimaisForm> = ({
                         header: "Confirmação"
                     })
                 }}
-                        className="p-button-rounded p-button-danger"/>
+                        className="button is-small is-responsive p-button-danger"/>
             </div>
         )
     }
@@ -260,7 +261,11 @@ export const ListagemAnimais: React.FC<ConsultaAnimaisForm> = ({
 
             <div className='columns'>
                 <div className='is-full'>
-                    <DataTable value={animal.content}
+                    <DataTable 
+                            autoLayout
+                            resizableColumns
+                            columnResizeMode='fit'
+                            value={animal.content}
                             totalRecords={animal.totalElements}
                             lazy paginator
                             first={animal.first}
@@ -268,10 +273,13 @@ export const ListagemAnimais: React.FC<ConsultaAnimaisForm> = ({
                             onPage={handlePage}
                             loading={loading}
                             emptyMessage="Nenhum registro."
+                            // autoLayout
+                            // columnResizeMode='expand'
+                            
                             >
-                        <Column field='id' header="Código" />
-                        <Column field='data' header="Dt. Cadastro" />
-                        <Column field='idEspecieAnimal.nome' header="Espécie" />
+                        {/* <Column field='id' header="Código" /> */}
+                        <Column field='data' header="Dt. Encontro" />
+                        <Column field='especie' header="Espécie"  />
                         <Column field='cadastradopor' header="Cadastrado por" />
                         <Column field='estado' header="Estado" />
                         <Column body={actionTemplate} />

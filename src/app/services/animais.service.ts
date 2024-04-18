@@ -18,6 +18,15 @@ export const useAnimaisService = () => {
         await httpClient.put<Animais>(url, animais)
     }
 
+    const atualizarFoto = async (endereco: string, id: string | undefined, foto: string | undefined) : Promise<void> => {
+        const url: string = `${resourceURL}/${id}`
+        //console.log('foto:' + {foto: endereco})
+        if (foto =='foto1')
+            await httpClient.patch(url, {foto1: endereco})
+        else
+            await httpClient.patch(url, {foto2: endereco})
+    }
+
     const carregarAnimal = async (id: any) : Promise<Animais> => {
         const url: string = `${resourceURL}/${id}`
         const response: AxiosResponse<Animais> = await httpClient.get(url)
@@ -45,6 +54,7 @@ export const useAnimaisService = () => {
         atualizar,
         carregarAnimal,
         deletar,
-        find
+        find,
+        atualizarFoto
     }
 }

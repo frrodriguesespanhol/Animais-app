@@ -4,7 +4,7 @@ import { Formik, useFormik } from 'formik'
 import { validationScheme } from './validationSchema'
 import Router from 'next/router'
 import { useClassificacaoService, useEspecieService, useGrupoService } from 'app/services'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Page } from 'app/models/common/page'
 import { Grupos } from 'app/models/grupos'
 import { AutoComplete, AutoCompleteChangeParams, AutoCompleteCompleteMethodParams } from 'primereact/autocomplete'
@@ -138,10 +138,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
     }
 
     
-    // function alteraFoto(){
-
-    // }
-
+    
 
     return (
 
@@ -168,7 +165,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         value={formik.values.data?.toString()}
                         onChange={formik.handleChange}
                         error={formik.errors.data}
-                        //type='date'
+                        type='date'
                     />
                 </div>
 
@@ -229,6 +226,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         value={formik.values.especie}
                         onChange={formik.handleChange}
                         error={formik.errors.especie}
+                        maxLength={70}
                     />
                 </div>
 
@@ -246,7 +244,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
 
                 <div className="field is-grouped">
                     <p className="control is-expanded">
-                        <input
+                        <input 
                             id='localizacao'
                             name='localizacao'
                             value={formik.values.localizacao}
@@ -275,6 +273,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         value={formik.values.cadastradopor}
                         onChange={formik.handleChange}
                         error={formik.errors.cadastradopor}
+                        maxLength={50}
                     />
                 </div>
 
@@ -286,7 +285,8 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         columnClasses='is-full'
                         value={formik.values.email}
                         onChange={formik.handleChange}
-                        error={formik.errors.email}
+                        // error={formik.errors.email}
+                        maxLength={70}
                     />
                 </div>
 
@@ -299,18 +299,19 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         value={formik.values.estado}
                         onChange={formik.handleChange}
                         error={formik.errors.estado}
+                        maxLength={70}
                     />
                 </div>
 
                 <div className='columns'>
                     <Input id="comentario"
                         name="comentario"
-                        label="Comentários: *"
+                        label="Comentários: (não obrigatório)"
                         autoComplete='off'
                         columnClasses='is-full'
                         value={formik.values.comentario}
                         onChange={formik.handleChange}
-                        error={formik.errors.comentario}
+                        // error={formik.errors.comentario}
                     />
                 </div>
 
@@ -324,6 +325,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         value={formik.values.foto1}
                         onChange={formik.handleChange}
                         error={formik.errors.foto1}
+                        
                     />
                 </div>
 
@@ -344,7 +346,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                 <b>*</b> = campos obrigatórios
                 </p>
                 <p>
-                Ao salvar o registro, você não poderá excluí-lo, ele será validado pela Associação para que as informações se tornem públicas, ou não.
+                Ao salvar o registro, você não poderá excluí-lo, ele será validado pela Associação para que as informações se tornem públicas.
                 </p>
 
                 <div className='field is-grouped'>
@@ -370,6 +372,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         {/* <div className="w-full max-w-[420px] bg-white rounded-xl drop-shadow-md p-8"> */}
                         
                         <h1 className="has-text-centered has-text-grey">Fotos do Animal </h1>
+                        <p className="has-text-centered has-text-grey">Salve as informações e depois envie as fotos (máximo duas).</p>
                         <br/>
 
                         {formik.values.id &&
@@ -384,6 +387,8 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                                 setImageURL={setImageURL}
                                 pastaId={pastaId}
                                 numImagem='1'
+                                foto1={formik.values.foto1}
+                                foto2=''
                                 />
                             )}
                             </div>
@@ -400,6 +405,8 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                                 setImageURL={setImageURL}
                                 pastaId={pastaId}
                                 numImagem='2'
+                                foto1=''
+                                foto2={formik.values.foto2}
                                 />
                             )}
                             </div>

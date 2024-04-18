@@ -8,11 +8,11 @@ export default () => {
     
 return (
 
-    <RotaAutenticada>
-        {permissao==="adm" &&
+    // <RotaAutenticada>
+        // {permissao==="adm" &&
             <CadastroAnimais />
-        }
-    </RotaAutenticada>
+        // }
+    // </RotaAutenticada>
 
 )
 }
