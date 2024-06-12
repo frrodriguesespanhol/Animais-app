@@ -15,6 +15,7 @@ import { Especie } from 'app/models/especies'
 import { UploadLoading } from 'components/UploadLoading'
 import { ImagePreview } from 'components/ImagePreview'
 import { UploadImage } from 'components/UploadImage'
+import { signOut, useSession } from "next-auth/client"
 
 
 let cS_grupo: string | undefined
@@ -137,7 +138,8 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
         
     }
 
-    
+    const [session, loading] = useSession()
+    const permissao = session?.user?.email?.substring(session?.user?.email?.length - 3, session?.user?.email?.length)
     
 
     return (
@@ -342,6 +344,27 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                     />
                 </div>
 
+                <br/>
+                
+                {permissao==="adm" &&
+                 
+                <div className='columns'>
+                    &nbsp;&nbsp;&nbsp;
+                    <input 
+                        id='confirmacao'
+                        name='confirmacao'
+                        checked={false}
+                        //value={formik.values.confirmacao}
+                        onChange={formik.handleChange}
+                        //className="input"
+                        type="checkbox">
+                            
+                    </input>
+                    <label htmlFor="confirma">&nbsp;Registro Confirmado</label>
+                </div>
+                }
+
+                <br/>
                 <p>
                 <b>*</b> = campos obrigatórios
                 </p>
@@ -356,6 +379,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         </button>
                     </div>
                     
+                    {permissao==="adm" &&
                     <div className='control is-link'>
                         <button type='button'
                                 onClick={e => Router.push("/consultas/animais")}
@@ -363,6 +387,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                             Voltar
                         </button>
                     </div>
+                    }
                 </div>
 
 

@@ -51,6 +51,8 @@ export const Menu: React.FC = () => {
                         <MenuItem onClick={() => signOut()} href="/" label="Sair" />
                 }
             </ul>
+
+    
         </aside>
     )
 }

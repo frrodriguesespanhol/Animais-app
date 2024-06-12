@@ -7,6 +7,10 @@ import { httpClient } from "app/http";
 const resourceURL: string = "api/usuarios/validarSenha"
 
 export default NextAuth({
+  // aqui seria pra outra pagina de login, uma não padrão
+  // pages: {
+  //   signIn: "/",
+  // },
   providers: [
     Providers.Credentials({
       name: "Cadastro de Animais Silvestres",

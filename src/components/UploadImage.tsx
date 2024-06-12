@@ -141,6 +141,7 @@ export function UploadImage({ setImageURL, setIsLoading, pastaId, numImagem,
       {/* <h1 className="text-gray-500 text-xl">Anexe a imagem {numImagem}</h1> */}
       <h1 className="has-text-centered has-text-grey">Anexe a foto {numImagem}</h1>
       <p className=" has-text-centered has-text-grey-light">Imagem pode ser Jpeg, Png,...</p>
+      <p className=" has-text-centered has-text-grey-light">Clique sobre a imagem para ampliá-la</p>
 
       <div
         onDragOver={handleDragOver}
@@ -156,7 +157,8 @@ export function UploadImage({ setImageURL, setIsLoading, pastaId, numImagem,
             // src={localStorage.getItem("foto_" + pastaId + '_' + numImagem) || scr_imagem || scr_imagem_padrao}  
             src={imgFinal}
             alt="Default image"            
-            height={150}            
+            height={150}  
+            
           />
         </div>
         </a>
