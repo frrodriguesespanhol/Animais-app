@@ -43,7 +43,7 @@ export const EspecieForm: React.FC<EspecieFormProps> = ({
     const handleClassificacaoAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
         const nome = e.query
         classificacaoService
-            .find_combo(nome, 0, 20)
+            .find_combo(nome, "", 0, 20)
             .then(classificacoes => setListaClassificacoes(classificacoes))
     }
 

@@ -1,4 +1,6 @@
 import { createClient } from "@supabase/supabase-js"
+import { NextResponse } from "next/server"
+import { text } from "stream/consumers"
 
 const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
@@ -27,19 +29,16 @@ export async function POST(req: Request) {
         const { data: imageUrl } = supabase.storage
           .from('Imagens' + '/' + pasta_id )
           .getPublicUrl(data.path)
-
-        return Response.json(
+                
+        return NextResponse.json(
             {
-                imageUrl: imageUrl.publicUrl,
-            },
-            {
-              status: 201,
-            },
+              imageUrl: imageUrl.publicUrl,
+            }
         )
 
       } catch (error) {
         if (error instanceof Error) {
-            return Response.json({error: error.message})
+            return NextResponse.json({error: error.message})
         }
       } 
 }

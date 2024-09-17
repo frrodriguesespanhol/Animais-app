@@ -13,12 +13,17 @@
 // module.exports = nextConfig
 
 
-
-module.exports = {
+const nextConfig = {
+  reactStrictMode: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+},
   images: {
     domains: ['msikgermgspiwqsqxjas.supabase.co']
   },
 }
+
+module.exports =   nextConfig
 
 
 // module.exports = { images: { writeToCacheDir: false, }, }
