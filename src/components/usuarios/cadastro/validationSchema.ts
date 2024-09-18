@@ -9,5 +9,5 @@ export const validationScheme = Yup.object().shape({
     nome: campoObrigatorioValidation,
     email: campoObrigatorioValidation,
     senha: campoObrigatorioValidation,
-    idEmpresa: campoObrigatorioIdEmpresa,
+    //idEmpresa: campoObrigatorioIdEmpresa,
 })
