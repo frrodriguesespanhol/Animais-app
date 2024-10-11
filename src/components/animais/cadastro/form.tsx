@@ -16,6 +16,7 @@ import { UploadLoading } from 'components/UploadLoading'
 import { ImagePreview } from 'components/ImagePreview'
 import { UploadImage } from 'components/UploadImage'
 import { signOut, useSession } from "next-auth/client"
+import Script from 'next/script'
 
 
 let cS_grupo: string | undefined
@@ -29,8 +30,8 @@ interface AnimaisFormProps {
 
 const formScheme: Animais = {
     data: undefined,
-    idGrupoAnimal: undefined,
-    idClassificacaoAnimal: undefined,
+    // idGrupoAnimal: undefined,
+    // idClassificacaoAnimal: undefined,
     idEspecieAnimal: undefined,
     especie: '',
     localizacao: '',
@@ -48,15 +49,6 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
     onSubmit
 }) => {
 
-    const grupoService = useGrupoService()
-    const [ listaGrupos, setListaGrupos ] = useState<Page<Grupos>>({
-        content: [],
-        first: 0,
-        number: 0,
-        size: 0,
-        totalElements: 0
-    })
-
     const formik = useFormik<Animais>({
         initialValues: {...formScheme, ...animais},
         onSubmit,
@@ -64,42 +56,53 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
         validationSchema: validationScheme
     })
 
-    const handleGrupoAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
-        const nome = e.query
-        grupoService
-            .find(nome, 0, 20)
-            .then(grupos => setListaGrupos(grupos))
-    }
+    // const grupoService = useGrupoService()
+    // const [ listaGrupos, setListaGrupos ] = useState<Page<Grupos>>({
+    //     content: [],
+    //     first: 0,
+    //     number: 0,
+    //     size: 0,
+    //     totalElements: 0
+    // })
 
-    const handleGrupoChange = (e: AutoCompleteChangeParams) => {
-        const grupoSelecionado: Grupos = e.value
-        formik.setFieldValue("idGrupoAnimal", grupoSelecionado)
-        cS_grupo = grupoSelecionado.id
-        console.log(grupoSelecionado)
-    }
 
-    const classificacaoService = useClassificacaoService()
-    const [ listaClassificacoes, setListaClassificacoes ] = useState<Page<Classificacao>>({
-        content: [],
-        first: 0,
-        number: 0,
-        size: 0,
-        totalElements: 0
-    })
 
-    const handleClassificacaoAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
-        const nome = e.query
-        classificacaoService
-            .find_combo(nome, cS_grupo, 0, 20)
-            .then(classificacao => setListaClassificacoes(classificacao))
-    }
+    // const handleGrupoAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
+    //     const nome = e.query
+    //     grupoService
+    //         .find(nome, 0, 20)
+    //         .then(grupos => setListaGrupos(grupos))
+    // }
 
-    const handleClassificacaoChange = (e: AutoCompleteChangeParams) => {
-        const classificacaoSelecionada: Classificacao = e.value
-        formik.setFieldValue("idClassificacaoAnimal", classificacaoSelecionada)
-        cS_classificacao = classificacaoSelecionada.id
-        console.log(classificacaoSelecionada)
-    }
+    // const handleGrupoChange = (e: AutoCompleteChangeParams) => {
+    //     const grupoSelecionado: Grupos = e.value
+    //     formik.setFieldValue("idGrupoAnimal", grupoSelecionado)
+    //     cS_grupo = grupoSelecionado.id
+    //     console.log(grupoSelecionado)
+    // }
+
+    // const classificacaoService = useClassificacaoService()
+    // const [ listaClassificacoes, setListaClassificacoes ] = useState<Page<Classificacao>>({
+    //     content: [],
+    //     first: 0,
+    //     number: 0,
+    //     size: 0,
+    //     totalElements: 0
+    // })
+
+    // const handleClassificacaoAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
+    //     const nome = e.query
+    //     classificacaoService
+    //         .find_combo(nome, cS_grupo, 0, 20)
+    //         .then(classificacao => setListaClassificacoes(classificacao))
+    // }
+
+    // const handleClassificacaoChange = (e: AutoCompleteChangeParams) => {
+    //     const classificacaoSelecionada: Classificacao = e.value
+    //     formik.setFieldValue("idClassificacaoAnimal", classificacaoSelecionada)
+    //     cS_classificacao = classificacaoSelecionada.id
+    //     console.log(classificacaoSelecionada)
+    // }
 
     const especieService = useEspecieService()
     const [ listaEspecies, setListaEspecies ] = useState<Page<Especie>>({
@@ -110,13 +113,20 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
         totalElements: 0
     })
 
+    // const handleEspecieAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
+    //     const nome = e.query
+    //     especieService
+    //         .find(nome, cS_classificacao, 0, 20)
+    //         .then(especie => setListaEspecies(especie))
+    // }
+
     const handleEspecieAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
         const nome = e.query
         especieService
-            .find(nome, cS_classificacao, 0, 20)
+            .find(nome, 0, 20)
             .then(especie => setListaEspecies(especie))
     }
-
+    
     const handleEspecieChange = (e: AutoCompleteChangeParams) => {
         const especieSelecionada: Especie = e.value
         formik.setFieldValue("idEspecieAnimal", especieSelecionada)
@@ -141,9 +151,8 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
     const [session, loading] = useSession()
     const permissao = session?.user?.email?.substring(session?.user?.email?.length - 3, session?.user?.email?.length)
     
-
     return (
-
+        
         <form onSubmit={formik.handleSubmit}>
             {formik.values.id &&
                 <div className='columns'>
@@ -171,7 +180,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                     />
                 </div>
 
-                <div className='p-field'>
+                {/* <div className='p-field'>
                         <label htmlFor="grupo">Grupo: (não obrigatório)</label>
                         <AutoComplete
                             suggestions={listaGrupos.content}
@@ -201,10 +210,10 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         <small className='p-error p-d-block'>
                             {formik.errors.idClassificacaoAnimal}
                         </small>
-                </div>
+                </div> */}
 
                 <div className='p-field'>
-                    <label htmlFor="classificacao">Espécie: (não obrigatória)</label>
+                    <label htmlFor="especie">Espécie: (não obrigatória)</label>
                         <AutoComplete
                             suggestions={listaEspecies.content}
                             completeMethod={handleEspecieAutoComplete}
@@ -445,6 +454,8 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                 {/* </> */}
 
             </div> 
+
+
         </form>
 
         

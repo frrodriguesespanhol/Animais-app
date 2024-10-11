@@ -30,20 +30,22 @@ export const useEspecieService = () => {
 
     const find = async (
         nome: string = '',
-        idClassificacao: string = '',
+        //idClassificacao: string = '',
         page: number = 0,
         size: number = 10) : Promise<Page<Especie>> => {
-        const url = `${resourceURL}?nome=${nome}&idClassificacao=${idClassificacao}&page=${page}&size=${size}`
+        //const url = `${resourceURL}?nome=${nome}&idClassificacao=${idClassificacao}&page=${page}&size=${size}`
+        const url = `${resourceURL}?nome=${nome}&page=${page}&size=${size}`
         const response: AxiosResponse<Page<Especie>> = await httpClient.get(url)
         return response.data
     }
 
     const find_combo = async (
         nome: string='',
-        idClassificacao: string = '',
+        // idClassificacao: string = '',
         page: number = 0,
         size: number = 10) : Promise<Page<Especie>> => {
-        const url = `${resourceURL}?nome=${nome}&idClassificacao=${idClassificacao}&page=${page}&size=${size}`
+        // const url = `${resourceURL}?nome=${nome}&idClassificacao=${idClassificacao}&page=${page}&size=${size}`
+        const url = `${resourceURL}?nome=${nome}&page=${page}&size=${size}`
         const response: AxiosResponse<Page<Especie>> = await httpClient.get(url)
         return response.data
     }

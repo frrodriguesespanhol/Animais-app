@@ -15,40 +15,44 @@ export const Menu: React.FC = () => {
             <ul className="menu-list">
                 {
                     (permissao==="adm" || permissao==="usu")  &&
-                        <MenuItem href="/" label="Home" />
+                        <MenuItem href="/" label="Home" accesskey="0"/>
                 }
                 {
                     (permissao==="adm")  &&
-                        <MenuItem href="/consultas/animais" label="Animais" />
+                        <MenuItem href="/consultas/animais" label="Animais" accesskey="1" />
                 }
                 {
                     (permissao==="adm")  &&
-                        <MenuItem href="/consultas/grupos" label="Grupos" />
+                        <MenuItem href="/consultas/grupos" label="Grupos" accesskey="2" />
                 }
                 {
                     (permissao==="adm")  &&
-                        <MenuItem href="/consultas/classificacoes" label="Classificações" />
+                        <MenuItem href="/consultas/classificacoes" label="Classificações" accesskey="3" />
                 }
                 {
                     (permissao==="adm")  &&
-                        <MenuItem href="/consultas/especies" label="Espécies" />
+                        <MenuItem href="/consultas/especies" label="Espécies" accesskey="4" />
                 }
                 {
                     (permissao==="adm")  &&
-                        <MenuItem href="/consultas/paises" label="Países" />
+                        <MenuItem href="/consultas/paises" label="Países" accesskey="5" />
                 }
                 {
                     (permissao==="adm")  &&
-                        <MenuItem href="/consultas/cidades" label="Cidades" />
+                        <MenuItem href="/consultas/cidades" label="Cidades" accesskey="6" />
                 }
 
                 {
                     (permissao==="adm")  &&
-                        <MenuItem href="/consultas/usuarios" label="Usuários" />
+                        <MenuItem href="/consultas/usuarios" label="Usuários" accesskey="7" />
+                }
+                {
+                    (permissao==="adm" || permissao==="usu") &&
+                        <MenuItem href="/acessibilidade" label="Acessibilidade" accesskey="8" />
                 }
                 {
                     (permissao==="adm" || permissao==="usu")  &&
-                        <MenuItem onClick={() => signOut()} href="/" label="Sair" />
+                        <MenuItem onClick={() => signOut()} href="/" label="Sair" accesskey="9" />
                 }
             </ul>
 
@@ -60,14 +64,15 @@ export const Menu: React.FC = () => {
 interface MenuItemProps {
     href: string
     label: string
+    accesskey: string
     onClick?: () => void
 }
 
 const MenuItem: React.FC<MenuItemProps> = (props: MenuItemProps) => {
     return (
-        <li>
+        <li >
             <Link href={props.href}>
-                <a onClick={props.onClick}>
+                <a onClick={props.onClick} accessKey={props.accesskey}>
                     <span className="icon"></span> { props.label }
                 </a>
             </Link>

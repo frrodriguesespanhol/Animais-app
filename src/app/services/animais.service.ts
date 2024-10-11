@@ -15,6 +15,7 @@ export const useAnimaisService = () => {
 
     const atualizar = async (animais: Animais) : Promise<void> => {
         const url: string = `${resourceURL}/${animais.id}`
+        console.log('animais especie:' + animais.idEspecieAnimal)
         await httpClient.put<Animais>(url, animais)
     }
 
@@ -39,12 +40,15 @@ export const useAnimaisService = () => {
     }
 
     const find = async (
-        idGrupoAnimal: string = '',
-        idClassificacaoAnimal: string = '',
+        // idGrupoAnimal: string = '',
+        // idClassificacaoAnimal: string = '',
         idEspecieAnimal: string = '',
+        especie: string = '',
+        cadastradopor: string = '',
         page: number = 0,
         size: number = 10) : Promise<Page<Animais>> => {
-        const url = `${resourceURL}?grupo=${idGrupoAnimal}&classificacao=${idClassificacaoAnimal}&especie=${idEspecieAnimal}&page=${page}&size=${size}`
+        //const url = `${resourceURL}?grupo=${idGrupoAnimal}&classificacao=${idClassificacaoAnimal}&especie=${idEspecieAnimal}&page=${page}&size=${size}`
+        const url = `${resourceURL}?idEspecieAnimal=${idEspecieAnimal}&especie=${especie}&cadastradopor=${cadastradopor}&page=${page}&size=${size}`
         const response: AxiosResponse<Page<Animais>> = await httpClient.get(url)
         return response.data
     }

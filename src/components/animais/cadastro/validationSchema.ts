@@ -14,6 +14,6 @@ export const validationScheme = Yup.object().shape({
     localizacao: campoObrigatorioValidation,
     cadastradopor: campoObrigatorioValidation,
     estado: campoObrigatorioValidation,
-    comentario: campoObrigatorioValidation
+    //comentario: campoObrigatorioValidation
     
 })

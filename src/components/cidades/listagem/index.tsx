@@ -140,7 +140,7 @@ export const ListagemCidades: React.FC<ConsultaCidadesForm> = ({
                         name="nome" value={filtro.nome} />
                 </div>
                 <div className='p-field'>
-                    <label htmlFor="pais">País: *</label>
+                    <label htmlFor="pais">País:</label>
                     <AutoComplete
                         suggestions={listaPaises.content}
                         completeMethod={handlePaisAutoComplete}

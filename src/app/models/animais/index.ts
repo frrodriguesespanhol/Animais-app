@@ -5,8 +5,8 @@ import { Grupos } from "../grupos"
 export interface Animais {
     id?: string
     data?: Date
-    idGrupoAnimal?: Grupos
-    idClassificacaoAnimal?: Classificacao
+    // idGrupoAnimal?: Grupos
+    // idClassificacaoAnimal?: Classificacao
     idEspecieAnimal?: Especie
     especie?: string
     localizacao?: string
