@@ -11,7 +11,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider session={pageProps.session}>
       <Component {...pageProps} 
+      
       /> 
+
     </Provider>
   )
 }

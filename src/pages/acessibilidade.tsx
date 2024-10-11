@@ -48,6 +48,7 @@ return (
             </ul>
             <h2>Tradução automática de conteúdos de Língua Portuguesa para a Libras </h2>
             <p>O VLibras é uma suíte de ferramentas utilizadas na tradução automática do Português para a Língua Brasileira de Sinais. É possível utilizar essas ferramentas tanto no computador Desktop quanto em smartphones e tablets, através de extensões instaladas nos navegadores Google Chrome, Firefox, Safari; instalação nos sistemas operacionais Windows (7 ou superior), Addon VLibras NVDA, Linux (32 bits), Linux (64 bits); instalação em Android e IOS.   </p>
+
         </Layout>
         }
     </RotaAutenticada>
