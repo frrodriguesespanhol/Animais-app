@@ -1,10 +1,8 @@
 import { Layout, ListagemAnimais, RotaAutenticada } from "components";
 import { useSession } from 'next-auth/client'
-import type { NextPage } from "next";
-import VLibras from "vlibras-nextjs";
 
-// export default () => {
-const Ace: NextPage = () => {
+
+export default () => {
     const [session] = useSession()
     const permissao = session?.user?.email?.substring(session?.user?.email.length-3, session?.user?.email.length)
 
@@ -13,10 +11,6 @@ return (
     <RotaAutenticada>
         {permissao==="adm" &&
         <Layout titulo="Acessibilidade">
-         	  <div>
-             {/* only worked in production in tests with nextjs applications maybe you can solve this! */}
-             {process.env.NODE_ENV === "production" && <VLibras forceOnload />}
-            </div>
             <h2>Acessibilidade</h2>
             <p>Este site foi projetado para ser acessível e usável.</p>
             <h2>Tamanho do Texto</h2>
@@ -60,6 +54,3 @@ return (
  
 )
 }
-
-
-export default Ace
