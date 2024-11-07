@@ -50,6 +50,10 @@ export const Menu: React.FC = () => {
                     (permissao==="adm" || permissao==="usu") &&
                         <MenuItem href="/acessibilidade" label="Acessibilidade" accesskey="8" />
                 }
+                                {
+                    (permissao==="adm" || permissao==="usu") &&
+                        <MenuItem href="https://mata-ciliar.vercel.app" target="_blank" label="Conteúdo Educativo" accesskey="8" />
+                }
                 {
                     (permissao==="adm" || permissao==="usu")  &&
                         <MenuItem onClick={() => signOut()} href="/" label="Sair" accesskey="9" />
@@ -63,6 +67,7 @@ export const Menu: React.FC = () => {
 
 interface MenuItemProps {
     href: string
+    target?: string
     label: string
     accesskey: string
     onClick?: () => void
@@ -72,7 +77,7 @@ const MenuItem: React.FC<MenuItemProps> = (props: MenuItemProps) => {
     return (
         <li >
             <Link href={props.href}>
-                <a onClick={props.onClick} accessKey={props.accesskey}>
+                <a onClick={props.onClick} target={props.target} accessKey={props.accesskey}>
                     <span className="icon"></span> { props.label }
                 </a>
             </Link>
