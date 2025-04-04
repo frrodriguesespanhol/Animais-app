@@ -35,7 +35,7 @@ export function UploadImage({ setImageURL, setIsLoading, pastaId, numImagem,
   const [isDragging, setIsDragging] = useState(false)
   
   scr_imagem = foto1 + '' || foto2 +''
-  const scr_imagem_padrao: string | undefined = 'https://msikgermgspiwqsqxjas.supabase.co/storage/v1/object/public/Imagens/padrao.png'
+  const scr_imagem_padrao: string | undefined = 'https://kplrcwmyqyihticqvldj.supabase.co/storage/v1/object/public/imagens/padrao.png'
        
   function validateImage(file: File) {
     if (file.type.startsWith('image/')) return true
@@ -81,7 +81,7 @@ export function UploadImage({ setImageURL, setIsLoading, pastaId, numImagem,
       try {
         setIsLoading(true)
         const {data, error} = await supabase.storage
-          .from('Imagens')
+          .from('imagens')
             .upload(pasta_id + '/' + numImagem + '/' + pasta_id + '_' + numImagem + '_' + chaveImagem , file, {
             upsert: true,
           })
@@ -93,7 +93,7 @@ export function UploadImage({ setImageURL, setIsLoading, pastaId, numImagem,
         }
 
         const { data: imageUrl } = supabase.storage
-          .from('Imagens')
+          .from('imagens')
           .getPublicUrl(data.path)
            
         //if (foto1!='null') { //rever isso
