@@ -35,7 +35,8 @@ export function UploadImage({ setImageURL, setIsLoading, pastaId, numImagem,
   const [isDragging, setIsDragging] = useState(false)
   
   scr_imagem = foto1 + '' || foto2 +''
-  const scr_imagem_padrao: string | undefined = 'https://kplrcwmyqyihticqvldj.supabase.co/storage/v1/object/public/imagens/padrao.png'
+  // const scr_imagem_padrao: string | undefined = 'https://kplrcwmyqyihticqvldj.supabase.co/storage/v1/object/public/imagens/padrao.png'
+  const scr_imagem_padrao: string | undefined = 'https://kplrcwmyqyihticqvldj.supabase.co/storage/v1/object/sign/imagens/padrao.png?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJpbWFnZW5zL3BhZHJhby5wbmciLCJpYXQiOjE3NDM3OTEzNTksImV4cCI6MTc0NDM5NjE1OX0.fSlRXxCFpMbO2FJEkkRzVe--YDvYvWQwTZvMh8HPgzk'
        
   function validateImage(file: File) {
     if (file.type.startsWith('image/')) return true
