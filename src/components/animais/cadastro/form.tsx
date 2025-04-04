@@ -139,7 +139,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
     const [numImg, setNumImg] = useState('')
 
 
-    const img_prev = 'https://msikgermgspiwqsqxjas.supabase.co/storage/v1/object/public/Imagens/' + pastaId + '/'
+    const img_prev = 'https://kplrcwmyqyihticqvldj.supabase.co/storage/v1/object/public/imagens/' + pastaId + '/'
 
 
     const clickAbrir = () => {
