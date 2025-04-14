@@ -98,6 +98,7 @@ export function UploadImage({ setImageURL, setIsLoading, pastaId, numImagem,
           .getPublicUrl(data.path)
            
         //if (foto1!='null') { //rever isso
+        console.log("Imagem para atualizar foto: " + imageUrl.publicUrl)
         if (numImagem=='1') {
           service.atualizarFoto(imageUrl.publicUrl, pastaId, 'foto1')
         }else {

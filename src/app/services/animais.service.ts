@@ -21,9 +21,11 @@ export const useAnimaisService = () => {
 
     const atualizarFoto = async (endereco: string, id: string | undefined, foto: string | undefined) : Promise<void> => {
         const url: string = `${resourceURL}/${id}`
-        //console.log('foto:' + {foto: endereco})
-        if (foto =='foto1')
-            await httpClient.patch(url, {foto1: endereco})
+        console.log('foto:' + {foto: endereco})
+        if (foto =='foto1'){
+            console.log('URL:' + url)
+            console.log('foto:' + endereco)
+            await httpClient.patch(url, {foto1: endereco})}
         else
             await httpClient.patch(url, {foto2: endereco})
     }
