@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { signOut, useSession } from "next-auth/client"
+import Image from 'next/image';
 
 export const Menu: React.FC = () => {
     const [session, loading] = useSession()
@@ -7,11 +8,23 @@ export const Menu: React.FC = () => {
     //const permissao = session?.user?.email
 
     return (
-
+        
         <aside className="column is-2">
+            
             {/* <p className="menu-label is-hidden-touch">
                 Animais Silvestres
             </p> */}
+            
+            <Image
+                src="/images/guara.jpg" // Substitua pelo caminho da imagem
+                alt="Descrição da imagem" // Obrigatório para acessibilidade
+                width={'200%'} // Largura da imagem
+                height={'200%'} // Altura da imagem
+                
+            />
+            
+
+
             <ul className="menu-list">
                 {
                     (permissao==="adm" || permissao==="usu")  &&

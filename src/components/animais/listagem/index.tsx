@@ -232,7 +232,7 @@ export const ListagemAnimais: React.FC<ConsultaAnimaisForm> = ({
                         </small>
                     </div> */}
 
-                    <div className='p-field'>
+                    {/* <div className='p-field'>
                         <label htmlFor="idespecieanimal">Espécie:</label>
                         <AutoComplete
                             suggestions={listaEspecies.content}
@@ -246,7 +246,7 @@ export const ListagemAnimais: React.FC<ConsultaAnimaisForm> = ({
                         <small className='p-error p-d-block'>
                             {formik.errors.id}
                         </small>
-                    </div>
+                    </div> */}
 
                     <div className='columns'>
                         <Input label="Provável Espécie" id="especie"
@@ -256,13 +256,13 @@ export const ListagemAnimais: React.FC<ConsultaAnimaisForm> = ({
                             name="especie" value={filtro.especie} />
                     </div>
 
-                    <div className='columns'>
+                    {/* <div className='columns'>
                         <Input label="Cadastrado por" id="especie"
                             columnClasses='is-full'
                             autoComplete='off'
                             onChange={handleChange}
                             name="cadastradopor" value={filtro.cadastradopor} />
-                    </div>
+                    </div> */}
 
                     <div className='field is-grouped'>
                         <div className='control is-link'>
@@ -288,9 +288,10 @@ export const ListagemAnimais: React.FC<ConsultaAnimaisForm> = ({
             <div className='columns'>
                 <div className='is-full'>
                     <DataTable 
-                            autoLayout
+                            //autoLayout
                             resizableColumns
                             columnResizeMode='fit'
+                            scrollable
                             value={animal.content}
                             totalRecords={animal.totalElements}
                             lazy paginator
@@ -306,8 +307,8 @@ export const ListagemAnimais: React.FC<ConsultaAnimaisForm> = ({
                         {/* <Column field='id' header="Código" /> */}
                         <Column field='data' header="Dt. Encontro" />
                         <Column field='especie' header="Espécie"  />
-                        <Column field='cadastradopor' header="Cadastrado por" />
-                        <Column field='estado' header="Estado" />
+                        <Column field='localizacao' header="Localização" />
+                        {/* <Column field='foto1' header="Foto 1" /> */}
                         <Column body={actionTemplate} />
                     </DataTable>
 

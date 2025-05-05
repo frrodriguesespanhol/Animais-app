@@ -32,7 +32,7 @@ const formScheme: Animais = {
     data: undefined,
     // idGrupoAnimal: undefined,
     // idClassificacaoAnimal: undefined,
-    idEspecieAnimal: undefined,
+    //idEspecieAnimal: undefined,
     especie: '',
     localizacao: '',
     cadastradopor: '',
@@ -120,31 +120,57 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
     //         .then(especie => setListaEspecies(especie))
     // }
 
-    const handleEspecieAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
-        const nome = e.query
-        especieService
-            .find(nome, 0, 20)
-            .then(especie => setListaEspecies(especie))
-    }
+    // const handleEspecieAutoComplete = (e: AutoCompleteCompleteMethodParams) => {
+    //     const nome = e.query
+    //     especieService
+    //         .find(nome, 0, 20)
+    //         .then(especie => setListaEspecies(especie))
+    // }
     
-    const handleEspecieChange = (e: AutoCompleteChangeParams) => {
-        const especieSelecionada: Especie = e.value
-        formik.setFieldValue("idEspecieAnimal", especieSelecionada)
-        console.log(especieSelecionada)
-    }
+    // const handleEspecieChange = (e: AutoCompleteChangeParams) => {
+    //     const especieSelecionada: Especie = e.value
+    //     formik.setFieldValue("idEspecieAnimal", especieSelecionada)
+    //     //console.log(especieSelecionada)
+    // }
 
+  
     const [isLoading, setIsLoading] = useState(false)
     const [imageURL, setImageURL] = useState('')
     const pastaId: string | undefined = animais.id?.toString()
     const [numImg, setNumImg] = useState('')
 
+    const [latitude, setLatitude] = useState('')
+    const [longitude, setLongitude] = useState('')
+    const [erro, setErro] = useState('')
 
     const img_prev = 'https://kplrcwmyqyihticqvldj.supabase.co/storage/v1/object/public/imagens/' + pastaId + '/'
 
-
     const clickAbrir = () => {
 
-        window.open(formik.values.localizacao, '_blank')
+        //window.open(formik.values.localizacao, '_blank')
+        //useEffect(() => {
+        
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                setLatitude(position.coords.latitude.toString())
+                setLongitude(position.coords.longitude.toString())
+                //alert('passou_certo' + latitude)
+              },
+              (error) => {
+                //alert('passou_erro' + latitude)
+                setErro(error.message)
+              }
+            )
+            //alert('nav' + latitude)
+          } else {
+            setErro("O navegador não suporta geolocalização.")
+            //alert('passou_erro-erro2' + latitude)
+          }
+          //}, [])
+          //console.log(latitude)
+          //alert('passou!' + erro + latitude + longitude)
+          formik.setFieldValue("localizacao",erro || latitude + ', ' + longitude)
         
     }
 
@@ -152,9 +178,9 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
     const permissao = session?.user?.email?.substring(session?.user?.email?.length - 3, session?.user?.email?.length)
     
     return (
-        
+                
         <form onSubmit={formik.handleSubmit}>
-            {formik.values.id &&
+            {/* {formik.values.id &&
                 <div className='columns'>
                     <Input id="id"
                         name="id"
@@ -165,9 +191,9 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         value={formik.values.id}
                     />
                 </div>
-            }
+            } */}
             <div className='p-fluid'>
-                <div className='columns'>
+                {/* <div className='columns'>
                     <Input id="data"
                         name="data"
                         label="Data do encontro com o animal: *"
@@ -178,7 +204,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         error={formik.errors.data}
                         type='date'
                     />
-                </div>
+                </div> */}
 
                 {/* <div className='p-field'>
                         <label htmlFor="grupo">Grupo: (não obrigatório)</label>
@@ -212,7 +238,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         </small>
                 </div> */}
 
-                <div className='p-field'>
+                {/* <div className='p-field'>
                     <label htmlFor="especie">Espécie: (não obrigatória)</label>
                         <AutoComplete
                             suggestions={listaEspecies.content}
@@ -226,7 +252,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         <small className='p-error p-d-block'>
                             {formik.errors.idEspecieAnimal}
                         </small>
-                </div>
+                </div> */}
 
                 <div className='columns'>
                     <Input id="especie"
@@ -238,44 +264,48 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         onChange={formik.handleChange}
                         error={formik.errors.especie}
                         maxLength={70}
+                        placeholder="Espécie do Animal"
                     />
                 </div>
 
                 <br/>
 
                 <div className='columns'>                    
-                    <p>&nbsp;&nbsp;&nbsp;Acesse o&nbsp;
+                    {/* <p>&nbsp;&nbsp;&nbsp;Acesse o&nbsp;
                     <a href='https://www.google.com/maps' target='_blank' >
                      Google maps
                     </a>
                     , copie a localização e cole neste campo. Não sabe como fazer,&nbsp;
                     <a href='https://www.youtube.com' target='_blank' >
-                    assista a este vídeo.</a></p>
+                    assista a este vídeo.</a></p> */}
+                    &nbsp;&nbsp;&nbsp;<b>Informe a localização do animal ou obtenha 
+                    sua localização atual clicando no botão ao lado *</b>
                 </div>
 
                 <div className="field is-grouped">
                     <p className="control is-expanded">
-                        <input 
+                        <input
                             id='localizacao'
                             name='localizacao'
                             value={formik.values.localizacao}
                             onChange={formik.handleChange}
                             className="input"
                             type="text"
-                            placeholder="Informe aqui a localização do Google Maps">
+                            placeholder="Localização do Animal">
                             
                         </input>
                     </p>
                     <p className="control">                    
-                        <button onClick={clickAbrir} className="button is-info">
-                        Abrir a Localização
+                        <button type='button' onClick={clickAbrir} className="button is-info">
+                        Obter a localização atual
                         </button>                    
                     </p>
                 </div>
 
                 <br/>
+                
 
-                <div className='columns'>
+                {/* <div className='columns'>
                     <Input id="cadastradopor"
                         name="cadastradopor"
                         label="Cadastrado por (informe seu nome): *"
@@ -324,9 +354,9 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         onChange={formik.handleChange}
                         // error={formik.errors.comentario}
                     />
-                </div>
+                </div> */}
 
-                <div className='columns'>
+                {/* <div className='columns'>
                     <Input id="foto1"
                         name="foto1"
                         disabled
@@ -351,11 +381,11 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         onChange={formik.handleChange}
                         error={formik.errors.foto2}
                     />
-                </div>
+                </div> */}
 
                 <br/>
                 
-                {permissao==="adm" &&
+                {/* {permissao==="adm" &&
                  
                 <div className='columns'>
                     &nbsp;&nbsp;&nbsp;
@@ -371,9 +401,9 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                     </input>
                     <label htmlFor="confirma">&nbsp;Registro Confirmado</label>
                 </div>
-                }
+                } */}
 
-                <br/>
+                {/* <br/> */}
                 <p>
                 <b>*</b> = campos obrigatórios
                 </p>
