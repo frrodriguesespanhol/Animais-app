@@ -296,7 +296,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
                         </input>
                     </p>
                     <p className="control">                    
-                        <button type='button' onClick={clickAbrir} className="button is-info">
+                        <button type='button' onClick={clickAbrir} className="button is-warning">
                         Obter a localização atual
                         </button>                    
                     </p>
