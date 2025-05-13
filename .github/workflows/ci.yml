@@ -23,7 +23,7 @@ jobs:
       - run: npm run build
   deploy-production:
     name: Deploy (Production)
-    needs: [build]
+    needs: [lint, build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
