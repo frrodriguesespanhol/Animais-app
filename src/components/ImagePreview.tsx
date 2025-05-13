@@ -17,7 +17,7 @@ export function ImagePreview({imageUrl}: ImagePreviewProps) {
 
   return (
      <div className="box">
-       <MdCheckCircle size={43} className="text-green" />
+       {/* <MdCheckCircle size={43} className="text-green" /> */}
 
        {/* <img src={imageUrl} /> */}
        <Image
