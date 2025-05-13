@@ -1,9 +1,6 @@
 import Image from 'next/image'
-
 import { MdCheckCircle } from 'react-icons/md'
-
 import example from '../assets/image-demo.jpg'
-import { toast } from 'react-toastify'
 
 interface ImagePreviewProps {
   imageUrl: string
