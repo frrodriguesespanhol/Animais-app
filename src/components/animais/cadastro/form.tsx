@@ -405,7 +405,7 @@ export const AnimaisForm: React.FC<AnimaisFormProps> = ({
 
                 {/* <br/> */}
                 <p>
-                <b>*</b> = campos obrigatórios
+                <b>*</b> = campos obrigatórios.
                 </p>
                 <p>
                 Ao salvar o registro, você não poderá excluí-lo, ele será validado pela Associação para que as informações se tornem públicas.
